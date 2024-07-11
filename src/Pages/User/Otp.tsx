@@ -53,6 +53,9 @@ console.log(response);
             </button>
           </div>
         </form>
+        <div>
+          <p>timer</p>
+        </div>
         {/* Additional content like timer and resend OTP button */}
       </div>
     </div>
