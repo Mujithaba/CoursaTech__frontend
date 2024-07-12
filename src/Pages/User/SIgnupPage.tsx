@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import signupImage from "/Logo/icon/ai-generated-8309926_1280.jpg";
 import { FcGoogle } from "react-icons/fc";
 import { signup } from "../../api/user";
@@ -25,7 +25,7 @@ const SignupPage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  //form validation    
+  //form validation
   const validateForm = () => {
     const newErrors: Errors = {};
 
@@ -98,7 +98,7 @@ const SignupPage: React.FC = () => {
     };
 
   return (
-    <div className="relative w-full  min-h-screen bg-gray-800 flex justify-center items-center ">
+    <div className="relative w-full  min-h-screen bg-gray-900 flex justify-center items-center ">
       <img
         className="absolute w-full h-full object-cover mix-blend-overlay"
         src={signupImage}
@@ -214,7 +214,10 @@ const SignupPage: React.FC = () => {
             Sign up
           </button>
           <p className="text-gray-600 mt-3 mb-3 text-center">
-            Already have an acoount? Try login
+            Already have an acoount? 
+            <Link to="/login" className="text-indigo-600 hover:underline">
+              Login
+            </Link>
           </p>
           <hr className="border-red-950" />
           <div className="flex justify-center">

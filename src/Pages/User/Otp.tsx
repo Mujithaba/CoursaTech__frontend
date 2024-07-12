@@ -1,35 +1,45 @@
 import { useState, FormEvent } from "react";
-import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { OTPverify } from "../../api/user";
 import errorHandler from "../../api/error";
-
+import { toast } from "react-toastify";
+import signupImage from "/Logo/icon/ai-generated-8309926_1280.jpg";
 
 function Otp() {
   const [otp, setOtp] = useState("");
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const location = useLocation();
   const userData = location.state;
+  const data = { otp, userData };
 
   const submitOtp = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     try {
-      e.preventDefault()
-      const data = { otp, userData };
+      e.preventDefault();
+     
       let response = await OTPverify(data);
-console.log(response);
+      console.log(response);
+      
+      if (response) {
+        toast.success(response.data.message);
+        navigate('/login')
+      }
 
       // toast.success(response)
-    } catch (error:any) {
-      errorHandler(error)
+    } catch (error: any) {
+      errorHandler(error);
     }
   };
 
   return (
-    <div className="w-full min-h-screen  bg-slate-950 flex justify-center items-center">
-      <div className="relative w-full max-w-md px-4 py-8 bg-white rounded-lg shadow-lg shadow-red-500">
+    <div className="w-full min-h-screen  bg-gray-900 flex justify-center items-center">
+       <img
+        className="absolute w-full h-full object-cover mix-blend-overlay"
+        src={signupImage}
+        alt="signupImage"
+      />
+      <div className="relative w-full max-w-md px-4 py-8 bg-white rounded-lg shadow-lg shadow-red-400">
         <h2 className="text-center text-2xl font-bold mb-4">Enter OTP</h2>
         <form onSubmit={submitOtp}>
           <div className="mb-4 flex justify-center items-center">

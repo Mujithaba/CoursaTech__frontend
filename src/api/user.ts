@@ -28,10 +28,13 @@ export const signup = async (userData: userFormData) => {
 // ---otp verification api---
 export const OTPverify = async (data: {}) => {
     try {
-        const res = await Api.post(userRoutes.verification, data);
+        console.log(data)
+        const res = await Api.post(userRoutes.verify, data);
+        console.log(res)
 
         return res;
     } catch (error) {
+        console.log("error:",error)
         if (error instanceof AxiosError) {
             return errorHandler(error);
         }
