@@ -1,6 +1,6 @@
 import React, { useState, FormEvent, ChangeEvent } from "react";
 import { useNavigate,Link } from "react-router-dom";
-import signupImage from "/Logo/icon/ai-generated-8309926_1280.jpg";
+import signupImage from "/Logo/images/ai-generated-8309926_1280.jpg";
 import { FcGoogle } from "react-icons/fc";
 import { signup } from "../../api/user";
 import { toast } from "react-toastify";

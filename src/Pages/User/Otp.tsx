@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { OTPverify } from "../../api/user";
 import errorHandler from "../../api/error";
 import { toast } from "react-toastify";
-import signupImage from "/Logo/icon/ai-generated-8309926_1280.jpg";
+import signupImage from "/Logo/images/ai-generated-8309926_1280.jpg";
 
 function Otp() {
   const [otp, setOtp] = useState("");

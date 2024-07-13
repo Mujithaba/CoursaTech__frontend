@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import signupImage from "/Logo/icon/ai-generated-8309926_1280.jpg";
+import signupImage from "/Logo/images/ai-generated-8309926_1280.jpg";
+import { login } from "../../api/user";
+import { setCredentials } from "../../redux/slices/authSlice";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -23,16 +25,41 @@ const LoginPage: React.FC = () => {
     const newErrors: { email?: string; password?: string } = {};
     if (!email) newErrors.email = "Email is required";
     if (!password) newErrors.password = "Password is required";
-    return newErrors;
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newErrors = validateForm();
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
+    const isValid = validateForm();
+
+    if (isValid) {
+      const data = {
+        email:email,
+        password:password
+      }
+
+      const response  = await login(data)
+      
+      if (response) {
+        
+        console.log(response.data.message,"jiiii");
+        if (response.data.isAdmin) {
+          
+        } else {
+          console.log(response);
+          localStorage.setItem('token',response.data.token)
+          dispatch(setCredentials(response.data.message))
+          navigate('/home')
+        }
+      } 
+      
+
+      
     }
+
+
   };
 
   return (
@@ -58,7 +85,7 @@ const LoginPage: React.FC = () => {
               placeholder="Email"
               value={email}
               onChange={handleInputChange(setEmail)}
-              required
+              // required
             />
             {errors.email && (
               <p className="text-sm text-red-500">{errors.email}</p>
@@ -76,7 +103,7 @@ const LoginPage: React.FC = () => {
               placeholder="Password"
               value={password}
               onChange={handleInputChange(setPassword)}
-              required
+              // required
             />
             {errors.password && (
               <p className="text-sm text-red-500">{errors.password}</p>

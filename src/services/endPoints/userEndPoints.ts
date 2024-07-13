@@ -1,7 +1,8 @@
 const userRoutes={
 
     signup :'/users/signUp',
-    verify : '/users/verify'
+    verify : '/users/verify',
+    login: '/users/login'
 }
 
 export default userRoutes;
