@@ -1,7 +1,7 @@
 import Api from "../services/axios";
 import errorHandler from "./error";
 import userRoutes from "../services/endPoints/userEndPoints";
-import { AxiosError,AxiosResponse  } from "axios";
+import { AxiosError  } from "axios";
 
 interface userFormData {
   name?: string;
@@ -61,3 +61,16 @@ export const login = async (loginData: loginInfo)=> {
     return errorHandler(err);
   }
 };
+
+export const resendOTP = async(name:string,email:string)=>{
+  try {
+
+    const res = await Api.post(userRoutes.resendOtp,{name,email});
+    return res
+    
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}

@@ -1,29 +1,63 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { OTPverify } from "../../api/user";
+import { OTPverify, resendOTP } from "../../api/user";
 import errorHandler from "../../api/error";
 import { toast } from "react-toastify";
 import signupImage from "/Logo/images/ai-generated-8309926_1280.jpg";
 
 function Otp() {
   const [otp, setOtp] = useState("");
+  const [timer, setTimer] = useState(60);
+  const [resendButton, setShowResendButton] = useState(true);
+
+  useEffect(() => {
+    let interval: number | undefined;
+
+    if (timer > 0) {
+      interval = window.setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    } else {
+      setShowResendButton(true);
+    }
+
+    return () => {
+      if (interval !== undefined) {
+        clearInterval(interval);
+      }
+    };
+  }, [timer]);
 
   const navigate = useNavigate();
 
   const location = useLocation();
-  const userData = location.state;
-  const data = { otp, userData };
+  const roleData = location.state;
+  const role = "user";
+  const data = { otp, role, roleData };
+
+  const handleResendOtp = async () => {
+    setShowResendButton(false);
+    setTimer(60);
+
+    let response = await resendOTP(roleData.name, roleData.email);
+    console.log(response, "resendotp data");
+
+    if (response) {
+      toast.success(response.data.message);
+    }
+  };
 
   const submitOtp = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     try {
       e.preventDefault();
-     
+      console.log("otp1111");
+
       let response = await OTPverify(data);
-      console.log(response);
-      
+      console.log(response, "otp page");
+
       if (response) {
         toast.success(response.data.message);
-        navigate('/login')
+        navigate("/login");
       }
 
       // toast.success(response)
@@ -34,7 +68,7 @@ function Otp() {
 
   return (
     <div className="w-full min-h-screen  bg-gray-900 flex justify-center items-center">
-       <img
+      <img
         className="absolute w-full h-full object-cover mix-blend-overlay"
         src={signupImage}
         alt="signupImage"
@@ -63,10 +97,22 @@ function Otp() {
             </button>
           </div>
         </form>
-        <div>
-          <p>timer</p>
+
+        <div className="mt-4 flex justify-center items-center">
+          {resendButton ? (
+            <button
+              className=" text-sm  px-3 py-1 rounded bg-green-500 hover:bg-green-300"
+              onClick={handleResendOtp}
+            >
+              Resend OTP
+            </button>
+          ) : (
+            <p>
+              Resend OTP in: <b>{timer}</b>{" "}
+              <span className="text-sm">seconds </span>
+            </p>
+          )}
         </div>
-        {/* Additional content like timer and resend OTP button */}
       </div>
     </div>
   );

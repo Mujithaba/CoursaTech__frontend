@@ -1,11 +1,14 @@
 import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import UserLayouts from "../Layouts/UserLayouts";
-import Otp from "../Pages/User/Otp";
-import LoginPage from "../Pages/User/LoginPage";
+
 
 const SIgnUpPage = lazy(() => import("../Pages/User/SIgnupPage"));
+const Otp = lazy(()=> import  ("../Pages/User/Otp"));
+const LoginPage = lazy(()=>import ("../Pages/User/LoginPage"));
 const Home = lazy(() => import("../Components/User/Home"));
+
+
 
 function UserRoutes() {
   return (
