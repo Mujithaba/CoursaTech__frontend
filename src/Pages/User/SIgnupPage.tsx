@@ -45,8 +45,8 @@ const SignupPage: React.FC = () => {
 
     if (!password.trim()) {
       newErrors.password = "Password is required";
-    } else if (password.length < 4) {
-      newErrors.password = "Password must contain atleast 8 characters";
+    } else if (password.length < 6) {
+      newErrors.password = "Password must contain atleast 6 characters";
     }
 
     if (password !== confirmPassword) {
@@ -106,14 +106,14 @@ const SignupPage: React.FC = () => {
       />
 
       <div className=" relative w-full max-w-md px-4 py-8 bg-white rounded-lg shadow-lg">
-        <h2 className="text-xl font-bold text-center mb-4">Sign Up</h2>
+        <h2 className="text-xl font-bold text-center mb-4 text-black">Sign Up</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex flex-col">
-            <label htmlFor="name" className="text-sm font-sans font-medium">
+            <label htmlFor="name" className="text-sm font-sans text-black font-medium">
               Name
             </label>
             <input
-              className="border  bg-gray-200 p-2 rounded-md h-9"
+              className="border text-black bg-gray-200 p-2 rounded-md h-9"
               type="text"
               id="name"
               name="name"
@@ -127,11 +127,11 @@ const SignupPage: React.FC = () => {
             )}
           </div>
           <div className="flex flex-col">
-            <label htmlFor="email" className="text-sm font-sans font-medium">
+            <label htmlFor="email" className="text-sm text-black font-sans font-medium">
               Email
             </label>
             <input
-              className="border bg-gray-200 p-2 rounded-md h-9"
+              className="border bg-gray-200 text-black p-2 rounded-md h-9 border-none"
               type="email"
               id="email"
               name="email"
@@ -145,11 +145,11 @@ const SignupPage: React.FC = () => {
             )}
           </div>
           <div className="flex flex-col">
-            <label htmlFor="phone" className="text-sm font-sans font-medium">
+            <label htmlFor="phone" className="text-sm text-black font-sans font-medium">
               Phone
             </label>
             <input
-              className="border bg-gray-200 p-2 rounded-md h-9"
+              className="border bg-gray-200 p-2 text-black rounded-md h-9"
               type="text"
               id="phone"
               name="phone"
@@ -166,12 +166,12 @@ const SignupPage: React.FC = () => {
             <div className="flex flex-col ">
               <label
                 htmlFor="password"
-                className="text-sm font-sans font-medium"
+                className="text-sm font-sans text-black font-medium"
               >
                 Password
               </label>
               <input
-                className="border bg-gray-200 p-2 rounded-md h-9"
+                className="border text-black bg-gray-200 p-2 rounded-md h-9"
                 type="password"
                 id="password"
                 name="password"
@@ -181,18 +181,18 @@ const SignupPage: React.FC = () => {
                 required
               />
               {errors.password && (
-                <p className="text-sm text-red-500">{errors.password}</p>
+                <p className="text-sm  text-red-500">{errors.password}</p>
               )}
             </div>
             <div className="flex flex-col max-md:mt-3">
               <label
                 htmlFor="confirmpass"
-                className="text-sm font-sans font-medium"
+                className="text-sm font-sans text-black font-medium"
               >
                 Confirm Password
               </label>
               <input
-                className="border bg-gray-200 p-2 rounded-md h-9"
+                className="border text-black bg-gray-200 p-2 rounded-md h-9 border-none"
                 type="password"
                 id="confirmpass"
                 name="confirmpass"
@@ -221,7 +221,7 @@ const SignupPage: React.FC = () => {
           </p>
           <hr className="border-red-950" />
           <div className="flex justify-center">
-            <button className="flex items-center bg-white py-2 px-2 border border-gray-200 rounded-md hover:bg-gray-200">
+            <button className="flex text-black items-center bg-white py-2 px-2 border border-gray-200 rounded-md hover:bg-gray-200">
               <FcGoogle className="mr-1" /> Sign up with Google
             </button>
           </div>

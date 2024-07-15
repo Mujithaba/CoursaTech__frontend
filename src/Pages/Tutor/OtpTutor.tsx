@@ -73,7 +73,7 @@ function OtpTutor() {
         alt="signupImage"
       />
       <div className="relative w-full max-w-md px-4 py-8 bg-white rounded-lg shadow-lg shadow-red-400">
-        <h2 className="text-center text-2xl font-bold mb-4">Enter OTP</h2>
+        <h2 className="text-center text-2xl font-bold mb-4 text-black">Enter OTP</h2>
         <form onSubmit={submitOtp}>
           <div className="mb-4 flex justify-center items-center">
             <input
@@ -82,7 +82,7 @@ function OtpTutor() {
               name="otp"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
-              className="mt-1 block w-28 px-3 py-1 border-b-2 border-gray-300 focus:outline-none focus:border-indigo-700 text-center font-bold tracking-wide sm:w-40 lg:w-48"
+              className="mt-1 block w-28 px-3 py-1 border-b-2 bg-white border-gray-300 focus:outline-none focus:border-indigo-700 text-center font-bold tracking-wide sm:w-40 lg:w-48"
               placeholder="OTP"
               required
             />
@@ -90,7 +90,7 @@ function OtpTutor() {
           <div className="mt-4 flex justify-center items-center">
             <button
               type="submit"
-              className="w-36 py-2 px-4 bg-indigo-600 text-white font-bold rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:w-48 lg:w-56"
+              className="w-36 py-2 px-4 bg-indigo-600 text-white font-bold rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:w-48 lg:w-40"
             >
               Submit OTP
             </button>
@@ -100,7 +100,7 @@ function OtpTutor() {
         <div className="mt-4 flex justify-center items-center">
           {resendButton ? (
             <button
-              className=" text-sm  px-3 py-1 rounded bg-green-500 hover:bg-green-300"
+              className=" text-sm  px-3 py-1 text-black rounded bg-green-500 hover:bg-green-400"
               onClick={handleResendOtp}
             >
               Resend OTP

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import signupImage from "/Logo/images/ai-generated-8309926_1280.jpg";
 import { login } from "../../api/user";
 import { setCredentials } from "../../redux/slices/authSlice";
+import { RootState } from "../../redux/store";
+import { adminSetCredentials } from "../../redux/slices/adminSlice";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +16,18 @@ const LoginPage: React.FC = () => {
   );
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  let {userInfo} = useSelector((state:RootState)=>state.auth)
+  let {adminInfo} = useSelector((state:RootState)=>state.adminAuth)
+
+  useEffect(()=>{
+    if (userInfo) {
+      navigate('/home')
+    } 
+    if (adminInfo) {
+      navigate('/admin/dashboard')
+    }
+  })
 
   const handleInputChange =
     (setter: React.Dispatch<React.SetStateAction<string>>) =>
@@ -46,12 +60,13 @@ const LoginPage: React.FC = () => {
         
         console.log(response.data.message,"jiiii");
         if (response.data.isAdmin) {
-          
+          localStorage.setItem('token', response.data.token);
+          dispatch(adminSetCredentials(response.data.message)); // Dispatch admin credentials
+          navigate('/admin/dashboard');
         } else {
-          console.log(response);
-          localStorage.setItem('token',response.data.token)
-          dispatch(setCredentials(response.data.message))
-          navigate('/home')
+          localStorage.setItem('token', response.data.token);
+          dispatch(setCredentials(response.data.message));
+          navigate('/home');
         }
       } 
       
@@ -69,14 +84,14 @@ const LoginPage: React.FC = () => {
       />
 
       <div className="relative w-full max-w-md px-4 py-8 bg-white rounded-lg shadow-lg">
-        <h2 className="text-xl font-bold text-center mb-4">Login</h2>
+        <h2 className="text-xl font-bold text-center mb-4 text-black">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex flex-col">
-            <label htmlFor="email" className="text-sm font-sans font-medium">
+            <label htmlFor="email" className="text-sm text-black font-sans font-medium">
               Email
             </label>
             <input
-              className="border bg-gray-200 p-2 rounded-md h-9"
+              className="border text-black bg-gray-200 p-2 rounded-md h-9"
               type="email"
               id="email"
               name="email"
@@ -90,11 +105,11 @@ const LoginPage: React.FC = () => {
             )}
           </div>
           <div className="flex flex-col">
-            <label htmlFor="password" className="text-sm font-sans font-medium">
+            <label htmlFor="password" className="text-sm font-sans text-black font-medium">
               Password
             </label>
             <input
-              className="border bg-gray-200 p-2 rounded-md h-9"
+              className="border bg-gray-200 p-2 text-black rounded-md h-9"
               type="password"
               id="password"
               name="password"
@@ -122,7 +137,7 @@ const LoginPage: React.FC = () => {
           </p>
           <hr className="border-red-950" />
           <div className="flex justify-center">
-            <button className="flex items-center bg-white py-2 px-2 border border-gray-200 rounded-md hover:bg-gray-200">
+            <button className="flex items-center text-black bg-white py-2 px-2 border border-gray-200 rounded-md hover:bg-gray-200">
               <FcGoogle className="mr-1" /> Login with Google
             </button>
           </div>

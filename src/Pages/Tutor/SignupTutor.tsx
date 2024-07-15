@@ -112,11 +112,11 @@ interface Errors {
           <h2 className="text-xl font-bold text-center mb-4">Tutor Register</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="flex flex-col">
-              <label htmlFor="name" className="text-sm font-sans font-medium">
+              <label htmlFor="name" className="text-sm text-black font-sans font-medium">
                 Name
               </label>
               <input
-                className="border  bg-gray-200 p-2 rounded-md h-9"
+                className="border text-black  bg-gray-200 p-2 rounded-md h-9"
                 type="text"
                 id="name"
                 name="name"
@@ -130,11 +130,11 @@ interface Errors {
               )}
             </div>
             <div className="flex flex-col">
-              <label htmlFor="email" className="text-sm font-sans font-medium">
+              <label htmlFor="email" className="text-sm text-black font-sans font-medium">
                 Email
               </label>
               <input
-                className="border bg-gray-200 p-2 rounded-md h-9"
+                className="border text-black bg-gray-200 p-2 rounded-md h-9"
                 type="email"
                 id="email"
                 name="email"
@@ -148,11 +148,11 @@ interface Errors {
               )}
             </div>
             <div className="flex flex-col">
-              <label htmlFor="phone" className="text-sm font-sans font-medium">
+              <label htmlFor="phone" className="text-sm text-black font-sans font-medium">
                 Phone
               </label>
               <input
-                className="border bg-gray-200 p-2 rounded-md h-9"
+                className="border bg-gray-200 p-2 text-black rounded-md h-9"
                 type="text"
                 id="phone"
                 name="phone"
@@ -169,12 +169,12 @@ interface Errors {
               <div className="flex flex-col ">
                 <label
                   htmlFor="password"
-                  className="text-sm font-sans font-medium"
+                  className="text-sm font-sans text-black font-medium"
                 >
                   Password
                 </label>
                 <input
-                  className="border bg-gray-200 p-2 rounded-md h-9"
+                  className="border bg-gray-200 p-2  text-black rounded-md h-9"
                   type="password"
                   id="password"
                   name="password"
@@ -190,12 +190,12 @@ interface Errors {
               <div className="flex flex-col max-md:mt-3">
                 <label
                   htmlFor="confirmpass"
-                  className="text-sm font-sans font-medium"
+                  className="text-sm font-sans text-black font-medium"
                 >
                   Confirm Password
                 </label>
                 <input
-                  className="border bg-gray-200 p-2 rounded-md h-9"
+                  className="border bg-gray-200 p-2 text-black rounded-md h-9"
                   type="password"
                   id="confirmpass"
                   name="confirmpass"
@@ -218,13 +218,13 @@ interface Errors {
             </button>
             <p className="text-gray-600 mt-3 mb-3 text-center">
               Already have an acoount? 
-              <Link to="/login" className="text-indigo-600 hover:underline">
+              <Link to="/tutor/tutorLogin" className="text-indigo-600 hover:underline">
                 Login
               </Link>
             </p>
             <hr className="border-red-950" />
             <div className="flex justify-center">
-              <button className="flex items-center bg-white py-2 px-2 border border-gray-200 rounded-md hover:bg-gray-200">
+              <button className="flex items-center text-black bg-white py-2 px-2 border border-gray-200 rounded-md hover:bg-gray-200">
                 <FcGoogle className="mr-1" /> Sign up with Google
               </button>
             </div>

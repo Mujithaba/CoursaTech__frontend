@@ -4,27 +4,28 @@ import course from "/Logo/images/otp-backgroud-image.jpg";
 import becomeTutor from "../../../public/Logo/images/pexels-george-milton-6954188.jpg";
 import Tutor from "../../../public/Logo/images/pexels-hasibullah-zhowandai-248954-819530.jpg";
 import { Link } from "react-router-dom";
-import { useDispatch, UseDispatch } from "react-redux";
+import { useDispatch, UseDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logOut } from "../../redux/slices/authSlice";
+import { RootState } from "../../redux/store";
 
 function Home() {
-
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const logoutHandler = async () => {
     try {
-       
-        dispatch(logOut());
-        navigate('/');
+      dispatch(logOut());
+      navigate("/");
     } catch (err) {
-        console.log(err);
+      console.log(err);
     }
-};
+  };
+
+  const { userInfo } = useSelector((state: RootState) => state.auth);
   return (
-    <div className="bg-gray-100">
-      {/* Container hero Section */}
+    <div className="bg-gray-100 ">
+      <div className="  px-6 py-12 flex flex-col md:flex-row rounded items-center bg-green-100">
       <section className="container mx-auto px-6 py-12 flex flex-col md:flex-row items-center">
         <div className="md:w-1/2">
           <h1 className="text-4xl font-bold mb-4">
@@ -39,18 +40,29 @@ function Home() {
             you grow your skills and advance your career.
           </p>
           {/* <a href="#" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-400">Sign Up</a> */}
-          <Link
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-400"
-            to="/register"
-          >
-            Sign Up
-          </Link>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-400" onClick={logoutHandler}>logout</button>
+          {userInfo ? (
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-400"
+              onClick={logoutHandler}
+            >
+              logout
+            </button>
+          ) : (
+            <Link
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-400"
+              to="/register"
+            >
+              Sign Up
+            </Link>
+          )}
         </div>
         <div className="md:w-1/2">
           <img src={s} alt="Learning" className="rounded" />
         </div>
       </section>
+      </div>
+      {/* Container hero Section */}
+      
 
       {/* Popular Courses Section */}
       <section className="container mx-auto px-6 py-12">

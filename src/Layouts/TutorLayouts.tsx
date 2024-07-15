@@ -4,22 +4,14 @@ import TutorSideBar from "../Components/Tutor/TutorSideBar";
 
 function TutorLayouts() {
   return (
-    <div>
-        {/* header  */}
-      <TutorHearder /> 
-
-      <div className=" flex">
-        
-        {/* sideBar */}
-        <div className="w-[16%]">
-          <TutorSideBar />
-        </div>
-
-        {/* outlet */}
-        <div className="w-[84%] mt-[73px]">
+    <div className="flex h-screen bg-gray-100">
+      <TutorSideBar />
+      <div className="flex flex-col flex-1 ml-64">
+        <TutorHearder />
+        <main className="p-6">
+          
           <Outlet />
-        </div>
-
+        </main>
       </div>
     </div>
   );

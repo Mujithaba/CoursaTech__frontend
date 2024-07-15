@@ -73,14 +73,14 @@ export default function LoginTutor() {
       />
 
       <div className="relative w-full max-w-md px-4 py-8 bg-white rounded-lg shadow-lg">
-        <h2 className="text-xl font-bold text-center mb-4">Login</h2>
+        <h2 className="text-xl font-bold text-center mb-4 text-black">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex flex-col">
-            <label htmlFor="email" className="text-sm font-sans font-medium">
+            <label htmlFor="email" className="text-sm text-black font-sans font-medium">
               Email
             </label>
             <input
-              className="border bg-gray-200 p-2 rounded-md h-9"
+              className="border bg-gray-200 p-2 text-black rounded-md h-9"
               type="email"
               id="email"
               name="email"
@@ -94,11 +94,11 @@ export default function LoginTutor() {
             )}
           </div>
           <div className="flex flex-col">
-            <label htmlFor="password" className="text-sm font-sans font-medium">
+            <label htmlFor="password" className="text-sm text-black font-sans font-medium">
               Password
             </label>
             <input
-              className="border bg-gray-200 p-2 rounded-md h-9"
+              className="border bg-gray-200 p-2 text-black rounded-md h-9"
               type="password"
               id="password"
               name="password"
@@ -120,13 +120,13 @@ export default function LoginTutor() {
           </button>
           <p className="text-gray-600 mt-3 mb-3 text-center">
             Don't have an account?{" "}
-            <Link  to="/register" className="text-indigo-600 hover:underline">
+            <Link  to="/tutor/register" className="text-indigo-600 hover:underline">
               Sign up
             </Link>
           </p>
           <hr className="border-red-950" />
           <div className="flex justify-center">
-            <button className="flex items-center bg-white py-2 px-2 border border-gray-200 rounded-md hover:bg-gray-200">
+            <button className="flex items-center text-black bg-white py-2 px-2 border border-gray-200 rounded-md hover:bg-gray-200">
               <FcGoogle className="mr-1" /> Login with Google
             </button>
           </div>
