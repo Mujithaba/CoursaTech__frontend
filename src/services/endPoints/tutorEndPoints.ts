@@ -1,7 +1,8 @@
 const tutorRoutes ={
     signup :'/tutors/register',
     verify : '/tutors/verify',
-    login: '/tutors/login',
+    login  : '/tutors/login',
+    googleUse : '/tutors/googleTutorIN',
     resendOtp: '/tutors/resendOTP'
 }
 

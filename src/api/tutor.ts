@@ -76,4 +76,18 @@ export const login = async (loginData: loginInfo)=> {
       return errorHandler(err);
     }
   }
+
+  // google sign up or login api
+export const googleIN = async (data:{})=>{
+  try {
+
+    const res = await Api.post(tutorRoutes.googleUse,data);
+    return res
+    
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}
   

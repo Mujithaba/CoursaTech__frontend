@@ -9,8 +9,8 @@ const TutorDashboard = lazy(() => import("../Components/Tutor/TutorDashboard"));
 
 function TutorRoutes() {
   return (
-    <div>
-      <Suspense fallback={<div>Loading...</div>}>
+    <div >
+      <Suspense  fallback={<div >Loading...</div>}>
         <Routes>
           <Route path="/register" element={<SignupTutor />} />
           <Route path="/tutorOtp" element={<OtpTutor />} />

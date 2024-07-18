@@ -1,15 +1,17 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate,Link } from 'react-router-dom';
 import { setCredentials } from '../../redux/slices/tutorSlice';
-import { login } from '../../api/tutor';
+import { googleIN, login } from '../../api/tutor';
 import { FcGoogle } from "react-icons/fc";
 import loginbg from "/Logo/images/tutorSignup-bg.jpg"
+import axios from 'axios';
+import { useGoogleLogin } from '@react-oauth/google';
 
 
 export default function LoginTutor() {
 
-
+    const  [tutor,setTutor] = useState<{access_token:string} | null>(null)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState<{ email?: string; password?: string }>(
@@ -59,9 +61,55 @@ export default function LoginTutor() {
         } 
         
       }
-  
-  
     };
+
+
+    
+       // google login
+  const handleGoogleLogin =()=>{
+    loginWithGoogle()
+  }
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: (response) => setTutor(response),  
+    onError: (error) => console.log("login failed", error),
+  });
+
+  useEffect(()=>{
+    const fetchingGRes = async ()=>{
+      try {
+        
+        if (tutor) {
+          const res = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tutor.access_token}`);
+           console.log(res,"res data");
+    
+          const data ={
+            name:res.data.name,
+            email:res.data.email,
+            phone:"empty",
+            password:res.data.id,
+            isGoogled : true
+          }
+
+          const responseGoogle = await googleIN(data)
+
+          console.log(responseGoogle,"responseGoogle");
+          
+          if (responseGoogle) {
+            localStorage.setItem("token", responseGoogle.data.token);
+              dispatch(setCredentials(responseGoogle.data.message));
+              navigate("/tutor/tuturDashboard");
+            }
+          }
+            
+
+      } catch (error) {
+        console.log("Error fetching tutor info:", error);
+      }
+    }
+   
+    fetchingGRes()
+
+  },[tutor,dispatch,navigate])
   
 
   return (
@@ -126,7 +174,8 @@ export default function LoginTutor() {
           </p>
           <hr className="border-red-950" />
           <div className="flex justify-center">
-            <button className="flex items-center text-black bg-white py-2 px-2 border border-gray-200 rounded-md hover:bg-gray-200">
+            <button className="flex items-center text-black bg-white py-2 px-2 border border-gray-200 rounded-md hover:bg-gray-200"
+            onClick={handleGoogleLogin}>
               <FcGoogle className="mr-1" /> Login with Google
             </button>
           </div>

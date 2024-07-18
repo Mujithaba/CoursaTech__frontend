@@ -3,12 +3,15 @@ import { FcGoogle } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import signupImage from "/Logo/images/ai-generated-8309926_1280.jpg";
-import { login } from "../../api/user";
+import { googleIN, login } from "../../api/user";
 import { setCredentials } from "../../redux/slices/authSlice";
 import { RootState } from "../../redux/store";
 import { adminSetCredentials } from "../../redux/slices/adminSlice";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 const LoginPage: React.FC = () => {
+  const [user, setUser] = useState<{ access_token: string } | null>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
@@ -17,17 +20,17 @@ const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  let {userInfo} = useSelector((state:RootState)=>state.auth)
-  let {adminInfo} = useSelector((state:RootState)=>state.adminAuth)
+  let { userInfo } = useSelector((state: RootState) => state.auth);
+  let { adminInfo } = useSelector((state: RootState) => state.adminAuth);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (userInfo) {
-      navigate('/home')
-    } 
-    if (adminInfo) {
-      navigate('/admin/dashboard')
+      navigate("/home");
     }
-  })
+    if (adminInfo) {
+      navigate("/admin/dashboard");
+    }
+  },[adminInfo,userInfo,navigate]);
 
   const handleInputChange =
     (setter: React.Dispatch<React.SetStateAction<string>>) =>
@@ -41,7 +44,7 @@ const LoginPage: React.FC = () => {
     if (!password) newErrors.password = "Password is required";
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -50,30 +53,77 @@ const LoginPage: React.FC = () => {
 
     if (isValid) {
       const data = {
-        email:email,
-        password:password
-      }
+        email: email,
+        password: password,
+      };
 
-      const response  = await login(data)
-      
+      const response = await login(data);
+
       if (response) {
-        
-        console.log(response.data.message,"jiiii");
+        console.log(response.data.message, "jiiii");
         if (response.data.isAdmin) {
-          localStorage.setItem('token', response.data.token);
+          localStorage.setItem("token", response.data.token);
           dispatch(adminSetCredentials(response.data.message)); // Dispatch admin credentials
-          navigate('/admin/dashboard');
+          navigate("/admin/dashboard");
         } else {
-          localStorage.setItem('token', response.data.token);
+          localStorage.setItem("token", response.data.token);
           dispatch(setCredentials(response.data.message));
-          navigate('/home');
+          navigate("/home");
         }
-      } 
-      
+      }
     }
-
-
   };
+
+  // google login
+  const handleGoogleLogin =()=>{
+    loginWithGoogle()
+  }
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: (response) => setUser(response),  
+    onError: (error) => console.log("login failed", error),
+  });
+
+  useEffect(()=>{
+    const fetchingGRes = async ()=>{
+      try {
+        
+        if (user) {
+          const res = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`);
+           console.log(res,"res data");
+    
+          const data ={
+            name:res.data.name,
+            email:res.data.email,
+            phone:"empty",
+            password:res.data.id,
+            isGoogled : true
+          }
+
+          const responseGoogle = await googleIN(data)
+
+          console.log(responseGoogle,"responseGoogle");
+          
+          if (responseGoogle) {
+            localStorage.setItem("token", responseGoogle.data.token);
+            if (responseGoogle.data.isAdmin) {
+              dispatch(adminSetCredentials(responseGoogle.data.message)); // Dispatch admin credentials
+              navigate("/admin/dashboard");
+            } else {
+              dispatch(setCredentials(responseGoogle.data.message));
+              navigate("/home");
+            }
+          }
+            
+        }
+
+      } catch (error) {
+        console.log("Error fetching user info:", error);
+      }
+    }
+   
+    fetchingGRes()
+
+  },[user,dispatch,navigate])
 
   return (
     <div className="relative w-full min-h-screen bg-gray-900 flex justify-center items-center">
@@ -87,7 +137,10 @@ const LoginPage: React.FC = () => {
         <h2 className="text-xl font-bold text-center mb-4 text-black">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex flex-col">
-            <label htmlFor="email" className="text-sm text-black font-sans font-medium">
+            <label
+              htmlFor="email"
+              className="text-sm text-black font-sans font-medium"
+            >
               Email
             </label>
             <input
@@ -105,7 +158,10 @@ const LoginPage: React.FC = () => {
             )}
           </div>
           <div className="flex flex-col">
-            <label htmlFor="password" className="text-sm font-sans text-black font-medium">
+            <label
+              htmlFor="password"
+              className="text-sm font-sans text-black font-medium"
+            >
               Password
             </label>
             <input
@@ -131,13 +187,16 @@ const LoginPage: React.FC = () => {
           </button>
           <p className="text-gray-600 mt-3 mb-3 text-center">
             Don't have an account?{" "}
-            <Link  to="/register" className="text-indigo-600 hover:underline">
+            <Link to="/register" className="text-indigo-600 hover:underline">
               Sign up
             </Link>
           </p>
           <hr className="border-red-950" />
           <div className="flex justify-center">
-            <button className="flex items-center text-black bg-white py-2 px-2 border border-gray-200 rounded-md hover:bg-gray-200">
+            <button
+              className="flex items-center text-black bg-white py-2 px-2 border border-gray-200 rounded-md hover:bg-gray-200"
+              onClick={handleGoogleLogin}
+            >
               <FcGoogle className="mr-1" /> Login with Google
             </button>
           </div>

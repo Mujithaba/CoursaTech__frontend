@@ -1,10 +1,14 @@
-import React, { useState, FormEvent, ChangeEvent } from "react";
+import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { useNavigate,Link } from "react-router-dom";
 import signupImage from "/Logo/images/tutorSignup-bg.jpg"
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
 import validator from "validator";
-import { sign_up } from "../../api/tutor";
+import { googleIN, sign_up } from "../../api/tutor";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import { setCredentials } from "../../redux/slices/tutorSlice";
+import { useDispatch } from "react-redux";
 
 interface Errors {
     name?: string;
@@ -16,6 +20,7 @@ interface Errors {
  
  
  function SignupTutor() {
+    const [tutor, setTutor] = useState<{access_token:string} | null> (null);
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [phone, setPhone] = useState<string>("");
@@ -25,6 +30,7 @@ interface Errors {
     const [errors, setErrors] = useState<Errors>({});
   
     const navigate = useNavigate();
+    const dispatch = useDispatch()
   
     //form validation
     const validateForm = () => {
@@ -98,6 +104,52 @@ interface Errors {
         setter(e.target.value);
       };
 
+
+       // google login
+  const handleGoogleLogin =()=>{
+    loginWithGoogle()
+  }
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: (response) => setTutor(response),  
+    onError: (error) => console.log("login failed", error),
+  });
+
+  useEffect(()=>{
+    const fetchingGRes = async ()=>{
+      try {
+        
+        if (tutor) {
+          const res = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tutor.access_token}`);
+           console.log(res,"res data");
+    
+          const data ={
+            name:res.data.name,
+            email:res.data.email,
+            phone:"empty",
+            password:res.data.id,
+            isGoogled : true
+          }
+
+          const responseGoogle = await googleIN(data)
+
+          console.log(responseGoogle,"responseGoogle");
+          
+          if (responseGoogle) {
+            localStorage.setItem("token", responseGoogle.data.token);
+              dispatch(setCredentials(responseGoogle.data.message));
+              navigate("/tutor/tuturDashboard");
+            }
+          }
+            
+
+      } catch (error) {
+        console.log("Error fetching tutor info:", error);
+      }
+    }
+   
+    fetchingGRes()
+
+  },[tutor,dispatch,navigate])
 
   
     return (
@@ -224,7 +276,8 @@ interface Errors {
             </p>
             <hr className="border-red-950" />
             <div className="flex justify-center">
-              <button className="flex items-center text-black bg-white py-2 px-2 border border-gray-200 rounded-md hover:bg-gray-200">
+              <button className="flex items-center text-black bg-white py-2 px-2 border border-gray-200 rounded-md hover:bg-gray-200"
+              onClick={handleGoogleLogin}>
                 <FcGoogle className="mr-1" /> Sign up with Google
               </button>
             </div>

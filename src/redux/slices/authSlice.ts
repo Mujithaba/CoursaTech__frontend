@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice,PayloadAction } from "@reduxjs/toolkit";
 
 
 const getStoredUserInfo = () =>{
@@ -21,7 +21,7 @@ const authSlice = createSlice({
     name:"auth",
     initialState,
     reducers:{
-        setCredentials:(state,action)=>{
+        setCredentials:(state,action:PayloadAction <any>)=>{
             state.userInfo=action.payload,
             localStorage.setItem('userInfo',JSON.stringify(action.payload));
         },
