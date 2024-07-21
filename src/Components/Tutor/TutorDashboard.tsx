@@ -1,7 +1,5 @@
 import React from 'react'
-
 import DashboardStats from './DashboardStats';
-import DashboardChart from './DashBoardChart';
 
 const TutorDashboard: React.FC = () => {
   return (

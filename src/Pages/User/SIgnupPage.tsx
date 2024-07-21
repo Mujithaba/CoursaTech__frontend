@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import signupImage from "/Logo/images/ai-generated-8309926_1280.jpg";
 import { FcGoogle } from "react-icons/fc";
 import { googleIN, signup } from "../../api/user";
@@ -20,7 +20,7 @@ interface Errors {
 }
 
 const SignupPage: React.FC = () => {
-  const [ user, setUser] = useState<{access_token:string } | null>(null);
+  const [user, setUser] = useState<{ access_token: string } | null>(null);
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
@@ -30,7 +30,7 @@ const SignupPage: React.FC = () => {
   const [errors, setErrors] = useState<Errors>({});
 
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   //form validation
   const validateForm = () => {
@@ -104,36 +104,36 @@ const SignupPage: React.FC = () => {
       setter(e.target.value);
     };
 
-
-    // google login
-  const handleGoogleLogin =()=>{
-    loginWithGoogle()
-  }
+  // google login
+  const handleGoogleLogin = () => {
+    loginWithGoogle();
+  };
   const loginWithGoogle = useGoogleLogin({
-    onSuccess: (response) => setUser(response),  
+    onSuccess: (response) => setUser(response),
     onError: (error) => console.log("login failed", error),
   });
 
-  useEffect(()=>{
-    const fetchingGRes = async ()=>{
+  useEffect(() => {
+    const fetchingGRes = async () => {
       try {
-        
         if (user) {
-          const res = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`);
-           console.log(res,"res data");
-    
-          const data ={
-            name:res.data.name,
-            email:res.data.email,
-            phone:"empty",
-            password:res.data.id,
-            isGoogled : true
-          }
+          const res = await axios.get(
+            `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`
+          );
+          console.log(res, "res data");
 
-          const responseGoogle = await googleIN(data)
+          const data = {
+            name: res.data.name,
+            email: res.data.email,
+            phone: "empty",
+            password: res.data.id,
+            isGoogled: true,
+          };
 
-          console.log(responseGoogle,"responseGoogle");
-          
+          const responseGoogle = await googleIN(data);
+
+          console.log(responseGoogle, "responseGoogle");
+
           if (responseGoogle) {
             localStorage.setItem("token", responseGoogle.data.token);
             if (responseGoogle.data.isAdmin) {
@@ -144,18 +144,14 @@ const SignupPage: React.FC = () => {
               navigate("/home");
             }
           }
-            
         }
-
       } catch (error) {
         console.log("Error fetching user info:", error);
       }
-    }
-   
-    fetchingGRes()
+    };
 
-  },[user,dispatch,navigate])
-
+    fetchingGRes();
+  }, [user, dispatch, navigate]);
 
   return (
     <div className="relative w-full  min-h-screen bg-gray-900 flex justify-center items-center ">
@@ -166,10 +162,15 @@ const SignupPage: React.FC = () => {
       />
 
       <div className=" relative w-full max-w-md px-4 py-8 bg-white rounded-lg shadow-lg">
-        <h2 className="text-xl font-bold text-center mb-4 text-black">Sign Up</h2>
+        <h2 className="text-xl font-bold text-center mb-4 text-black">
+          Sign Up
+        </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex flex-col">
-            <label htmlFor="name" className="text-sm font-sans text-black font-medium">
+            <label
+              htmlFor="name"
+              className="text-sm font-sans text-black font-medium"
+            >
               Name
             </label>
             <input
@@ -187,7 +188,10 @@ const SignupPage: React.FC = () => {
             )}
           </div>
           <div className="flex flex-col">
-            <label htmlFor="email" className="text-sm text-black font-sans font-medium">
+            <label
+              htmlFor="email"
+              className="text-sm text-black font-sans font-medium"
+            >
               Email
             </label>
             <input
@@ -205,7 +209,10 @@ const SignupPage: React.FC = () => {
             )}
           </div>
           <div className="flex flex-col">
-            <label htmlFor="phone" className="text-sm text-black font-sans font-medium">
+            <label
+              htmlFor="phone"
+              className="text-sm text-black font-sans font-medium"
+            >
               Phone
             </label>
             <input
@@ -274,15 +281,17 @@ const SignupPage: React.FC = () => {
             Sign up
           </button>
           <p className="text-gray-600 mt-3 mb-3 text-center">
-            Already have an acoount? 
+            Already have an acoount?
             <Link to="/login" className="text-indigo-600 hover:underline">
               Login
             </Link>
           </p>
           <hr className="border-red-950" />
           <div className="flex justify-center">
-            <button className="flex text-black items-center bg-white py-2 px-2 border border-gray-200 rounded-md hover:bg-gray-200"
-             onClick={handleGoogleLogin}>
+            <button
+              className="flex text-black items-center bg-white py-2 px-2 border border-gray-200 rounded-md hover:bg-gray-200"
+              onClick={handleGoogleLogin}
+            >
               <FcGoogle className="mr-1" /> Sign up with Google
             </button>
           </div>

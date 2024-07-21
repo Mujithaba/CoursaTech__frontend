@@ -30,7 +30,7 @@ const LoginPage: React.FC = () => {
     if (adminInfo) {
       navigate("/admin/dashboard");
     }
-  },[adminInfo,userInfo,navigate]);
+  }, [adminInfo, userInfo, navigate]);
 
   const handleInputChange =
     (setter: React.Dispatch<React.SetStateAction<string>>) =>
@@ -75,34 +75,35 @@ const LoginPage: React.FC = () => {
   };
 
   // google login
-  const handleGoogleLogin =()=>{
-    loginWithGoogle()
-  }
+  const handleGoogleLogin = () => {
+    loginWithGoogle();
+  };
   const loginWithGoogle = useGoogleLogin({
-    onSuccess: (response) => setUser(response),  
+    onSuccess: (response) => setUser(response),
     onError: (error) => console.log("login failed", error),
   });
 
-  useEffect(()=>{
-    const fetchingGRes = async ()=>{
+  useEffect(() => {
+    const fetchingGRes = async () => {
       try {
-        
         if (user) {
-          const res = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`);
-           console.log(res,"res data");
-    
-          const data ={
-            name:res.data.name,
-            email:res.data.email,
-            phone:"empty",
-            password:res.data.id,
-            isGoogled : true
-          }
+          const res = await axios.get(
+            `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`
+          );
+          console.log(res, "res data");
 
-          const responseGoogle = await googleIN(data)
+          const data = {
+            name: res.data.name,
+            email: res.data.email,
+            phone: "empty",
+            password: res.data.id,
+            isGoogled: true,
+          };
 
-          console.log(responseGoogle,"responseGoogle");
-          
+          const responseGoogle = await googleIN(data);
+
+          console.log(responseGoogle, "responseGoogle");
+
           if (responseGoogle) {
             localStorage.setItem("token", responseGoogle.data.token);
             if (responseGoogle.data.isAdmin) {
@@ -113,17 +114,14 @@ const LoginPage: React.FC = () => {
               navigate("/home");
             }
           }
-            
         }
-
       } catch (error) {
         console.log("Error fetching user info:", error);
       }
-    }
-   
-    fetchingGRes()
+    };
 
-  },[user,dispatch,navigate])
+    fetchingGRes();
+  }, [user, dispatch, navigate]);
 
   return (
     <div className="relative w-full min-h-screen bg-gray-900 flex justify-center items-center">

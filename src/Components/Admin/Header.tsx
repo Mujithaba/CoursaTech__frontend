@@ -2,8 +2,8 @@
 
 function Hearder() {
     return (
-      <header className="bg-white text-black flex justify-between items-center p-4">
-      <div className="text-xl font-bold">Admin Dashboard</div>
+      <header className="bg-gray-800 text-black flex justify-between items-center p-4">
+      <div className="text-xl font-bold"></div>
       <div className="flex items-center">
         <input 
           type="text" 
