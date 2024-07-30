@@ -1,11 +1,10 @@
 import { useState, FormEvent, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { OTPverify, resendOTP } from "../../api/user";
-import errorHandler from "../../api/error";
 import { toast } from "react-toastify";
-import signupImage from "/Logo/images/ai-generated-8309926_1280.jpg";
+import { forgotOTPverify, resendOTP } from "../../api/tutor";
+import errorHandler from "../../api/error";
 
-function Otp() {
+export default function ForgotPassOTP() {
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(30);
   const [resendButton, setShowResendButton] = useState(false);
@@ -32,7 +31,10 @@ function Otp() {
 
   const location = useLocation();
   const roleData = location.state;
-  const role = "user";
+  // console.log(roleData);
+
+  const role = "Tutor";
+
   const data = { otp, role, roleData };
 
   const handleResendOtp = async () => {
@@ -50,14 +52,22 @@ function Otp() {
   const submitOtp = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     try {
       e.preventDefault();
-      console.log("otp1111");
+      console.log(data,"otp1111");
 
-      let response = await OTPverify(data);
+      let response = await forgotOTPverify(data);
       console.log(response, "otp page");
 
       if (response) {
-        toast.success(response.data.message);
-        navigate("/login");
+        if (response.status === 200) {
+          toast.success(response.data.message); // Show success message
+          navigate("/tutor/resetPassword", {
+            state: {
+              email: response.data.data.email,
+            },
+          });
+        } else if (response.status === 400) {
+          toast.error(response.data.message); // Show error message
+        }
       }
 
       // toast.success(response)
@@ -68,13 +78,10 @@ function Otp() {
 
   return (
     <div className="w-full min-h-screen  bg-gray-900 flex justify-center items-center">
-      <img
-        className="absolute w-full h-full object-cover mix-blend-overlay"
-        src={signupImage}
-        alt="signupImage"
-      />
       <div className="relative w-full max-w-md px-4 py-8 bg-white rounded-lg shadow-lg shadow-red-400">
-        <h2 className="text-center text-black text-2xl font-bold mb-4">Enter OTP</h2>
+        <h2 className="text-center text-black text-2xl font-bold mb-4">
+          Enter OTP
+        </h2>
         <form onSubmit={submitOtp}>
           <div className="mb-4 flex justify-center items-center">
             <input
@@ -83,7 +90,7 @@ function Otp() {
               name="otp"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
-              className="mt-1 block  w-28 px-3 py-1 border-b-2 bg-white border-gray-300 focus:outline-none focus:border-indigo-700 text-center font-bold tracking-wide sm:w-40 lg:w-48"
+              className="mt-1 block  w-28 px-3 py-1 border-b-2 text-black bg-white border-gray-300 focus:outline-none focus:border-indigo-700 text-center font-bold tracking-wide sm:w-40 lg:w-48"
               placeholder="OTP"
               required
             />
@@ -117,5 +124,3 @@ function Otp() {
     </div>
   );
 }
-
-export default Otp;

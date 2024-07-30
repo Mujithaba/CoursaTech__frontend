@@ -17,7 +17,7 @@ const tutorSlice = createSlice({
         },
         logOut:(state)=>{
             state.tutorInfo=null,
-            localStorage.removeItem('userInfo')
+            localStorage.removeItem('tutorInfo')
         }
     }
 

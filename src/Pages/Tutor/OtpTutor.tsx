@@ -7,8 +7,8 @@ import otpbg from "/Logo/images/tutorSignup-bg.jpg";
 
 function OtpTutor() {
   const [otp, setOtp] = useState("");
-  const [timer, setTimer] = useState(60);
-  const [resendButton, setShowResendButton] = useState(true);
+  const [timer, setTimer] = useState(30);
+  const [resendButton, setShowResendButton] = useState(false);
 
   useEffect(() => {
     let interval: number | undefined;
@@ -37,7 +37,7 @@ function OtpTutor() {
 
   const handleResendOtp = async () => {
     setShowResendButton(false);
-    setTimer(60);
+    setTimer(30);
 
     let response = await resendOTP(roleData.name, roleData.email);
     console.log(response, "resendotp data");
@@ -82,7 +82,7 @@ function OtpTutor() {
               name="otp"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
-              className="mt-1 block w-28 px-3 py-1 border-b-2 bg-white border-gray-300 focus:outline-none focus:border-indigo-700 text-center font-bold tracking-wide sm:w-40 lg:w-48"
+              className="mt-1 block w-28 px-3 py-1 border-b-2 text-black bg-white border-gray-300 focus:outline-none focus:border-indigo-700 text-center font-bold tracking-wide sm:w-40 lg:w-48"
               placeholder="OTP"
               required
             />
@@ -106,9 +106,9 @@ function OtpTutor() {
               Resend OTP
             </button>
           ) : (
-            <p>
+            <p className="text-black">
               Resend OTP in: <b>{timer}</b>{" "}
-              <span className="text-sm">seconds </span>
+              <span className="text-sm  ">seconds </span>
             </p>
           )}
         </div>

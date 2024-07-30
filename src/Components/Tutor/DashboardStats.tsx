@@ -9,7 +9,7 @@ interface StatsCardProps {
 
 const StatsCard: React.FC<StatsCardProps> = ({ title, value, icon }) => {
   return (
-    <div className="bg-white p-4 rounded shadow-md flex items-center">
+    <div className="bg-white mr-3 p-4 rounded shadow-md flex items-center">
       <div className="mr-4">
         {icon}
       </div>

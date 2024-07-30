@@ -183,6 +183,7 @@ const LoginPage: React.FC = () => {
           >
             Login
           </button>
+          <Link className=" mt-5 text-gray-400 hover:text-gray-800" to='/userForgetPassword'>Forgot Password</Link>
           <p className="text-gray-600 mt-3 mb-3 text-center">
             Don't have an account?{" "}
             <Link to="/register" className="text-indigo-600 hover:underline">

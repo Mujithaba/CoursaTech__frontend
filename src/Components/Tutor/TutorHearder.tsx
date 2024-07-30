@@ -2,7 +2,7 @@ import React from 'react'
 
  function TutorHearder() {
   return (
-    <header className="bg-gray-800 text-white flex justify-between items-center p-4">
+    <header className="bg-gray-600 text-white flex justify-between items-center p-4">
     <div className="text-xl  font-bold"></div>
     <div className="flex items-center">
       <input 

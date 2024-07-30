@@ -162,6 +162,8 @@ export default function LoginTutor() {
           >
             Login
           </button>
+          <Link className=" mt-5 text-gray-400 hover:text-gray-800" to='/tutor/tutorForgetPassword'>Forgot Password</Link>
+
           <p className="text-gray-600 mt-3 mb-3 text-center">
             Don't have an account?{" "}
             <Link

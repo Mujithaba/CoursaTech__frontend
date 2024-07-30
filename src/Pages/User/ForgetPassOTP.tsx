@@ -1,11 +1,11 @@
 import { useState, FormEvent, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { OTPverify, resendOTP } from "../../api/user";
+import { forgotOTPverify, resendOTP } from "../../api/user";
 import errorHandler from "../../api/error";
 import { toast } from "react-toastify";
 import signupImage from "/Logo/images/ai-generated-8309926_1280.jpg";
 
-function Otp() {
+function ForgetPassOTP() {
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(30);
   const [resendButton, setShowResendButton] = useState(false);
@@ -32,7 +32,10 @@ function Otp() {
 
   const location = useLocation();
   const roleData = location.state;
+  // console.log(roleData);
+  
   const role = "user";
+
   const data = { otp, role, roleData };
 
   const handleResendOtp = async () => {
@@ -52,12 +55,21 @@ function Otp() {
       e.preventDefault();
       console.log("otp1111");
 
-      let response = await OTPverify(data);
+      let response = await forgotOTPverify(data);
       console.log(response, "otp page");
-
+      
       if (response) {
-        toast.success(response.data.message);
-        navigate("/login");
+        if (response.status === 200) {
+          
+          toast.success(response.data.message);  // Show success message
+          navigate("/resetPassword", {
+            state: {
+              email: response.data.data.email
+            }
+          });
+        } else if (response.status === 400) {
+          toast.error(response.data.message);  // Show error message
+        }
       }
 
       // toast.success(response)
@@ -83,7 +95,7 @@ function Otp() {
               name="otp"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
-              className="mt-1 block  w-28 px-3 py-1 border-b-2 bg-white border-gray-300 focus:outline-none focus:border-indigo-700 text-center font-bold tracking-wide sm:w-40 lg:w-48"
+              className="mt-1 block  w-28 px-3 py-1 border-b-2 text-black bg-white border-gray-300 focus:outline-none focus:border-indigo-700 text-center font-bold tracking-wide sm:w-40 lg:w-48"
               placeholder="OTP"
               required
             />
@@ -118,4 +130,4 @@ function Otp() {
   );
 }
 
-export default Otp;
+export default ForgetPassOTP;

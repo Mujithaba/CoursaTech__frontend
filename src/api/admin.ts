@@ -1,19 +1,20 @@
 import Api from "../services/axios";
 import adminRoutes from "../services/endPoints/adminEndPoints";
 import errorHandler from "./error";
-import { AxiosError } from "axios";
+// import { AxiosError } from "axios";
 import axios from "axios";
+import {TutorsResponse,UsersResponse} from '../services/types'
 
-interface User {
-  _id: string;
-  name: string;
-  email: string;
-  isBlocked: boolean;
-}
 
-export const getUsers = async (): Promise<User[]> => {
+
+export const getUsers = async (
+  page: number,
+  limit: number
+): Promise<UsersResponse> => {
   try {
-    const res = await Api.get(adminRoutes.allUsers);
+    const res = await Api.get(adminRoutes.allUsers, {
+      params: { page, limit },
+    });
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -21,7 +22,7 @@ export const getUsers = async (): Promise<User[]> => {
     } else {
       console.error("Unexpected error:", error);
     }
-    return []; // Return an empty array on error
+    return { users: [], totalUsers: 0 };
   }
 };
 
@@ -49,39 +50,44 @@ export const userUnblock = async (userID: string) => {
 };
 
 // getting all tutors
-export const getTutors = async (): Promise<User[]> => {
-    try {
-      const res = await Api.get(adminRoutes.allTutors);
-      return res.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        errorHandler(error);
-      } else {
-        console.error("Unexpected error:", error);
-      }
-      return []; // Return an empty array on error
+export const getTutors = async (page: number,
+  limit: number
+): Promise<TutorsResponse> => {
+  try {
+    const res = await Api.get(adminRoutes.allTutors, {
+      params: { page, limit },
+    });
+    return res.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      errorHandler(error);
+    } else {
+      console.error("Unexpected error:", error);
     }
-  };
+    return { tutors: [], totalTutors: 0 };
+  }
+
+};
 
 //   tutor block
-  export const tutorBlock = async (tutorID: string) => {
-    try {
-      const res = await Api.patch(adminRoutes.blockTutor, { tutorID });
-      return res;
-    } catch (error) {
-      console.log("error:", error);
-      const err: Error = error as Error;
-      return errorHandler(err);
-    }
-  };
+export const tutorBlock = async (tutorID: string) => {
+  try {
+    const res = await Api.patch(adminRoutes.blockTutor, { tutorID });
+    return res;
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};
 //   tutor unblock
 export const tutorUnblock = async (tutorID: string) => {
-    try {
-      const res = await Api.patch(adminRoutes.unblockTutor, { tutorID });
-      return res;
-    } catch (error) {
-      console.log("error:", error);
-      const err: Error = error as Error;
-      return errorHandler(err);
-    }
-  };
+  try {
+    const res = await Api.patch(adminRoutes.unblockTutor, { tutorID });
+    return res;
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};

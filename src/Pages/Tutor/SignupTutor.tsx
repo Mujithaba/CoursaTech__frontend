@@ -51,8 +51,8 @@ function SignupTutor() {
 
     if (!password.trim()) {
       newErrors.password = "Password is required";
-    } else if (password.length < 4) {
-      newErrors.password = "Password must contain atleast 8 characters";
+    } else if (password.length < 6) {
+      newErrors.password = "Password must contain atleast 6 characters";
     }
 
     if (password !== confirmPassword) {
