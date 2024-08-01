@@ -3,9 +3,7 @@ import adminRoutes from "../services/endPoints/adminEndPoints";
 import errorHandler from "./error";
 // import { AxiosError } from "axios";
 import axios from "axios";
-import {TutorsResponse,UsersResponse} from '../services/types'
-
-
+import { TutorsResponse, UsersResponse ,CategoryResponse} from "../services/types";
 
 export const getUsers = async (
   page: number,
@@ -50,7 +48,8 @@ export const userUnblock = async (userID: string) => {
 };
 
 // getting all tutors
-export const getTutors = async (page: number,
+export const getTutors = async (
+  page: number,
   limit: number
 ): Promise<TutorsResponse> => {
   try {
@@ -66,7 +65,6 @@ export const getTutors = async (page: number,
     }
     return { tutors: [], totalTutors: 0 };
   }
-
 };
 
 //   tutor block
@@ -91,3 +89,70 @@ export const tutorUnblock = async (tutorID: string) => {
     return errorHandler(err);
   }
 };
+
+// add category 
+export const addCategory = async (category:string)=>{
+  try {
+    console.log(category,"kkk");
+    
+    const res = await Api.post(adminRoutes.categoryAdd,{category})
+    return res
+    
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}
+
+export const getCategory = async ( page: number,limit: number):Promise<CategoryResponse>=>{
+  try {
+
+    const res = await Api.get(adminRoutes.getCategories,{
+      params:{page,limit}
+    })
+    return res.data
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      errorHandler(error);
+    } else {
+      console.error("Unexpected error:", error);
+    }
+    return { categories: [], totalCategory: 0 };
+  }
+}
+
+
+//   category unlist
+export const categoryUnlist = async (categoryID: string) => {
+  try {
+    const res = await Api.patch(adminRoutes.categoryUnlist, { categoryID });
+    return res;
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};
+//   category list
+export const categoryList = async (categoryID: string) => {
+  try {
+    const res = await Api.patch(adminRoutes.categorylist, { categoryID });
+    return res;
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};
+// category edit
+export const editedCategoryData = async(newCategory:string,categoryID:string)=>{
+  try {
+    const res = await Api.patch(adminRoutes.categoryEdit,{newCategory,categoryID});
+    return res
+  } catch (error) {
+    console.log("error",error);
+    const err:Error = error as Error;
+    return errorHandler(err)
+  }
+}

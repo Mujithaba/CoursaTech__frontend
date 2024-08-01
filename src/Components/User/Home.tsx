@@ -75,7 +75,7 @@ function Home() {
             {/* <a href="#" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-400">Sign Up</a> */}
             {userInfo ? (
               <button
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-400"
+                className="bg-gray-950 text-white px-4 py-2 rounded hover:bg-blue-400"
                 onClick={logoutHandler}
               >
                 logout

@@ -7,8 +7,10 @@ import { Provider } from "react-redux"
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import {NextUIProvider} from "@nextui-org/react";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
+  <NextUIProvider>
   <Provider store={store}>
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}> 
     {/* <React.StrictMode> */}
@@ -17,4 +19,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     {/* </React.StrictMode> */}
     </GoogleOAuthProvider>
   </Provider>
+  </NextUIProvider>
 )

@@ -30,8 +30,11 @@ export default function Tutors() {
     if (block == false) {
       const response = await tutorBlock(tutorID);
 
-      toast.success(response?.data, {
+      toast.info(response?.data, {
         position: "top-center",
+        autoClose:1000,
+        hideProgressBar:true,
+        closeButton:false
       });
     }
 
@@ -40,6 +43,10 @@ export default function Tutors() {
 
       toast.success(response2?.data, {
         position: "top-center",
+        autoClose:1000,
+        hideProgressBar:true,
+        closeButton:false
+
       });
     }
     setTutors((prevTutors) =>
@@ -66,12 +73,47 @@ export default function Tutors() {
         paginate={paginate}
         currentPage={currentPage}
       />
-  );
 
     </div>
 
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // <div className="container mx-auto mt-8">
 //   <h1 className="text-2xl font-bold mb-4 text-black">Instructors List</h1>

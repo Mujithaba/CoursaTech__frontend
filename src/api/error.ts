@@ -28,7 +28,7 @@ const errorHandler = (error: Error | AxiosError) => {
         errorResponse.accountType === "tutor"
       ) {
         toast.error(errorResponse.message, {
-          autoClose: 2000, // Close the toast after 4 seconds
+          autoClose: 2000, 
           hideProgressBar: true,
         });
         if (window.location.pathname !== "/tutor/tuturDashboard") {

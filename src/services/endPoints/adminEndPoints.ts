@@ -4,7 +4,12 @@ const adminRoutes = {
     unblockUser :'/admin/userUnblock',
     allTutors : '/admin/getAllTutors',
     blockTutor: '/admin/tutorBlock',
-    unblockTutor: '/admin/tutorUnblock'
+    unblockTutor: '/admin/tutorUnblock',
+    categoryAdd: '/admin/addCategory',
+    getCategories:'/admin/getCagories',
+    categoryUnlist:'/admin/categoryUnlist',
+    categorylist:'/admin/categorylist',
+    categoryEdit:'/admin/categoryEdit',
 }
 
 export default adminRoutes

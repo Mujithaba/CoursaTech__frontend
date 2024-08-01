@@ -31,8 +31,11 @@ export default function Users() {
 
     if (block == false) {
       const response = await userBlock(userID);
-      toast.success(response?.data, {
+      toast.info(response?.data, {
         position: "top-center",
+        autoClose:1000,
+        hideProgressBar:true,
+        closeButton:false
       });
     }
 
@@ -40,6 +43,9 @@ export default function Users() {
       const response2 = await userUnblock(userID);
       toast.success(response2?.data, {
         position: "top-center",
+        autoClose:1000,
+        hideProgressBar:true,
+        closeButton:false
       });
     }
 
@@ -71,6 +77,7 @@ export default function Users() {
     </div>
   );
 }
+
 
 // <div className="container mx-auto mt-8">
 //   <h1 className="text-2xl font-bold mb-4 text-black">Users List</h1>

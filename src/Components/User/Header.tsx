@@ -12,7 +12,7 @@ function Header() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex  justify-between items-center h-20 px-14 ">
+    <div className="flex bg-gray-950  justify-between items-center h-20 px-14 ">
       <div>
         {userInfo ? (
           <Link to={"/home"}>
