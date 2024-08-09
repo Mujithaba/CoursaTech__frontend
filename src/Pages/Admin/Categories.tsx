@@ -5,7 +5,7 @@ import { categoryList, categoryUnlist, getCategory } from "../../api/admin";
 import Pagination from "../../Components/Common/Pagination";
 import { toast } from "react-toastify";
 import { FaEdit } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
+// import { MdDeleteForever } from "react-icons/md";
 import EditModal from "../../Components/Ui/Category/EditModal";
 
 export default function Categories() {

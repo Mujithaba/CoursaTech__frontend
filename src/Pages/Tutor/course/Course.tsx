@@ -14,10 +14,10 @@ export default function Course() {
   const fetchHomeData = async () => {
     try {
       if (tutorInfo) {
-        console.log(tutorInfo._id, "jjjj");
+        // console.log(tutorInfo._id, "jjjj");
 
         const response = await tutorUpdateCheck(tutorInfo._id);
-        console.log(response, "home response");
+        // console.log(response, "home response");
         if (response.data.data) {
           if (response.data.data.isBlocked) {
             dispatch(logOut());

@@ -97,8 +97,8 @@ export const forgotPasswordEmail = async (email: string) => {
 
 export const forgotOTPverify = async (data: {}) => {
   try {
-    console.log(data,"dattttttt");
-    
+    // console.log(data, "dattttttt");
+
     const res = await Api.post(tutorRoutes.forgotOtpVerify, data);
     return res;
   } catch (error) {
@@ -110,7 +110,7 @@ export const forgotOTPverify = async (data: {}) => {
 
 export const newPasswordSet = async (email: string, password: string) => {
   try {
-    console.log(email, password, "jjjjj");
+    // console.log(email, password, "jjjjj");
 
     const res = await Api.patch(tutorRoutes.forgotPassReset, {
       email,
@@ -128,13 +128,49 @@ export const newPasswordSet = async (email: string, password: string) => {
 // dashboard
 export const tutorUpdateCheck = async (tutorId: string): Promise<any> => {
   try {
-    console.log(tutorId,"kkk");
-    
-    const res = await Api.get(tutorRoutes.dashobordPage,{params:{id:tutorId}});
+    // console.log(tutorId, "kkk");
+
+    const res = await Api.get(tutorRoutes.dashobordPage, {
+      params: { id: tutorId },
+    });
     return res;
   } catch (error) {
-    console.log('error:', error);
+    console.log("error:", error);
     const err: Error = error as Error;
     return errorHandler(err);
   }
 };
+
+// course basic info upload
+export const basicInfoUpload = async (formdata: FormData,instructor_id:string): Promise<any> => {
+  try {
+    console.log(formdata,"api ");
+   
+    formdata.append('instructor_id',instructor_id)
+    const res = await Api.post(tutorRoutes.basicInfoUpload,formdata,{
+      headers:{
+        'Content-Type':'multipart/form-data',
+      },
+    })
+    console.log(res,"form data res");
+    
+    return res
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};
+
+// category fetch
+export const categoryData = async()=>{
+  try {
+    const res = await Api.get(tutorRoutes.getAllCategories)
+    return res.data
+    
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}

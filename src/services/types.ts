@@ -33,3 +33,16 @@ export interface CategoryResponse{
   totalCategory:number
 
 }
+
+
+export interface Lesson {
+  type: 'video' | 'document' | 'quiz';
+  title: string;
+  duration?: string;
+  preview?: boolean;
+}
+
+export interface Section {
+  title: string;
+  lessons: Lesson[];
+}

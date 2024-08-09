@@ -26,12 +26,14 @@ function SideBar() {
   };
 
   return (
-    <aside className="bg-teal-900 text-white w-64 space-y-6 py-7 px-6 absolute inset-y-0 left-0">
+    <aside className="bg-teal-900 m-3 text-white w-64 space-y-6 py-7 px-6 absolute inset-y-0 left-0 rounded-lg">
       <div className="text-2xl font-semibold flex justify-center">
         <img className="" src={Logo} alt="logo" />
       </div>
       <hr />
+
       <nav className="font-sans font-semibold ">
+      
         <NavLink
           to="/admin/dashboard"
           className={({ isActive }) =>
@@ -153,12 +155,13 @@ function SideBar() {
             </>
           )}
         </NavLink>
+      
 
         <NavLink
           to="/login"
           className={({ isActive }) =>
-            `flex items-center py-2.5 m-2 px-4 rounded-xl transition duration-200 ${
-              isActive ? "bg-gray-800 justify-center" : "hover:bg-gray-800"
+            `flex items-center mt-11 py-2.5 m-2 px-4 rounded-xl transition duration-200 ${
+              isActive ? "bg-gray-800 justify-center" : "hover:bg-red-900 border border-gray-900 hover:border-0 hover:opacity-90"
             }`
           }
           onClick={logoutHandler}

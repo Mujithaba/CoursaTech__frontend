@@ -2,7 +2,7 @@
 
 function Hearder() {
     return (
-      <header className="bg-teal-900 text-black flex justify-between items-center p-4">
+      <header className=" mt-3 ms-4 me-2 bg-teal-900 text-black flex justify-between items-center p-4 rounded-lg">
       <div className="text-xl font-bold"></div>
       <div className="flex items-center">
         {/* <input 

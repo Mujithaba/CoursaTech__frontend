@@ -8,7 +8,12 @@ export default  {
 
   ],
   theme: {
-    extend: {},
+   
+    extend: {
+      colors: {
+        card: '#ecfccb',
+      },
+    },
   },
   darkMode: "class",
   plugins: [

@@ -7,7 +7,9 @@ const tutorRoutes ={
     forgotPasswordEmail : '/tutors/forgotPassEmail',
     forgotOtpVerify : '/tutors/forgotOTPverify',
     forgotPassReset : '/tutors/forgotPasswordSave',
-    dashobordPage:'/tutors/dashboardPage'
+    dashobordPage:'/tutors/dashboardPage',
+    basicInfoUpload:'/tutors/basicInfoUpload',
+    getAllCategories:'/tutors/getAllCategories',
 
 }
 

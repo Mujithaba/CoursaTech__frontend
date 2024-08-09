@@ -2,14 +2,14 @@ import React from 'react'
 
  function TutorHearder() {
   return (
-    <header className="bg-gray-600 text-white flex justify-between items-center p-4">
+    <header className="bg-gray-800 text-white flex justify-between items-center p-4 mt-3 ms-8 me-2 rounded-lg">
     <div className="text-xl  font-bold"></div>
     <div className="flex items-center">
-      <input 
+      {/* <input 
         type="text" 
         placeholder="Search..." 
         className="bg-gray-700 text-white rounded-lg p-2 mr-4"
-      />
+      /> */}
       <div className="relative">
         <button className="relative z-10 block rounded-md bg-gray-800 p-2 focus:outline-none">
           <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

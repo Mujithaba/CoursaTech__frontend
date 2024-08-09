@@ -10,6 +10,10 @@ const Home = lazy(() => import("../Components/User/Home"));
 const ForgotUserPass = lazy(()=>import("../Pages/User/ForgotUser"))
 const ForgetPassOTP = lazy(()=>  import("../Pages/User/ForgetPassOTP"))
 const ForgotPassEnter = lazy(()=> import("../Pages/User/ForgotPassEnter"))
+const Courses = lazy(()=> import("../Pages/User/Courses"))
+const CourseViewPage = lazy(()=> import("../Pages/User/CourseViewPage"))
+const Curriculum = lazy(()=> import("../Components/Ui/User/Course/Caricculum"))
+
 
 
 
@@ -21,6 +25,9 @@ function UserRoutes() {
           <Route element={<UserLayouts />}>
             <Route index element={<Home />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/coursePage" element={<Courses />} />
+            <Route path="/Courseview" element={<CourseViewPage />} />
+            <Route path="/Courseview/Curriculum" element={<Curriculum />} />
           </Route>
 
           <Route path="/register" element={<SIgnUpPage />} />

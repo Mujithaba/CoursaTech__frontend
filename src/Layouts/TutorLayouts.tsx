@@ -7,8 +7,8 @@ function TutorLayouts() {
     <div className="flex h-screen bg-gray-100  ">
       <TutorSideBar />
       <div className="flex flex-col flex-1 ml-60 ">
-        {/* <TutorHearder  /> */}
-        <main className="p-2 flex-1 overflow-y-auto">
+        <TutorHearder  />
+        <main className="pt-6 ps-9 pe-3 pb-4 mb-3 flex-1 overflow-y-auto">
           <Outlet />
         </main>
       </div>
