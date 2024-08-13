@@ -19,7 +19,6 @@ const Curriculum: React.FC = () => {
         { type: 'video', title: "Course Intro", duration: "3.27", preview: true },
         { type: 'video', title: "Course Outline", duration: "5.00", preview: true },
         { type: 'document', title: "Course Materials" },
-        { type: 'quiz', title: "Summer Quiz" },
         { type: 'document', title: "Assignment" },
       ]
     },

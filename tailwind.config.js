@@ -13,6 +13,7 @@ export default  {
       colors: {
         card: '#ecfccb',
       },
+      
     },
   },
   darkMode: "class",

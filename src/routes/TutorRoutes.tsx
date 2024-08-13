@@ -10,9 +10,10 @@ const TutorDashboard = lazy(() => import("../Components/Tutor/TutorDashboard"));
 const ForgotTutor = lazy(() => import("../Pages/Tutor/ForgotTutor"));
 const ForgotPassOTP = lazy(() => import("../Pages/Tutor/ForgotPassOTP"));
 const ForgotNewPass = lazy(() => import("../Pages/Tutor/ForgotNewPass"));
-const Course = lazy(() => import("../Pages/Tutor/course/Course"));
+const MyCourse = lazy(() => import("../Pages/Tutor/course/MyCourse"));
 const CourseCreation = lazy(() => import("../Components/Tutor/course/CourseCreation"));
 const AddCuricculum = lazy(()=> import("../Components/Tutor/course/courseCreate.tsx/CuricculumOfCourse"))
+const ViewMyCourse = lazy(()=> import("../Pages/Tutor/course/ViewMyCourse"))
 
 
 
@@ -31,9 +32,10 @@ function TutorRoutes() {
           <Route element={<TutorLayouts />}>
             <Route index element={<TutorDashboard />} />
             <Route path="/tuturDashboard" element={<TutorDashboard />} />
-            <Route path="/Course" element={<Course />} />
+            <Route path="/myCourses" element={<MyCourse />} />
             <Route path="/createCourse" element={<CourseCreation />} />
             <Route path="/addCuricculum" element={<AddCuricculum />} />
+            <Route path="/myCourses/courseView" element={<ViewMyCourse />} />
             
           </Route>
         </Routes>

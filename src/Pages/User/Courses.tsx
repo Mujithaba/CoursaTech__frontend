@@ -23,7 +23,7 @@ export default function Courses() {
           />
 
           {/* Content */}
-          <div className="relative m-24 z-10 max-w-4xl w-full bg-white p-8 rounded-lg shadow-lg opacity-50">
+          <div className="relative m-24 z-10 max-w-4xl w-full bg-black/50 p-8 rounded-lg shadow-lg">
             <h1 className="text-2xl text-black font-bold ">
               Take the first step,
               <span className="text-lg">to learn with us</span>

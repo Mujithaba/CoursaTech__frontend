@@ -156,3 +156,34 @@ export const editedCategoryData = async(newCategory:string,categoryID:string)=>{
     return errorHandler(err)
   }
 }
+// get all courses
+export const getCourses = async()=>{
+  try {
+    const res = await Api.get(adminRoutes.getCourse);
+    return res.data
+    
+  } catch (error) {
+    console.log("error",error);
+    const err:Error = error as Error;
+    return errorHandler(err)
+  }
+}
+// viewCoureseDetails
+export const viewCoureseDetails = async (course_id:string)=>{
+  try {
+    console.log(course_id,"cours....id");
+    
+  const res = await Api.get(adminRoutes.getViewCourse, {
+    params: {
+      id: course_id,
+    },
+  });
+  console.log(res,"data course view");
+  
+  return res.data;
+} catch (error) {
+  console.log("error:", error);
+  const err: Error = error as Error;
+  return errorHandler(err);
+}
+} 

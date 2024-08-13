@@ -16,7 +16,6 @@ const LessonItem: React.FC<LessonItemProps> = ({ lesson, isActive, onClick }) =>
     <div className="flex items-center">
       {lesson.type === 'video' && <FaVideo className="mr-2 text-gray-500" />}
       {lesson.type === 'document' && <FaFileAlt className="mr-2 text-gray-500" />}
-      {lesson.type === 'quiz' && <FaVolumeUp className="mr-2 text-gray-500" />}
       <span className="text-sm">{lesson.title}</span>
     </div>
     <div className="flex items-center">

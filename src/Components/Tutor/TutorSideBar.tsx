@@ -58,7 +58,7 @@ function TutorSideBar() {
           )}
         </NavLink>
 
-        {location.pathname === "/tutor/createCourse" && (
+      
           <NavLink
             to="/tutor/createCourse"
             className={({ isActive }) =>
@@ -85,9 +85,9 @@ function TutorSideBar() {
               </>
             )}
           </NavLink>
-        )}
+        
 
-        {location.pathname === "/tutor/addCuricculum" && (
+        {/* {location.pathname === "/tutor/addCuricculum" && (
           <NavLink
             to="/tutor/addCuricculum"
             className={({ isActive }) =>
@@ -114,10 +114,10 @@ function TutorSideBar() {
               </>
             )}
           </NavLink>
-        )}
+        )} */}
 
         <NavLink
-          to="/tutor/Course"
+          to="/tutor/myCourses"
           className={({ isActive }) =>
             `flex items-center py-2.5 m-2 px-4 rounded-xl transition duration-200 ${
               isActive

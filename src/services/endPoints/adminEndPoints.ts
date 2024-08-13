@@ -10,6 +10,8 @@ const adminRoutes = {
     categoryUnlist:'/admin/categoryUnlist',
     categorylist:'/admin/categorylist',
     categoryEdit:'/admin/categoryEdit',
+    getCourse:'/admin/getCourse',
+    getViewCourse:'/admin/getViewCourse',
 }
 
 export default adminRoutes

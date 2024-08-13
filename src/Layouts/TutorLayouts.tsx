@@ -4,7 +4,7 @@ import TutorSideBar from "../Components/Tutor/TutorSideBar";
 
 function TutorLayouts() {
   return (
-    <div className="flex h-screen bg-gray-100  ">
+    <div className="flex h-screen bg-gray-700  ">
       <TutorSideBar />
       <div className="flex flex-col flex-1 ml-60 ">
         <TutorHearder  />

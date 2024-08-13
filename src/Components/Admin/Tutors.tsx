@@ -45,7 +45,7 @@ export default function Tutors() {
         position: "top-center",
         autoClose:1000,
         hideProgressBar:true,
-        closeButton:false
+        closeButton:false,
 
       });
     }

@@ -1,3 +1,4 @@
+import { Button } from "@nextui-org/react";
 import React, { useState } from "react";
 import { IoAddCircle } from "react-icons/io5";
 
@@ -85,7 +86,7 @@ const CurriculumOfCourse: React.FC<CurriculumOfCourseProps> = ({
     onModulesChange?.(updatedModules);
   };
 
-  const handleFileChange = (
+  const  handleFileChange = (
     moduleIndex: number,
     lectureIndex: number,
     field: "video" | "pdf",
@@ -201,6 +202,7 @@ const CurriculumOfCourse: React.FC<CurriculumOfCourseProps> = ({
                   <input
                     type="file"
                     accept="video/*"
+                    name="video"
                     onChange={(e) =>
                       handleFileChange(
                         moduleIndex,
@@ -226,6 +228,7 @@ const CurriculumOfCourse: React.FC<CurriculumOfCourseProps> = ({
                   <input
                     type="file"
                     accept=".pdf"
+                    name="pdf"
                     onChange={(e) =>
                       handleFileChange(
                         moduleIndex,
@@ -267,14 +270,19 @@ const CurriculumOfCourse: React.FC<CurriculumOfCourseProps> = ({
           Add Module
         </button>
       </div>
-      <button
+      {modules.length !== 0 && 
+      
+      <Button
         type="submit"
-        className="mt-8 w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300"
+        className="ms-52 mt-4 w-80 bg-gray-950 text-white font-bold py-3 px-6 rounded-lg shadow-lg focus:ring-1 focus:ring-gray-900"
       >
         Submit Curriculum
-      </button>
+      </Button>
+      }
+      
     </form>
   );
 };
 
-export default CurriculumOfCourse;
+export default CurriculumOfCourse
+// export default CurriculumOfCourse;

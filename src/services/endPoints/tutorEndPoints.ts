@@ -10,6 +10,10 @@ const tutorRoutes ={
     dashobordPage:'/tutors/dashboardPage',
     basicInfoUpload:'/tutors/basicInfoUpload',
     getAllCategories:'/tutors/getAllCategories',
+    getInstructorCourses:'/tutors/getInstructorCourses',
+    getCourseView:'/tutors/getCourseView',
+    uploadingCuricculum:'/tutors/uploadCuricculum',
+    getViewCourse:'/tutors/getViewCourse',
 
 }
 

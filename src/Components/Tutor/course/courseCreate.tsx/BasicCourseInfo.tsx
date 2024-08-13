@@ -1,6 +1,7 @@
 // export default BasicCourseInfo;
 import React, { useEffect, useState } from "react";
 import { categoryData } from "../../../../api/tutor";
+import { Button } from "@nextui-org/react";
 
 interface BasicCourseInfoProps {
   onSubmit: (data: FormData) => void;
@@ -66,7 +67,7 @@ const BasicCourseInfo: React.FC<BasicCourseInfoProps> = ({ onSubmit }) => {
       className="max-w-5xl mx-auto p-8 bg-white shadow-md rounded-lg border border-gray-200"
     >
       <h2 className="text-2xl  font-bold text-gray-800 mb-6 text-center">
-        {" "}
+        {/* {" "} */}
         Course Basic Info
       </h2>
       <hr className="border-t-2 border-black mb-2" />
@@ -80,7 +81,7 @@ const BasicCourseInfo: React.FC<BasicCourseInfoProps> = ({ onSubmit }) => {
             type="file"
             accept="image/*"
             onChange={handleThumbnailChange}
-            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg shadow-sm"
+            className="block p-1 w-full text-sm text-gray-900 border border-gray-300 rounded-lg shadow-sm" required
           />
           {thumbImage && (
             <img
@@ -98,7 +99,7 @@ const BasicCourseInfo: React.FC<BasicCourseInfoProps> = ({ onSubmit }) => {
             type="file"
             accept="video/*"
             onChange={handleVideoChange}
-            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg shadow-sm"
+            className="block p-1 w-full text-sm text-gray-900 border border-gray-300 rounded-lg shadow-sm" required
           />
           {video && (
             <video
@@ -166,12 +167,12 @@ const BasicCourseInfo: React.FC<BasicCourseInfoProps> = ({ onSubmit }) => {
         </div>
       </div>
       <div className="flex justify-center">
-      <button
+      <Button
         type="submit"
-        className="mt-8 w-96 bg-green-900 text-white font-semibold py-3 px-1 rounded-lg shadow-lg hover:bg-green-800 focus:ring-4 focus:ring-blue-300"
+        className="mt-8 w-96 bg-gray-950 text-white font-semibold py-3 px-1 rounded-lg shadow-lg  focus:ring-1 focus:ring-blue-300"
       >
         Create
-      </button></div>
+      </Button></div>
     </form>
   );
 };

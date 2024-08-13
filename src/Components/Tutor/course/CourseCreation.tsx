@@ -1,12 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
-// import CloseIcon from "@mui/icons-material/Close";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { logOut } from "../../../redux/slices/tutorSlice";
 import { basicInfoUpload, tutorUpdateCheck } from "../../../api/tutor";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import BasicCourseInfo from "./courseCreate.tsx/BasicCourseInfo";
-import CurriculumOfCourse from "./courseCreate.tsx/CuricculumOfCourse";
 import Uploading from "../../Common/Uploading";
 import { toast } from "react-toastify";
 
@@ -55,15 +53,12 @@ const [isLoading,setIsLoading] = useState<boolean>(false)
     try {
       setIsLoading(true)
       const response = await basicInfoUpload(data,tutorInfo._id)
-      console.log(response.message);
+      console.log(response,"data course add");
       if (response) {
         
-        navigate('/tutor/addCuricculum')
-        toast.success(response.message,{
-          position: "top-center",
-          autoClose:2000,
-          hideProgressBar:true,
-          closeButton:false
+        navigate('/tutor/myCourses')
+        toast.success(response.data.message,{
+          position: "top-center"
         })
         console.log('Upload successful:', response);
       }

@@ -8,6 +8,7 @@ const UsersList = lazy(()=> import("../Components/Admin/Users"))
 const TutorsList = lazy(()=> import("../Components/Admin/Tutors"))
 const CourseShow = lazy(()=> import("../Pages/Admin/Courses"))
 const CategoryList = lazy(()=> import("../Pages/Admin/Categories"))
+const ViewMyCourse = lazy(()=> import("../Pages/Admin/ViewMyCourse"))
 
 
 
@@ -26,7 +27,7 @@ const CategoryList = lazy(()=> import("../Pages/Admin/Categories"))
           <Route path="/tutorsList" element={<TutorsList/>} />
           <Route path="/allCourse" element={<CourseShow/>} />
           <Route path="/categories" element={<CategoryList/>} />
-
+          <Route path="/allCourse/courseView" element={<ViewMyCourse />} />
           
         </Route>
       </Routes>
