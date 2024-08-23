@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { setCredentials } from "../../redux/slices/tutorSlice";
 import { googleIN, login } from "../../api/tutor";
@@ -7,6 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import loginbg from "/Logo/images/tutorSignup-bg.jpg";
 import axios from "axios";
 import { useGoogleLogin } from "@react-oauth/google";
+import { RootState } from "../../redux/store";
 
 export default function LoginTutor() {
   const [tutor, setTutor] = useState<{ access_token: string } | null>(null);
@@ -15,8 +16,17 @@ export default function LoginTutor() {
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
     {}
   );
+  const {tutorInfo}= useSelector((state:RootState)=> state.tutorAuth);
+
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  useEffect(()=>{
+  if (tutorInfo) {
+    navigate('/tutor/tuturDashboard')
+  }
+},[navigate,tutorInfo])
+  
 
   const handleInputChange =
     (setter: React.Dispatch<React.SetStateAction<string>>) =>

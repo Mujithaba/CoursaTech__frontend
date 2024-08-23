@@ -14,8 +14,8 @@ interface PaginationProps {
     }
   
     return (
-      <nav>
-        <ul className="flex justify-center  mt-4">
+      <nav >
+        <ul className="flex justify-center  mt-4 ">
           {pageNumbers.map(number => (
             <li key={number} className={`mx-1 ${currentPage === number ? 'font-bold' : ''}`}>
               <button

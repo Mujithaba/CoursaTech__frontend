@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
@@ -8,8 +7,10 @@ import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import {NextUIProvider} from "@nextui-org/react";
+import {ChakraProvider} from '@chakra-ui/react'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
+  // <ChakraProvider>
   <NextUIProvider>
   <Provider store={store}>
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}> 
@@ -20,4 +21,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     </GoogleOAuthProvider>
   </Provider>
   </NextUIProvider>
+  // </ChakraProvider>
 )

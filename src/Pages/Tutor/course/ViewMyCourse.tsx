@@ -126,27 +126,11 @@ const getViewCourse =async()=>{
 
 
 
-      {/* <div className="ms-32 mb-4">
-        <span className="bg-indigo-600 text-white px-3 py-1 rounded-full text-sm font-semibold mr-2" onClick={()=>navigate('/Courseview/Curriculum')}>Featured</span>
-        <span className="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-semibold">UX Design</span>
-      </div> */}
-      {/* <div className="flex ms-32 items-center mb-4">
-        <div className="flex text-yellow-400 mr-2">
-          {[...Array(5)].map((_, i) => (
-            <FaStar key={i} />
-          ))}
-        </div>
-        <span className="text-gray-600 mr-4">(44)</span>
-        <span className="text-gray-600">Last Update: Sep 29, 2024</span>
-      </div> */}
-
-
-
 {/* course view page contents starts here*/}
       <div className="flex  justify-between m-4">
         <div>
           <img
-            className="h-44 w-64 rounded-md"
+            className="h-40  rounded-md"
             src={courseData.thumbnailSignedUrl}
             alt="Cover Image"
           />

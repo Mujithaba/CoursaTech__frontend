@@ -3,7 +3,7 @@ import Logo from "/Logo/icon/SVG-Logo.svg";
 function Footer() {
   return (
     <>
-      <footer className="footer bg-base-200 text-base-content  p-10">
+      <footer className="footer bg-base-200 text-base-content   p-10">
         <aside>
           <img className="ms-5 " width="110" height="105" src={Logo} alt="" />
           

@@ -10,6 +10,11 @@ const userRoutes={
     forgotOtpVerify : '/users/forgotOTPverify',
     forgotPassReset : '/users/forgotPasswordSave',
     homePage:'/users/homePage',
+    getCourse:'/users/getCourse',
+    getViewCourse:'/users/getViewCourse',
+    createPayment:'/users/createPayment',
+    paymentSuccess:'/users/paymentSuccess',
+    sendusermsg:'/users/sendUserMsg',
 }
 
 export default userRoutes;

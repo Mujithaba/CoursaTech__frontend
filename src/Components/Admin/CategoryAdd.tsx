@@ -11,7 +11,6 @@ import {
 } from "@nextui-org/react";
 import { addCategory } from "../../api/admin";
 import { toast } from "react-toastify";
-import { Category } from "../../services/types";
 
 type Errors = {
   category?: string;

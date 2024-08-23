@@ -157,9 +157,11 @@ export const editedCategoryData = async(newCategory:string,categoryID:string)=>{
   }
 }
 // get all courses
-export const getCourses = async()=>{
+export const getCourses = async(page: number, limit: number)=>{
   try {
-    const res = await Api.get(adminRoutes.getCourse);
+    const res = await Api.get(adminRoutes.getCourse, {
+      params: { page, limit },
+    });
     return res.data
     
   } catch (error) {
@@ -187,3 +189,38 @@ export const viewCoureseDetails = async (course_id:string)=>{
   return errorHandler(err);
 }
 } 
+
+// unapproved course fetching
+export const fetchNotApprovedCourses = async()=>{
+  try {
+    const res = await Api.get(adminRoutes.getUnapprovedCourse)
+    return res.data
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}
+
+// courseApprove
+export const courseApprove = async(course_id:string)=>{
+  try {
+    const res = await Api.patch(adminRoutes.courseApproved, { course_id });
+    return res;
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}
+// courseUnapprove
+export const courseUnapprove = async(course_id:string)=>{
+  try {
+    const res = await Api.patch(adminRoutes.courseUnapproved, { course_id });
+    return res;
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}

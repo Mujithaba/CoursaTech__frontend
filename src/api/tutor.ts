@@ -2,7 +2,7 @@ import Api from "../services/axios";
 import errorHandler from "./error";
 import tutorRoutes from "../services/endPoints/tutorEndPoints";
 import { AxiosError } from "axios";
-import { Modules } from "../services/types";
+import { ITutorDetails, Modules, User } from "../services/types";
 
 interface tutorFormData {
   name?: string;
@@ -179,11 +179,13 @@ export const categoryData = async () => {
 };
 
 // get instructors courses
-export const getCoursesInstructor = async (instructor_id: string) => {
+export const getCoursesInstructor = async (instructor_id: string,page: number, limit: number) => {
   try {
     const res = await Api.get(tutorRoutes.getInstructorCourses, {
       params: {
         id: instructor_id,
+        page, 
+        limit
       },
     });
     console.log(res,"data course tutor");
@@ -254,5 +256,62 @@ export const viewCoureseDetails = async (course_id:string)=>{
   return errorHandler(err);
 }
 } 
+// fetchtutorRegisterData
+export const fetchtutorRegisterData = async(tutorId:string)=>{
+  try {
+console.log(tutorId,"id00");
 
+    const res = await Api.get(tutorRoutes.fetchtutorData,{
+      params:{
+        tutorID:tutorId,
+      },
+    })
+    
+    return res.data
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}
+// update profile
+export const profileDataSave =async (registerData:User | undefined,instructorProfile:ITutorDetails | undefined) =>{
+  try {
+    const res = await Api.patch(tutorRoutes.profileDetailSave,{registerData,instructorProfile})
+    return res
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}
+// storeMsgsFetching
+export const storeMsgsFetching = async (instructor_id: string) => {
+  try {
+    const res = await Api.get(tutorRoutes.msgsFetching, {
+      params: { instructorId: instructor_id },
+    });
+    console.log(res.data.data, "res conver");
+    return res.data.data;
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};
+// instructor course name for assignment add page
+export const instructorCourse = async (instructorId:string)=>{
+  try {
 
+    const res = await Api.get(tutorRoutes.coursesForAssignment,{
+      params:{
+        instructorId
+      }
+    })
+    return res.data
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}

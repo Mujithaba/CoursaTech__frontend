@@ -1,36 +1,80 @@
+import React from "react";
+import { ICourse } from "../../../../services/types";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
+import { FaArrowRight } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { FaStar } from "react-icons/fa6";
 
-
-export default function CardUi() {
- 
-  return (
-    <div className="flex m-4 bg-gray-700 rounded-lg ">
-
-    <div className="relative max-w-xl bg-card shadow-lg rounded-lg overflow-hidden">
-      <div className="grid grid-cols-1 md:grid-cols-2">
-        
-        <div className="p-4">
-          <img 
-            src="https://nextui.org/images/album-cover.png" 
-            alt="Course Cover"
-            className="w-full h-full object-cover rounded-lg"
-          />
-        </div>
-        
-        <div className="p-6 flex flex-col justify-center rounded-md  ">
-          <h1 className="text-2xl font-semibold mb-4">Courses</h1>
-          <ul className="">
-            <li className="text-lg text-gray-800">Course 1</li>
-            <li className="text-lg text-gray-800">Course 2</li>
-            <li className="text-lg text-gray-800">Course 3</li>
-            <li className="text-lg text-gray-800">Course 4</li>
-          </ul>
-        </div>
-        
-      </div>
-    </div>
-  
-  </div>
-  
-  );
+interface CardUIProps {
+  data: ICourse;
 }
 
+const CardUi: React.FC<CardUIProps> = ({ data }) => {
+  let formattedDate = data.createdAt
+    ? new Date(data.createdAt).toLocaleDateString()
+    : "Date not available";
+  const navigate = useNavigate();
+
+  const handleCourseView = () => {
+    try {
+      navigate("viewCourse", {
+        state: {
+          CourseData: data,
+        },
+      });
+    } catch (error) {
+      console.log("fetching this course have some error, Please try later");
+    }
+  };
+
+  return (
+    <div className=" w-full flex justify-center mb-3 mt-3   rounded-md">
+      <div className=" w-[300px]  rounded-md overflow-hidden relative p-4 bg-white">
+        <div className="h-[150px] bg-black rounded-md overflow-hidden ">
+          <img
+            src={
+              data.thumbnailSignedUrl ||
+              "https://nextui.org/images/album-cover.png"
+            }
+            alt=""
+            className="w-auto h-auto object-cover"
+          />
+        </div>
+        <div className="h-[170px] w-full bg-white mt-3 flex flex-col justify-between m-1">
+          <div className=" flex justify-between">
+            <p className="bg-green-200 text-xs font-serif px-2 flex items-center rounded-full">
+              {data.category_id
+                ? data.category_id.categoryName
+                : "Category not available"}
+            </p>
+            <p className="bg-yellow-400 px-2 flex items-center font-semibold rounded-full">
+              ${data.price}
+            </p>
+          </div>
+          <h2 className="text-lg font-semibold">
+            {data.title.toLocaleUpperCase()}
+          </h2>
+          <p className="text-gray-500 text-sm">{data.description}</p>
+          <div className="flex justify-between">
+            <div className="flex mt-3">
+              <FaStar className="text-yellow-500" />
+              <FaStar className="text-yellow-500" />
+              <FaStar className="text-yellow-500" />
+            </div>
+            <button
+              className="w-10 h-10 flex justify-center items-center rounded-full bg-yellow-300 hover:shadow-md relative group"
+              onClick={handleCourseView}
+            >
+              <div className="absolute arrow-icon">
+                <FaArrowRight />
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CardUi;

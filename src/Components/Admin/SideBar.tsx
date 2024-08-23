@@ -45,7 +45,7 @@ function SideBar() {
           {({ isActive }) => (
             <>
               <HiOutlineChartSquareBar
-                size={isActive ? 13 : 20} // Change size based on isActive
+                size={isActive ? 13 : 20} 
                 className="mr-2"
               />
               <span
@@ -106,8 +106,9 @@ function SideBar() {
             </>
           )}
         </NavLink>
+       
         <NavLink
-          to="/admin/allCourse"
+          to="/admin/coursesList"
           className={({ isActive }) =>
             `flex items-center py-2.5 m-2 px-4 rounded-xl transition duration-200 ${
               isActive ? "bg-gray-800 justify-center" : "hover:bg-gray-800"
@@ -125,7 +126,7 @@ function SideBar() {
                   isActive ? "text-sm" : "font-mono"
                 }`}
               >
-                Courses
+               Cousrse List
               </span>
             </>
           )}

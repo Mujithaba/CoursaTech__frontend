@@ -14,6 +14,10 @@ const tutorRoutes ={
     getCourseView:'/tutors/getCourseView',
     uploadingCuricculum:'/tutors/uploadCuricculum',
     getViewCourse:'/tutors/getViewCourse',
+    fetchtutorData:'/tutors/fetchtutorData',
+    profileDetailSave:'/tutors/profileDataSave',
+    msgsFetching:'/tutors/storedMsgsFetching',
+    coursesForAssignment:'/tutors/coursesForAssignment',
 
 }
 

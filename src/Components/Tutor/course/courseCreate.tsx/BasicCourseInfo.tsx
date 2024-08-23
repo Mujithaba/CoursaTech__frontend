@@ -21,6 +21,7 @@ const BasicCourseInfo: React.FC<BasicCourseInfoProps> = ({ onSubmit }) => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
+  const maxLengthDescription = 100;
 
   const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -129,9 +130,12 @@ const BasicCourseInfo: React.FC<BasicCourseInfoProps> = ({ onSubmit }) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             rows={4}
+            placeholder="Enter text (max 100 characters)"
+            maxLength={100}
             className="block w-full p-1 text-sm font-sans font-medium text-gray-900 border-2 border-gray-300 rounded-md shadow-sm"
             required
           />
+          <p className="text-gray-800 text-sm font-mono">{maxLengthDescription - description.length} characters remaining</p>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">

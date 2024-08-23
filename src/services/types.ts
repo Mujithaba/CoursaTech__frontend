@@ -2,7 +2,27 @@ export interface User {
   _id: string;
   name: string;
   email: string;
+  phone?:string;
   isBlocked: boolean;
+}
+
+export interface Tutor {
+  _id: string;
+  name: string;
+  email: string;
+  phone?:string;
+  isBlocked: boolean;
+  isGoogle:boolean
+}
+
+export interface ITutorDetails {
+  _id?:string;
+  profileImg:string;
+  profileImgUrl:string;
+  experience:string;
+  position:string;
+  companyName:string;
+  aboutBio:string;
 }
 
 export interface UsersResponse {
@@ -87,4 +107,27 @@ export interface Modules {
   name?: string;
   lectures?: Lecture[];
   createdAt?: Date;
+}
+
+
+export interface IMessage {
+  _id:string;
+  senderId:string;
+  receiverId:string;
+  message:string;
+}
+
+
+export interface IAssignment {
+  _id?:string;
+  title:string;
+  assignment:string;
+  assigmentsUrl:string;
+  courseId:string;
+}
+
+
+export interface ICoursesForAssignment {
+  _id: string;
+  courseName: string;
 }

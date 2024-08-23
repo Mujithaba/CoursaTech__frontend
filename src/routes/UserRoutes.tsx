@@ -1,6 +1,8 @@
 import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import UserLayouts from "../Layouts/UserLayouts";
+import UserProtected from "../protected/userProtected";
+import CourseDataLayouts from "../Layouts/CourseDataLayouts";
 import LoadingSpinner from "../Components/Common/LoadingSpinner";
 
 const SIgnUpPage = lazy(() => import("../Pages/User/SIgnupPage"));
@@ -12,7 +14,7 @@ const ForgetPassOTP = lazy(()=>  import("../Pages/User/ForgetPassOTP"))
 const ForgotPassEnter = lazy(()=> import("../Pages/User/ForgotPassEnter"))
 const Courses = lazy(()=> import("../Pages/User/Courses"))
 const CourseViewPage = lazy(()=> import("../Pages/User/CourseViewPage"))
-const Curriculum = lazy(()=> import("../Components/Ui/User/Course/Caricculum"))
+const ChatScreenUser = lazy(()=> import("../Components/User/ChatScreenUser"))
 
 
 
@@ -24,10 +26,14 @@ function UserRoutes() {
         <Routes>
           <Route element={<UserLayouts />}>
             <Route index element={<Home />} />
+
+            <Route element={<UserProtected />}>
             <Route path="/home" element={<Home />} />
             <Route path="/coursePage" element={<Courses />} />
-            <Route path="/Courseview" element={<CourseViewPage />} />
-            <Route path="/Courseview/Curriculum" element={<Curriculum />} />
+            <Route path="/coursePage/viewCourse" element={<CourseViewPage />} />
+            <Route path="/userChatscreen" element={<ChatScreenUser/>}/>
+            </Route>
+
           </Route>
 
           <Route path="/register" element={<SIgnUpPage />} />

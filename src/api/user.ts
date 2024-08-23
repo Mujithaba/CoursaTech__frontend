@@ -141,3 +141,78 @@ export const homePageData = async (userId: string): Promise<any> => {
     return errorHandler(err);
   }
 };
+
+// get all courses
+export const getCourses = async (page: number, limit: number) => {
+  try {
+    const res = await Api.get(userRoutes.getCourse, {
+      params: { page, limit },
+    });
+    return res.data;
+  } catch (error) {
+    console.log("error", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};
+// viewCoureseDetails
+export const viewCoureseDetails = async (course_id:string,userid:string)=>{
+  try {
+    console.log(course_id,"cours....id");
+    
+  const res = await Api.get(userRoutes.getViewCourse, {
+    params: {
+      id: course_id,
+      userId:userid
+    },
+  });
+  // console.log(res,"data course view");
+  
+  return res.data;
+} catch (error) {
+  console.log("error:", error);
+  const err: Error = error as Error;
+  return errorHandler(err);
+}
+} 
+// payment 
+export const createPayment = async (courseId:string)=>{
+  try {
+console.log(courseId,"id course for payment ");
+
+    const res = await Api.post(userRoutes.createPayment,{courseId})
+    return res
+    
+  } catch (error) {
+    console.log("error",error);
+    const err:Error = error as Error;
+    return errorHandler(err);
+    
+  }
+}
+// payment success
+export const paymentSuccess = async (data:{})=>{
+  try {
+    
+    const res = await Api.post(userRoutes.paymentSuccess,{data})
+    return res
+  } catch (error) {
+    console.log("error",error);
+    const err:Error = error as Error ;
+    return errorHandler(err);
+  }
+}
+// sendUserMsg
+export const sendUserMsg = async (message:string,userId:string,instructorId:string,username:string)=>{
+  try {
+    const res = await Api.post(userRoutes.sendusermsg,{message,userId,instructorId,username})
+    console.log(res,"res chat ");
+    
+    return res
+    
+  } catch (error) {
+    console.log("error",error);
+    const err:Error = error as Error ;
+    return errorHandler(err);
+  }
+}

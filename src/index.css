@@ -10,3 +10,10 @@
   min-height: 100vh;
 } */
 
+.arrow-icon {
+  transition: transform 0.3s ease-in-out;
+}
+
+.group:hover .arrow-icon {
+  transform: translateX(50%);
+}
