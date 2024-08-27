@@ -10,31 +10,31 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-  Checkbox,
   Input,
-  Link,
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { instructorCourse } from "../../../api/tutor";
+import { instructorCourse, uploadingAssignment } from "../../../api/tutor";
 import { ICoursesForAssignment } from "../../../services/types";
 import { toast } from "react-toastify";
+import { Spinner } from '@nextui-org/react'; // Assuming you're using NextUI
 
-type Errors = {
-  courseTitle: any;
-  assignment:File
-};
+interface AddAssignmentsProps{
+  AssignmentState:(setState:boolean)=>void;
+}
 
-const AddAssignments = () => {
+
+const AddAssignments: React.FC<AddAssignmentsProps> = ({ AssignmentState }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [assignment, setAssignment] = useState<File | null>(null);
   const [selectedCourse, setSelectedCourse] = useState<{
     id: string;
     title: string;
   } | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+
   const [courseData, setCourseData] = useState<ICoursesForAssignment[]>([]);
-  // const [errors, setErrors] = useState<Errors>({});
   const { tutorInfo } = useSelector((state: RootState) => state.tutorAuth);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,12 +69,35 @@ const AddAssignments = () => {
     console.log(courseId, "courseid");
     console.log(courseTitle, "coursetitle");
 
-    const formdata = new FormData()
-    // formdata.append('assignment',assignment)
-    formdata.append('courseTitle',courseTitle)
-    formdata.append('courseId',courseId)
-
-    // const uploadAssignment = await uploadingAssignment(formdata)
+    if (!assignment) {
+      console.error("No assignment file selected");
+      return;
+    }
+    
+  const formdata = new FormData()
+  formdata.append('assignment', assignment) 
+  formdata.append('courseTitle', courseTitle)
+  formdata.append('courseId', courseId)
+  try {
+    setIsUploading(true);
+    const response = await uploadingAssignment(formdata);
+    console.log(response);
+    
+    if (response) {  // Assuming your API returns a success flag
+      // toast.success("Assignment uploaded successfully!");
+      AssignmentState(true);
+      onOpenChange(); // Close the modal if it's in one
+    } else {
+      toast.error("Failed to upload assignment. Please try again.");
+      AssignmentState(false);
+    }
+  } catch (error) {
+    console.error("Error uploading assignment:", error);
+    toast.error("Error uploading assignment. Please try again.");
+    AssignmentState(false);
+  } finally {
+    setIsUploading(false);
+  }
   };
 
   return (
@@ -138,22 +161,26 @@ const AddAssignments = () => {
                 Close
               </Button>
               <Button
-                color="success"
-                variant="shadow"
-                onClick={() => {
-                  if (selectedCourse && assignment) {
-                    submitAssignment(selectedCourse.id, selectedCourse.title);
-                  } else {
-                    toast.error( "Please select a course and upload an assignment")
-                    console.error(
-                      "Please select a course and upload an assignment"
-                    );
-                  }
-                }}
-                isDisabled={!selectedCourse || !assignment}
-              >
-                Add Assignment
-              </Button>
+      color="success"
+      variant="shadow"
+      onClick={() => {
+        if (selectedCourse && assignment) {
+          submitAssignment(selectedCourse.id, selectedCourse.title);
+        } else {
+          toast.error("Please select a course and upload an assignment");
+        }
+      }}
+      isDisabled={!selectedCourse || !assignment || isUploading}
+    >
+      {isUploading ? (
+        <>
+          <Spinner size="sm" color="current" />
+          <span className="ml-2">Uploading...</span>
+        </>
+      ) : (
+        "Add Assignment"
+      )}
+    </Button>
             </ModalFooter>
           </>
         </ModalContent>

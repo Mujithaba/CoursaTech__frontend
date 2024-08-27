@@ -121,8 +121,8 @@ export interface IMessage {
 export interface IAssignment {
   _id?:string;
   title:string;
-  assignment:string;
-  assigmentsUrl:string;
+  pdf_file:string;
+  assignmentUrl:string;
   courseId:string;
 }
 

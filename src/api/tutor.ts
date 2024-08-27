@@ -179,17 +179,21 @@ export const categoryData = async () => {
 };
 
 // get instructors courses
-export const getCoursesInstructor = async (instructor_id: string,page: number, limit: number) => {
+export const getCoursesInstructor = async (
+  instructor_id: string,
+  page: number,
+  limit: number
+) => {
   try {
     const res = await Api.get(tutorRoutes.getInstructorCourses, {
       params: {
         id: instructor_id,
-        page, 
-        limit
+        page,
+        limit,
       },
     });
-    console.log(res,"data course tutor");
-    
+    console.log(res, "data course tutor");
+
     return res.data;
   } catch (error) {
     console.log("error:", error);
@@ -198,33 +202,54 @@ export const getCoursesInstructor = async (instructor_id: string,page: number, l
   }
 };
 // uploading Curicculum
-export const uploadCuricculum = async (course_id: string,modules:Modules[]) => {
+export const uploadCuricculum = async (
+  course_id: string,
+  modules: Modules[]
+) => {
   try {
-    const formData = new FormData()
+    const formData = new FormData();
 
-    formData.append('course_id',course_id)
-    formData.append('modules', JSON.stringify(modules.map((module,moduleIndex) => ({
-      ...module,
-      lectures: module.lectures?.map((lecture,lectureIndex )=> ({
-        ...lecture,
-         video: lecture.video ? `lectures[${moduleIndex}][${lectureIndex}].video` : '',
-    pdf: lecture.pdf ? `lectures[${moduleIndex}][${lectureIndex}].pdf` : ''
-      })) ?? []
-    }))));
-    
+    formData.append("course_id", course_id);
+    formData.append(
+      "modules",
+      JSON.stringify(
+        modules.map((module, moduleIndex) => ({
+          ...module,
+          lectures:
+            module.lectures?.map((lecture, lectureIndex) => ({
+              ...lecture,
+              video: lecture.video
+                ? `lectures[${moduleIndex}][${lectureIndex}].video`
+                : "",
+              pdf: lecture.pdf
+                ? `lectures[${moduleIndex}][${lectureIndex}].pdf`
+                : "",
+            })) ?? [],
+        }))
+      )
+    );
+
     // Append files separately
-      modules.forEach((module, moduleIndex) => {
-        module.lectures?.forEach((lecture, lectureIndex) => {
-          if (lecture.video) {
-            formData.append(`lectures[${moduleIndex}][${lectureIndex}].video`, lecture.video, lecture.video.name);
-          }
-          if (lecture.pdf) {
-            formData.append(`lectures[${moduleIndex}][${lectureIndex}].pdf`, lecture.pdf, lecture.pdf.name);
-          }
-        });
+    modules.forEach((module, moduleIndex) => {
+      module.lectures?.forEach((lecture, lectureIndex) => {
+        if (lecture.video) {
+          formData.append(
+            `lectures[${moduleIndex}][${lectureIndex}].video`,
+            lecture.video,
+            lecture.video.name
+          );
+        }
+        if (lecture.pdf) {
+          formData.append(
+            `lectures[${moduleIndex}][${lectureIndex}].pdf`,
+            lecture.pdf,
+            lecture.pdf.name
+          );
+        }
       });
-    
-     const res = await Api.post(tutorRoutes.uploadingCuricculum, formData, {
+    });
+
+    const res = await Api.post(tutorRoutes.uploadingCuricculum, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -238,53 +263,59 @@ export const uploadCuricculum = async (course_id: string,modules:Modules[]) => {
   }
 };
 // viewCoureseDetails
-export const viewCoureseDetails = async (course_id:string)=>{
+export const viewCoureseDetails = async (course_id: string) => {
   try {
-    console.log(course_id,"cours....id");
-    
-  const res = await Api.get(tutorRoutes.getViewCourse, {
-    params: {
-      id: course_id,
-    },
-  });
-  console.log(res,"data course view");
-  
-  return res.data;
-} catch (error) {
-  console.log("error:", error);
-  const err: Error = error as Error;
-  return errorHandler(err);
-}
-} 
-// fetchtutorRegisterData
-export const fetchtutorRegisterData = async(tutorId:string)=>{
-  try {
-console.log(tutorId,"id00");
+    console.log(course_id, "cours....id");
 
-    const res = await Api.get(tutorRoutes.fetchtutorData,{
-      params:{
-        tutorID:tutorId,
+    const res = await Api.get(tutorRoutes.getViewCourse, {
+      params: {
+        id: course_id,
       },
-    })
-    
-    return res.data
+    });
+    console.log(res, "data course view");
+
+    return res.data;
   } catch (error) {
     console.log("error:", error);
     const err: Error = error as Error;
     return errorHandler(err);
   }
-}
-// update profile
-export const profileDataSave =async (registerData:User | undefined,instructorProfile:ITutorDetails | undefined) =>{
+};
+// fetchtutorRegisterData
+export const fetchtutorRegisterData = async (tutorId: string) => {
   try {
-    const res = await Api.patch(tutorRoutes.profileDetailSave,{registerData,instructorProfile})
-    return res
+    console.log(tutorId, "id00");
+
+    const res = await Api.get(tutorRoutes.fetchtutorData, {
+      params: {
+        tutorID: tutorId,
+      },
+    });
+
+    return res.data;
   } catch (error) {
     console.log("error:", error);
     const err: Error = error as Error;
     return errorHandler(err);
   }
-}
+};
+// update profile
+export const profileDataSave = async (
+  registerData: User | undefined,
+  instructorProfile: ITutorDetails | undefined
+) => {
+  try {
+    const res = await Api.patch(tutorRoutes.profileDetailSave, {
+      registerData,
+      instructorProfile,
+    });
+    return res;
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};
 // storeMsgsFetching
 export const storeMsgsFetching = async (instructor_id: string) => {
   try {
@@ -300,18 +331,48 @@ export const storeMsgsFetching = async (instructor_id: string) => {
   }
 };
 // instructor course name for assignment add page
-export const instructorCourse = async (instructorId:string)=>{
+export const instructorCourse = async (instructorId: string) => {
   try {
-
-    const res = await Api.get(tutorRoutes.coursesForAssignment,{
-      params:{
-        instructorId
-      }
-    })
-    return res.data
+    const res = await Api.get(tutorRoutes.coursesForAssignment, {
+      params: {
+        instructorId,
+      },
+    });
+    return res.data;
   } catch (error) {
     console.log("error:", error);
     const err: Error = error as Error;
     return errorHandler(err);
   }
-}
+};
+// uploadingAssignment
+export const uploadingAssignment = async (formdata: {}) => {
+  try {
+    const res = await Api.post(tutorRoutes.uploadAssignment, formdata, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return res;
+  } catch (error) {
+    console.log("error", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};
+// assignmentFetching
+export const assignmentFetching = async (instructorId: string) => {
+  try {
+    const res = await Api.get(tutorRoutes.assignmentsFetch, {
+      params: {
+        instructorId,
+      },
+    });
+    console.log(res.data,"uuuu")
+    return res.data;
+  } catch (error) {
+    console.log("error", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};

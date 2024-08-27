@@ -61,7 +61,7 @@ function Header() {
           </div>
 
           <Link to={userInfo ? "/home" : "/"}>
-            <img src={Logo} alt="Logo" className="h-8" />
+            <img src={Logo} alt="Logo" className="h-16" />
           </Link>
         </div>
 

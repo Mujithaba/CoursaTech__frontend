@@ -6,7 +6,7 @@ export default function CourseDataLayouts() {
     <div>
       <div className="flex border-b ms-32">
         <NavLink
-          to="curriculum"
+          to="curriculums"
           className={({ isActive }) =>
             `flex items-center px-4 py-2 font-medium ${
               isActive ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-600'
@@ -17,7 +17,7 @@ export default function CourseDataLayouts() {
           Curriculum
         </NavLink>
         <NavLink
-          to="assignments"
+          to="assignmentsview"
           className={({ isActive }) =>
             `flex items-center px-4 py-2 font-medium ${
               isActive ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-600'
@@ -26,6 +26,17 @@ export default function CourseDataLayouts() {
         >
           <FaFileAlt className="mr-2" />
           Assignments
+        </NavLink>
+        <NavLink
+          to="instructorview"
+          className={({ isActive }) =>
+            `flex items-center px-4 py-2 font-medium ${
+              isActive ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-600'
+            }`
+          }
+        >
+          <FaUser className="mr-2" />
+          Instructor
         </NavLink>
         <NavLink
           to="reviews"
@@ -38,19 +49,8 @@ export default function CourseDataLayouts() {
           <FaComments className="mr-2" />
           Reviews
         </NavLink>
-        <NavLink
-          to="instructor"
-          className={({ isActive }) =>
-            `flex items-center px-4 py-2 font-medium ${
-              isActive ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-600'
-            }`
-          }
-        >
-          <FaUser className="mr-2" />
-          Instructor
-        </NavLink>
       </div>
-      
+     
       <div className="p-4">
         <Outlet />
       </div>

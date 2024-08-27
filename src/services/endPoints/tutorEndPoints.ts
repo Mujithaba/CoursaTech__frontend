@@ -18,6 +18,8 @@ const tutorRoutes ={
     profileDetailSave:'/tutors/profileDataSave',
     msgsFetching:'/tutors/storedMsgsFetching',
     coursesForAssignment:'/tutors/coursesForAssignment',
+    uploadAssignment:'/tutors/uploadingAssignment',
+    assignmentsFetch:'/tutors/assignmentsFetch',
 
 }
 

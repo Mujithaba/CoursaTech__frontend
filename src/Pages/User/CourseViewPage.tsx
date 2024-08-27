@@ -1,34 +1,33 @@
 import { FaBook, FaFileAlt, FaComments, FaUser } from "react-icons/fa";
-import { FcPaid } from "react-icons/fc";
+import { SiTicktick } from "react-icons/si";
 import useRazorpay, { RazorpayOptions } from "react-razorpay";
 import file from "/Logo/icon/file (1).png";
 import { useLocation } from "react-router-dom";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ICourse } from "../../services/types";
 import {
   createPayment,
   paymentSuccess,
   viewCoureseDetails,
 } from "../../api/user";
-import AccordionUi from "../../Components/Ui/AccordionUi";
+import {Chip} from "@nextui-org/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { toast } from "react-toastify";
-import InstructorViewPage from "./InstructorViewPage";
+import CuricculumsData from "../../Components/Common/CoursesCommon/CuricculumsData";
+import InstructorView from "../../Components/Common/CoursesCommon/InstructorView";
+import AssignmentsView from "../../Components/Common/CoursesCommon/AssignmentsView";
+import Reviews from "../../Components/Common/CoursesCommon/Reviews";
 
 export default function CourseViewPage() {
   const [courseData, setCourse] = useState<ICourse | null>(null);
-  const [activeTab,setActiveTab]=useState('Curriculum')
-  const [states,setStates]=useState<boolean>(false)
-  const [isPurchase,setIsPurchased] = useState<boolean>(false)
+  const [activeTab, setActiveTab] = useState("Curriculum");
+  const [states, setStates] = useState<boolean>(false);
+  const [isPurchase, setIsPurchased] = useState<boolean>(false);
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const [Razorpay] = useRazorpay();
-
-  
-
-
 
   const location = useLocation();
   const course = location.state?.CourseData as ICourse;
@@ -38,18 +37,16 @@ export default function CourseViewPage() {
     getViewCourse();
   }, [states]);
 
-
-// course fetching api
+  // course fetching api
   const getViewCourse = async () => {
     try {
-      
       let courseId = course._id as string;
       let userId = userInfo._id as string;
-      const response = await viewCoureseDetails(courseId,userId);
-      
+      const response = await viewCoureseDetails(courseId, userId);
+
       if (response && response.getViewCourses) {
         setCourse(response.getViewCourses);
-        setIsPurchased(response.isPurchased)
+        setIsPurchased(response.isPurchased);
       } else {
         console.error("No course data in the response");
         setCourse(null);
@@ -63,11 +60,10 @@ export default function CourseViewPage() {
   if (!courseData) {
     return <div>No course data available</div>;
   }
-  
-  
-  let instructorId = courseData.instructor_id as string
-  console.log(instructorId,"instrctor id");
-  
+
+  let instructorId = courseData.instructor_id as string;
+  console.log(instructorId, "instrctor id");
+  const courseId = courseData._id as string;
 
   // payment gateway started here
   const handlePayment = async () => {
@@ -95,8 +91,8 @@ export default function CourseViewPage() {
         };
         const paymentData = await paymentSuccess(data);
         if (paymentData) {
-          toast.success(paymentData.data.message)
-          setStates(true)
+          toast.success(paymentData.data.message);
+          setStates(true);
         }
       },
       prefill: {
@@ -112,10 +108,10 @@ export default function CourseViewPage() {
     const rzpay = new Razorpay(options);
     rzpay.open();
   };
+  console.log(courseData, "isPurchase------");
 
   return (
     <div className="max-full p-8 mx-auto  bg-whiye rounded-lg shadow-md ">
-     
       <div className="flex  justify-around m-4">
         <div className="">
           <img
@@ -127,36 +123,42 @@ export default function CourseViewPage() {
             <div className="flex justify-between items-center">
               <div>
                 <h1 className=" text-2xl font-bold mb-1">{courseData.title}</h1>
-                <span className="bg-green-300  text-black rounded-2xl py-1 px-2 mb-2 text-sm font-semibold font-mono">
+                {/* <span className="bg-green-300  text-black rounded-2xl py-1 px-2 mb-2 text-sm font-semibold font-mono">
                   {courseData.category_id.categoryName}
-                </span>
+                </span> */}
+                <Chip color="success" variant="dot">{courseData.category_id.categoryName}</Chip>
               </div>
               <div>
-              {/* <p className="bg-yellow-100 px-2 flex items-center font-semibold rounded-full">${courseData.price}</p> */}
+                {/* <p className="bg-yellow-100 px-2 flex items-center font-semibold rounded-full">${courseData.price}</p> */}
 
-              {isPurchase ?(
-                <div className="flex">
-                <p className="flex justify-center  bg-gray-300 rounded-md px-1">
-                <FcPaid size={30} />
-                <span className="text-xs  mt-2 font-sans font-semibold">
-              Purchased
-              </span>
-                </p>
-                
-                </div>
-                ) :(
-
-              <button
-                className="bg-yellow-400 px-4 py-2 font-bold rounded-md hover:bg-yellow-500 flex"
-                onClick={handlePayment}
-              >
-                <span className="text-sm me-1 font-semibold">
-                <FontAwesomeIcon icon={faShoppingBag} className="mr-1 mt-1" />
-                Buy
-                </span>
-                ${courseData.price}
-              </button>
-              )}
+                {isPurchase ? (
+                  <div className="flex">
+                    <p className="flex justify-center  rounded-md px-1">
+                      {/* <SiTicktick  className="text-green-700 mt-1" size={24} />
+                      <span className="text-xs text-green-600 mt-2 font-sans font-semibold">
+                        Purchased
+                      </span> */}
+                      <Chip   startContent={<SiTicktick  size={15} />} 
+                      variant="faded"
+                      className=""
+                      color="success">Purchased</Chip>
+                    </p>
+                  </div>
+                ) : (
+                  <button
+                    className="bg-yellow-400 px-4 py-2 font-bold rounded-md hover:bg-yellow-500 flex"
+                    onClick={handlePayment}
+                  >
+                    <span className="text-sm me-1 font-semibold">
+                      <FontAwesomeIcon
+                        icon={faShoppingBag}
+                        className="mr-1 mt-1"
+                      />
+                      Buy
+                    </span>
+                    ${courseData.price}
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -174,74 +176,85 @@ export default function CourseViewPage() {
         </div>
       </div>
 
+      {/* course layouts */}
       <div className="flex border-b ms-32">
-
-              <button
+        <button
           className={`px-4 py-2 text-lg flex font-semibold ${
             activeTab === "Curriculum"
-              ? "text-blue-600 border-b-2 border-blue-600"
-              : "text-gray-600"
+              ? "text-black border-b-2 border-green-800"
+              : "text-gray-500"
           }`}
           onClick={() => setActiveTab("Curriculum")}
-        ><FaBook className="mr-2 mt-2" size={15}/>
-         Curriculum
+        >
+          <FaBook className="mr-2 mt-2" size={15} />
+          Curriculum
         </button>
         <button
           className={`px-4 py-2 flex text-lg font-semibold ${
             activeTab === "Instructor"
-              ? "text-blue-600 border-b-2 border-blue-600"
-              : "text-gray-600"
+              ? "text-black border-b-2 border-green-800"
+              : "text-gray-500"
           }`}
           onClick={() => setActiveTab("Instructor")}
-        ><FaUser className="mr-2 mt-2" size={15}/>
-        Instructor
+        >
+          <FaUser className="mr-2 mt-2" size={15} />
+          Instructor
         </button>
-        
-        {/* <button className="flex items-center px-4 py-2 text-purple-600 border-b-2 border-purple-600 font-medium">
-          <FaBook className="mr-2" />
-          Curriculum
-        </button> */}
-        <button className="flex items-center px-4 py-2 text-gray-600 font-medium">
-          <FaFileAlt className="mr-2" />
+
+        <button
+          className={`px-4 py-2 flex text-lg font-semibold ${
+            activeTab === "Assignments"
+              ? "text-black border-b-2 border-green-800"
+              : "text-gray-500"
+          }`}
+          onClick={() => setActiveTab("Assignments")}
+        >
+          <FaFileAlt className="mr-2 mt-2" />
           Assignments
         </button>
-        <button className="flex items-center px-4 py-2 text-gray-600 font-medium">
-          <FaComments className="mr-2" />
+        <button
+          className={`px-4 py-2 flex text-lg font-semibold ${
+            activeTab === "reviews"
+              ? "text-black border-b-2 border-green-800"
+              : "text-gray-500"
+          }`}
+          onClick={() => setActiveTab("reviews")}
+        >
+          <FaComments className="mr-2 mt-2" />
           Reviews
         </button>
-        {/* <button className="flex items-center px-4 py-2 text-gray-600 font-medium">
-          <FaUser className="mr-2" />
-          Instructor
-        </button> */}
       </div>
 
+      {/* components of the nav bar in the course view page start*/}
 
-
-{/* Curriculum  start*/}
-      {activeTab === 'Curriculum' && (
-  <div>
-    {courseData.modules && courseData.modules.length > 0 ? (
-      <div className="mt-3 mx-2 bg-card p-3 rounded-md">
-        <AccordionUi modules={courseData.modules} isPurchased={isPurchase} />
-      </div>
-    ) : (
-      <p className="text-center text-gray-600 mt-4 font-bold font-mono">
-        No modules are available now.
-      </p>
-    )}
-  </div>
-)}
-{/* Curriculum  end*/}
-
-{/* instructor page start */}
-{activeTab === 'Instructor' && (
-  <div>
-    <InstructorViewPage instructorId={instructorId}/>
-  </div>
-)}
-{/* instructor page end */}
-
-
+      {/* Curriculum  start*/}
+      {activeTab === "Curriculum" && (
+        <div>
+          <CuricculumsData
+            modules={courseData.modules}
+            isPurchase={isPurchase}
+          />
+        </div>
+      )}
+      {/* instructor page start */}
+      {activeTab === "Instructor" && (
+        <div>
+          <InstructorView instructorId={instructorId} isPurchase={isPurchase} />
+        </div>
+      )}
+      {/* assignments page start */}
+      {activeTab === "Assignments" && (
+        <div>
+          <AssignmentsView courseID={courseId} />
+        </div>
+      )}
+      {/* reviews page start */}
+      {activeTab === "reviews" && (
+        <div>
+          <Reviews courseID={courseId} />
+        </div>
+      )}
+      {/* components of the nav bar in the course view page  end*/}
     </div>
   );
 }
