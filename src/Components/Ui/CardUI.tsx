@@ -45,7 +45,7 @@ const CardUI: React.FC<CardUIProps> = ({ data }) => {
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="absolute left-0 right-0 top-0 p-3 flex justify-end">
+        {/* <div className="absolute left-0 right-0 top-0 p-3 flex justify-end">
           {tutorInfo && (
             <Button color="warning" variant="contained" size="small">
               Unlist
@@ -57,7 +57,7 @@ const CardUI: React.FC<CardUIProps> = ({ data }) => {
               Approved
             </Button>
           )}
-        </div>
+        </div> */}
         <div className="h-[170px] w-full bg-white mt-3 flex flex-col justify-between m-1">
           <div className=" flex justify-between">
             <p className="bg-green-100 px-2 flex items-center rounded-full">

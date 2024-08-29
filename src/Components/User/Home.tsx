@@ -369,13 +369,14 @@ import {
   Avatar,
   Paper,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { School, Laptop, Group } from "@mui/icons-material";
 
 const MotionBox = motion(Box);
 
 const Home: React.FC = () => {
+  const navigate = useNavigate()
   const topCourses = [
     {
       id: 1,
@@ -641,12 +642,13 @@ const Home: React.FC = () => {
             <Typography variant="h6" gutterBottom sx={{ mb: 4 }}>
               Become an instructor and inspire learners worldwide
             </Typography>
-            <Link to="/become-instructor" style={{ textDecoration: "none" }}>
+            <Link to="/tutor/tutorLogin" style={{ textDecoration: "none" }}>
               <Button
                 variant="contained"
                 color="secondary"
                 size="large"
                 sx={{ fontWeight: "bold", px: 4, py: 1.5 }}
+                
               >
                 Start Teaching Today
               </Button>

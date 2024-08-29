@@ -8,7 +8,6 @@ interface CurriculumDataProps {
 }
 
 export default function CuricculumsData({modules, isPurchase}: CurriculumDataProps) {
-  console.log(modules, "isPurchase++++++");
   
   return (
     <div>
@@ -17,9 +16,9 @@ export default function CuricculumsData({modules, isPurchase}: CurriculumDataPro
           <AccordionUi modules={modules} isPurchased={isPurchase} />
         </div>
       ) : (
-        <p className="text-center text-gray-600 mt-4 font-bold font-mono">
+        <div className="text-center bg-card py-7 rounded-md text-gray-600 mt-4 font-bold font-mono">
           No modules are available now.
-        </p>
+        </div>
       )}
     </div>
   )

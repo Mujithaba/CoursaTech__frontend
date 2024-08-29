@@ -15,6 +15,10 @@ const userRoutes={
     createPayment:'/users/createPayment',
     paymentSuccess:'/users/paymentSuccess',
     sendusermsg:'/users/sendUserMsg',
+    uploadReview:'/users/uploadReviews',
+    reviewsFetch:'/users/reviewsFetch',
+    fetchAssignments:'/users/fetchAssignments',
+    getInstructor:'/users/getInstructor',
 }
 
 export default userRoutes;

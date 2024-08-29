@@ -20,6 +20,9 @@ const tutorRoutes ={
     coursesForAssignment:'/tutors/coursesForAssignment',
     uploadAssignment:'/tutors/uploadingAssignment',
     assignmentsFetch:'/tutors/assignmentsFetch',
+    reviewsFetch:'/tutors/reviewsFetch',
+    fetchAssignments:'/tutors/fetchAssignments',
+    getInstructor:'/tutors/getInstructor',
 
 }
 

@@ -172,7 +172,7 @@ export default function CourseViewPage() {
           >
             traile video not working
           </video>
-          <h1 className=" text-2xl font-bold ">Trailer</h1>
+          <h1 className=" text-2xl font-bold ">Preview</h1>
         </div>
       </div>
 

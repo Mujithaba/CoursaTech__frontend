@@ -11,12 +11,13 @@ import {
 import { IAssignment } from "../../../services/types";
 import document from "/Logo/images/documentImg.png";
 import { eachAssignmentsFetch } from "../../../api/user";
+import { eachAssignmentsFetchT } from "../../../api/tutor";
 
 interface AssignmentProps {
   courseID: string;
 }
 
-function AssignmentsView({ courseID }: AssignmentProps) {
+function AssignmentsViewCommon({ courseID }: AssignmentProps) {
   const [assignments, setAssignments] = useState<IAssignment[]>([]);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ function AssignmentsView({ courseID }: AssignmentProps) {
 
   const fetchEachAssignments = async () => {
     try {
-      const response = await eachAssignmentsFetch(courseID);
+      const response = await eachAssignmentsFetchT(courseID);
       if (response ) {
         setAssignments(response);
       } else {
@@ -93,4 +94,4 @@ function AssignmentsView({ courseID }: AssignmentProps) {
   );
 }
 
-export default React.memo(AssignmentsView);
+export default AssignmentsViewCommon;

@@ -376,3 +376,61 @@ export const assignmentFetching = async (instructorId: string) => {
     return errorHandler(err);
   }
 };
+// reviewsFetching
+export const reviewsFetchingT = async(courseId:string)=>{
+  try {
+
+    const res = await Api.get(tutorRoutes.reviewsFetch,{
+      params:{
+        courseId
+      }
+    })
+
+   return res.data
+    
+  } catch (error) {
+    console.log("error",error);
+    const err:Error = error as Error;
+    return errorHandler(err);
+  }
+}
+// eachAssignmentsFetch
+export const eachAssignmentsFetchT = async(courseId:string)=>{
+  try {
+console.log(courseId,"ppp");
+
+    const res = await Api.get(tutorRoutes.fetchAssignments,{
+      params:{
+        courseId
+      }
+    })
+    console.log(res,"assignment res");
+    
+    return res.data;
+    
+  } catch (error) {
+    console.log("error",error);
+    const err:Error = error as Error;
+    return errorHandler(err);
+  }
+}
+// getInstructorData
+export const getInstructorDataT = async(instructorId:string)=>{
+  try {
+    console.log(instructorId,"ppp");
+    
+        const res = await Api.get(tutorRoutes.getInstructor,{
+          params:{
+            instructorId
+          }
+        })
+        console.log(res,"data instructor");
+        
+        return res.data;
+        
+      } catch (error) {
+        console.log("error",error);
+        const err:Error = error as Error;
+        return errorHandler(err);
+      }
+}

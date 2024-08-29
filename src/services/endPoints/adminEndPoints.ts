@@ -15,6 +15,9 @@ const adminRoutes = {
     getUnapprovedCourse:'/admin/getUnapprovedCourse',
     courseApproved:'/admin/courseApprove',
     courseUnapproved:'/admin/courseUnapprove',
+    reviewsFetch:'/admin/reviewsFetch',
+    fetchAssignments:'/admin/fetchAssignments',
+    getInstructor:'/admin/getInstructor',
 }
 
 export default adminRoutes

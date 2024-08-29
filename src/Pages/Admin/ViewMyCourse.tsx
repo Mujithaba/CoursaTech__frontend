@@ -1,15 +1,18 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ICourse } from "../../services/types";
-import { FaChevronDown, FaBook, FaFileAlt, FaComments } from "react-icons/fa";
+import { FaBook, FaFileAlt, FaComments, FaUser } from "react-icons/fa";
 
-import AccordionUi from "../../Components/Ui/AccordionUi";
 import { viewCoureseDetails } from "../../api/admin";
+import CommonCuricculum from "../../Components/Common/tutorCommon/CommonCuricculum";
+import CommonInstructorViewA from "../../Components/Common/adminCommon/InstructorView";
+import AssignmentsViewCommonA from "../../Components/Common/adminCommon/AssignmentsView";
+import CommonReviewsA from "../../Components/Common/adminCommon/Reviews";
 
 const ViewMyCourse: React.FC = () => {
-  
   const [courseData, setCourse] = useState<ICourse | null>(null);
-const [state,setState] = useState<boolean>(false)
+  const [state, setState] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState("Curriculum");
 
   console.log(courseData, "setCourseData");
 
@@ -19,7 +22,7 @@ const [state,setState] = useState<boolean>(false)
 
   useEffect(() => {
     getViewCourse();
-  },[]);
+  }, []);
 
   console.log(courseData, "setCourseData...........");
   const getViewCourse = async () => {
@@ -43,85 +46,122 @@ const [state,setState] = useState<boolean>(false)
     return <div>No course data available</div>;
   }
 
- 
+  const courseid = courseData._id as string;
+  const instructor_id = courseData.instructor_id as string;
+
 
   return (
     <>
-      
-        <div className="max-full p-3 mx-auto  bg-white rounded-lg shadow-md ">
-       
-          
-          {/* course view page contents starts here*/}
-          <div className="flex  justify-between m-4">
-            <div>
-              <img
-                className="h-40 rounded-md"
-                src={courseData.thumbnailSignedUrl}
-                alt="Cover Image"
-              />
-              <h1 className=" text-2xl font-bold mt-5">{courseData.title}</h1>
-              <span className="bg-green-300  text-black rounded-2xl py-1 px-2 mb-2 text-sm font-semibold font-mono">
-                {courseData.category_id.categoryName}
-              </span>
-            </div>
+      <div className="max-full p-3 mx-auto  bg-white rounded-lg shadow-md ">
+        {/* course view page contents starts here*/}
+        <div className="flex  justify-between m-4">
+          <div>
+            <img
+              className="h-40 rounded-md"
+              src={courseData.thumbnailSignedUrl}
+              alt="Cover Image"
+            />
+            <h1 className=" text-2xl font-bold mt-5">{courseData.title}</h1>
+            <span className="bg-green-300  text-black rounded-2xl py-1 px-2 mb-2 text-sm font-semibold font-mono">
+              {courseData.category_id.categoryName}
+            </span>
+          </div>
 
+          <div>
+            <video
+              className="h-44  text-center border-2 border-card text-red-700 rounded-md"
+              src={courseData.trailerSignedUrl}
+              controls
+            >
+              traile video not working
+            </video>
+            <h1 className=" text-xl font-bold ">Preview</h1>
+          </div>
+        </div>
+
+
+           {/* course layouts */}
+      <div className="flex border-b ms-32">
+        <button
+          className={`px-4 py-2 text-lg flex font-semibold ${
+            activeTab === "Curriculum"
+              ? "text-black border-b-2 border-green-800"
+              : "text-gray-500"
+          }`}
+          onClick={() => setActiveTab("Curriculum")}
+        >
+          <FaBook className="mr-2 mt-2" size={15} />
+          Curriculum
+        </button>
+        <button
+          className={`px-4 py-2 flex text-lg font-semibold ${
+            activeTab === "Instructor"
+              ? "text-black border-b-2 border-green-800"
+              : "text-gray-500"
+          }`}
+          onClick={() => setActiveTab("Instructor")}
+        >
+          <FaUser className="mr-2 mt-2" size={15} />
+          Instructor
+        </button>
+
+        <button
+          className={`px-4 py-2 flex text-lg font-semibold ${
+            activeTab === "Assignments"
+              ? "text-black border-b-2 border-green-800"
+              : "text-gray-500"
+          }`}
+          onClick={() => setActiveTab("Assignments")}
+        >
+          <FaFileAlt className="mr-2 mt-2" />
+          Assignments
+        </button>
+        <button
+          className={`px-4 py-2 flex text-lg font-semibold ${
+            activeTab === "reviews"
+              ? "text-black border-b-2 border-green-800"
+              : "text-gray-500"
+          }`}
+          onClick={() => setActiveTab("reviews")}
+        >
+          <FaComments className="mr-2 mt-2" />
+          Reviews
+        </button>
+      </div>
+
+         {/* components of the nav bar in the course view page start*/}
+
+          {/* Curriculum  start*/}
+          {activeTab === "Curriculum" && (
             <div>
-          <video
-            className="h-44  text-center border-2 border-card text-red-700 rounded-md"
-            src={courseData.trailerSignedUrl}
-            controls
-          >
-            traile video not working
-          </video>
-          <h1 className=" text-xl font-bold ">Preview</h1>
-        </div>
-        
-          </div>
-          <div className="flex justify-center border-b ms-32">
-            <button className="flex items-center px-4 py-2 text-purple-600 border-b-2 border-purple-600 font-medium">
-              <FaBook className="mr-2" />
-              Curriculum
-            </button>
-            <button className="flex items-center px-4 py-2 text-gray-600 font-medium">
-              <FaFileAlt className="mr-2" />
-              Assignments
-            </button>
-            <button className="flex items-center px-4 py-2 text-gray-600 font-medium">
-              <FaComments className="mr-2" />
-              Reviews
-            </button>
-          </div>
-          {/* modules component */}
-          {courseData.modules && courseData.modules.length > 0 ? (
-            <div className="mt-3 mx-2 bg-card p-3 rounded-md">
-              <AccordionUi modules={courseData.modules} />
+              <CommonCuricculum modules={courseData.modules} />
             </div>
-          ) : (
-            <p className="text-center text-gray-600 mt-4 font-bold font-mono">
-              No modules are available now. Add them!
-            </p>
           )}
-          {/* <div className="mt-3 mx-14 ">
-        <AccordionUi modules={courseData.modules} />
-       </div> */}
-        </div>
-    
+          {/* instructor page start */}
+          {activeTab === "Instructor" && (
+            <div>
+              <CommonInstructorViewA instructorId={instructor_id} />
+            </div>
+          )}
+          {/* assignments page start */}
+          {activeTab === "Assignments" && (
+            <div>
+              <AssignmentsViewCommonA courseID={courseid} />
+            </div>
+          )}
+          {/* reviews page start */}
+          {activeTab === "reviews" && (
+            <div>
+              <CommonReviewsA courseID={courseid} />
+            </div>
+          )}
+          {/* components of the nav bar in the course view page  end*/}
+
+      
+      </div>
     </>
   );
 };
 
 export default ViewMyCourse;
 
-{
-  /* {courseData.chapters?.length !== 0 ? (
-  <div className="flex justify-between items-center p-4 bg-gray-100 rounded">
-    <span className="font-semibold">Intro Course content</span>
-    <span className="text-gray-600">02hr 35min</span>
-    <FaChevronDown className="text-gray-600" />
-  </div>
-) : (
-  <p className="text-gray-700 font-mono font-semibold">
-    Curicculums are Empty...!{" "}
-  </p>
-)} */
-}

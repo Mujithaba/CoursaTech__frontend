@@ -205,6 +205,7 @@ export const paymentSuccess = async (data:{})=>{
 // sendUserMsg
 export const sendUserMsg = async (message:string,userId:string,instructorId:string,username:string)=>{
   try {
+    console.log(message,userId,instructorId,username,"ppppppppp")
     const res = await Api.post(userRoutes.sendusermsg,{message,userId,instructorId,username})
     console.log(res,"res chat ");
     
@@ -215,4 +216,76 @@ export const sendUserMsg = async (message:string,userId:string,instructorId:stri
     const err:Error = error as Error ;
     return errorHandler(err);
   }
+}
+// uploadReviews
+export const uploadReviews =  async(rating:number,feedback:string,courseId:string,userId:string,userName:string)=>{
+  try {
+
+    const res = await Api.post(userRoutes.uploadReview,{rating,feedback,courseId,userId,userName})
+    return res;
+    
+  } catch (error) {
+    console.log("error",error);
+    const err:Error = error as Error;
+    return errorHandler(err)
+    
+  }
+}
+// reviewsFetching
+export const reviewsFetching = async(courseId:string)=>{
+  try {
+
+    const res = await Api.get(userRoutes.reviewsFetch,{
+      params:{
+        courseId
+      }
+    })
+
+   return res.data
+    
+  } catch (error) {
+    console.log("error",error);
+    const err:Error = error as Error;
+    return errorHandler(err);
+  }
+}
+// eachAssignmentsFetch
+export const eachAssignmentsFetch = async(courseId:string)=>{
+  try {
+console.log(courseId,"ppp");
+
+    const res = await Api.get(userRoutes.fetchAssignments,{
+      params:{
+        courseId
+      }
+    })
+    console.log(res,"assignment res");
+    
+    return res.data;
+    
+  } catch (error) {
+    console.log("error",error);
+    const err:Error = error as Error;
+    return errorHandler(err);
+  }
+}
+// getInstructorData
+export const getInstructorData = async(instructorId:string)=>{
+  try {
+    console.log(instructorId,"ppp");
+    
+        const res = await Api.get(userRoutes.getInstructor,{
+          params:{
+            instructorId
+          }
+        })
+        console.log(res,"data instructor");
+        
+        return res.data;
+        
+      } catch (error) {
+        console.log("error",error);
+        const err:Error = error as Error;
+        return errorHandler(err);
+      }
 }

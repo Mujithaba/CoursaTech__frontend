@@ -55,28 +55,28 @@ export default function Courses() {
           {/* Background image */}
 
           <img
-            className="absolute bg-white h-full w-full object-cover "
+            className="absolute bg-gray-900 h-full w-full object-cover "
             src={coverImage}
             alt=""
           />
 
           {/* Content */}
           <div className="relative m-24 z-10 max-w-4xl w-full bg-black/50 p-8 rounded-lg shadow-lg">
-            <h1 className="text-xl  text-card font-sans font-semibold mb-2">
+            <h1 className="text-xl flte text-card font-sans font-semibold mb-2">
               Take the first step,
               <span className="text-sm">to learn with us</span>
             </h1>
             <div className="w-full flex flex-col gap-4 mb-6 ">
-              <div className="flex w-full  flex-wrap md:flex-nowrap gap-4 mb-6">
-                <input
+              {/* <div className="flex w-full  flex-wrap md:flex-nowrap gap-4 mb-6"> */}
+                {/* <input
                   type="text"
                   placeholder="Search"
                   className="text-black p-2 rounded-lg border-2 w-full border-black"
                 />
                 <button className=" bg-white p-2 rounded-md">
                   <FaSearch size={20} className="bg-white" />
-                </button>
-              </div>
+                </button> */}
+              {/* </div> */}
             </div>
 
             {!userInfo && (

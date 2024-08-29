@@ -131,3 +131,10 @@ export interface ICoursesForAssignment {
   _id: string;
   courseName: string;
 }
+
+export interface IReviews{
+  _id?:string;
+  userName:string;
+  feedback:string;
+  rating:number;
+}

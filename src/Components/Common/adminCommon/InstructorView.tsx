@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { MdMessage } from "react-icons/md";
-import {Card, CardHeader, CardBody, CardFooter, Avatar, Button} from "@nextui-org/react";
-import {User, Link} from "@nextui-org/react";
+import {Card, CardHeader, CardBody,Avatar} from "@nextui-org/react";
+import { getInstructorDataA } from "../../../api/admin";
 
 
-import UserChatScreenModal from "../../User/UserChatScreenModal";
-import { getInstructorData } from "../../../api/user";
+
 
 interface IInstructorProps {
   instructorId: string;
-  isPurchase: boolean;
 }
 
 interface IInstructor {
@@ -24,15 +21,13 @@ interface IInstructor {
     aboutBio?:string;
   }
 
-const InstructorView: React.FC<IInstructorProps> = ({
+const CommonInstructorViewA: React.FC<IInstructorProps> = ({
   instructorId,
-  isPurchase,
+
 }) => {
-  const [isModalOpen, setModalOpen] = useState(false);
   const [instructor, setInstructor] = useState<IInstructor | null>(null); 
 
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
+  
 
   useEffect(()=>{
     fetchInstructorData()
@@ -40,7 +35,7 @@ const InstructorView: React.FC<IInstructorProps> = ({
 
   const fetchInstructorData=async()=>{
 try {
-  const response = await getInstructorData(instructorId)
+  const response = await getInstructorDataA(instructorId)
   console.log(response,"getInstructor");
   
   if(response){
@@ -60,13 +55,7 @@ try {
     {/* <h1>Instructor ID: {instructorId}</h1> */}
     <div>
 
-    <div className="flex mb-3 text-sm">
-      {!isPurchase && (
-        <div className="text-red-500">
-          After purchasing this course, you can chat with the tutor.
-        </div>
-      )}
-    </div>
+    
 
     <Card className="max-w-[340px]">
       <CardHeader className="justify-between">
@@ -87,18 +76,7 @@ try {
             </h5>
           </div>
         </div>
-        {isPurchase && (
-          <div className="ms-5">
-            <Button onPress={openModal} size="sm" className="bg-gray-950 text-xs  text-white">
-              <MdMessage /> Chat
-            </Button>
-            <UserChatScreenModal
-              isOpen={isModalOpen}
-              onClose={closeModal}
-              receiverId={instructorId}
-            />
-          </div>
-        )}
+        
       </CardHeader>
       <CardBody className="px-3 py-2 text-small text-default-400">
         <p>Company: {instructor?.companyName == 'Please give Company' ? "CompanyName not available" :(<span className="text-black">{instructor?.companyName}</span>) }</p>
@@ -137,4 +115,4 @@ try {
   );
 };
 
-export default InstructorView;
+export default CommonInstructorViewA;
