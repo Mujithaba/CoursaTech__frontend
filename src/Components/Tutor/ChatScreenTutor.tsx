@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import io, { Socket } from "socket.io-client";
 import { useLocation } from "react-router-dom";
 
 interface Message {
-  senderId?: string;
-  receiverId?: string;
-  message?: string;
+  id: string;
+  senderId: string;
+  receiverId: string;
+  message: string;
+  timestamp: string; // Added timestamp field
 }
+
+const SOCKET_SERVER_URL = "http://localhost:3000";
 
 const ChatScreenTutor: React.FC = () => {
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
   const location = useLocation();
-  const { senderId } = location.state || {};
-  console.log("User ID (Sender):", senderId);
+  const { senderId, userName } = location.state || {};
 
   const { tutorInfo } = useSelector((state: RootState) => state.tutorAuth);
   const receiverId = tutorInfo?._id;
-  console.log("Tutor ID (Receiver):", receiverId);
 
-  // Define socket variable outside useEffect so it can be accessed in handleSubmit
-  const [socket, setSocket] = useState<Socket | null>(null);
+  const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
     if (!receiverId || !senderId) {
@@ -30,65 +31,81 @@ const ChatScreenTutor: React.FC = () => {
       return;
     }
 
-    const newSocket = io("http://localhost:3000");
-    setSocket(newSocket);
+    socketRef.current = io(SOCKET_SERVER_URL);
 
-    console.log("Joining room with:", { receiverId, senderId });
-    newSocket.emit("join", { userId: senderId, receiverId });
+    const roomId = [senderId, receiverId].sort().join('-');
+    socketRef.current.emit('joinRoom', { roomId });
 
-    const handlePrivateMessage = (msg: Message) => {
-      console.log("Received message:", msg);
-      setMessages((prevMessages) => [...prevMessages, msg]);
-    };
-
-    newSocket.on("private message", handlePrivateMessage);
+    socketRef.current.on('private message', (msg: Message) => {
+      setMessages((prevMessages) => {
+        if (!prevMessages.some(m => m.id === msg.id)) {
+          return [...prevMessages, msg];
+        }
+        return prevMessages;
+      });
+    });
 
     return () => {
-      newSocket.off("private message", handlePrivateMessage);
-      newSocket.disconnect();
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+      }
     };
   }, [senderId, receiverId]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (message && senderId && receiverId && socket) {
-      console.log("Sending message:", { message, receiverId, senderId });
-      socket.emit("private message", {
-        message,
-        senderId: senderId,
-        receiverId: receiverId,
-      });
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { senderId: senderId, message, receiverId: receiverId },
-      ]);
+    if (message && senderId && receiverId && socketRef.current) {
+      const newMessage: Message = {
+        id: Date.now().toString(), // Use timestamp as a unique ID
+        senderId: receiverId,
+        receiverId: senderId,
+        message: message,
+        timestamp: new Date().toISOString(), // Add current timestamp
+      };
+
+      socketRef.current.emit('private message', newMessage);
+
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
       setMessage("");
     }
+  };
+
+  // Function to format the timestamp
+  const formatTimestamp = (timestamp: string) => {
+    const date = new Date(timestamp);
+    return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
   };
 
   return (
     <div className="flex flex-col h-full bg-gray-100">
       <div className="flex-1 p-4 overflow-y-auto">
         <ul className="space-y-2">
-          {messages.map((msg, index) => (
+          {messages.map((msg) => (
             <li
-              key={index}
+              key={msg.id}
               className={`flex ${
                 msg.senderId === receiverId ? "justify-end" : "justify-start"
               }`}
             >
-              <div
+              {/* <div
                 className={`p-3 rounded-lg max-w-xs ${
                   msg.senderId === receiverId
                     ? "bg-blue-500 text-white"
                     : "bg-gray-300 text-black"
                 }`}
               >
-                <strong>
-                  {msg.senderId === receiverId ? "You" : "User"}:
-                </strong>{" "}
-                {msg.message}
-              </div>
+                <p className="text-xs text-gray-500">{msg.senderId === receiverId ? "You" : userName}</p>
+                <p className="font-mono">{msg.message}</p>
+                <p className="text-xs text-gray-500 flex justify-end">{formatTimestamp(msg.timestamp)}</p>
+              </div> */}
+               <div className={`chat chat-start max-w-xs`}>
+                  <div className="chat-header">
+                  {msg.senderId === receiverId ? "You" : userName}
+                  </div>
+                  <div className="chat-bubble">{msg.message}</div>
+                    <time className="text-xs opacity-50">{formatTimestamp(msg.timestamp)}</time>
+                  <div className="chat-footer opacity-50">Seen</div>
+                </div>
             </li>
           ))}
         </ul>

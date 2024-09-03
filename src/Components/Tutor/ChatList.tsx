@@ -45,11 +45,12 @@ const ChatList: React.FC = () => {
         fetchMsgs();
     }, [fetchMsgs]);
 
-    const handleViewChatScreen = (senderId: string, receiverId: string) => {
+    const handleViewChatScreen = (senderId: string, receiverId: string,userName:string) => {
         navigate('viewChatScreen', {
             state: {
                 senderId,
-                receiverId
+                receiverId,
+                userName
             }
         });
     };
@@ -71,7 +72,7 @@ const ChatList: React.FC = () => {
                     <div 
                         key={conversation._id} 
                         className="flex items-center p-3 bg-gray-100 rounded-lg shadow-md hover:bg-gray-200 cursor-pointer transition duration-200"
-                        onClick={() => handleViewChatScreen(conversation.senderId, conversation.receiverId)}
+                        onClick={() => handleViewChatScreen(conversation.senderId, conversation.receiverId,conversation.senderName)}
                     >
                         <img 
                             src='https://via.placeholder.com/150' 
