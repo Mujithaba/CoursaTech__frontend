@@ -10,6 +10,9 @@ const TutorsList = lazy(() => import("../Components/Admin/Tutors"));
 const CategoryList = lazy(() => import("../Pages/Admin/Categories"));
 const ViewMyCourse = lazy(() => import("../Pages/Admin/ViewMyCourse"));
 const AdminCoursePage = lazy(() => import("../Pages/Admin/AdminCoursePage"));
+const ReportedCourses = lazy(() => import("../Components/Admin/ReportedCourses"));
+
+
 
 function AdminRoutes() {
   return (
@@ -28,6 +31,7 @@ function AdminRoutes() {
                 path="/coursesList/courseView"
                 element={<ViewMyCourse />}
               />
+              <Route path="/reportedCourses" element={<ReportedCourses />} />
             </Route>
           </Route>
         </Routes>

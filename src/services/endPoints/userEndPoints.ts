@@ -19,6 +19,7 @@ const userRoutes={
     reviewsFetch:'/users/reviewsFetch',
     fetchAssignments:'/users/fetchAssignments',
     getInstructor:'/users/getInstructor',
+    submitReport:'/users/submitReport',
 }
 
 export default userRoutes;

@@ -103,7 +103,7 @@ try {
       <CardBody className="px-3 py-2 text-small text-default-400">
         <p>Company: {instructor?.companyName == 'Please give Company' ? "CompanyName not available" :(<span className="text-black">{instructor?.companyName}</span>) }</p>
         <p>Positions: {instructor?.position == 'Please give your role' ?   "position not available"  :(<span className="text-black">{instructor?.position}</span>) }</p>
-        <p>Positions: {instructor?.experience == 'Please give your experience' ?   "position not available"  :(<span className="text-black">{ instructor?.experience}</span>)}</p>
+        <p>Experience: {instructor?.experience == 'Please give your experience' ?   "position not available"  :(<span className="text-black">{ instructor?.experience}</span>)}</p>
         <p>Bio: {instructor?.aboutBio == 'write something about youself' ? "Bio not available" :(<span className="text-black">{instructor?.aboutBio}</span>)}</p>
         {/* <span className="pt-2">
           #FrontendWithZoey{" "}

@@ -7,6 +7,7 @@ import {
   HiOutlineCollection,
   HiOutlineChartSquareBar,
 } from "react-icons/hi";
+import { GoReport } from "react-icons/go";
 import { TbCategoryPlus } from "react-icons/tb";
 import { GiTeacher } from "react-icons/gi";
 import { FaUsers } from "react-icons/fa6";
@@ -152,6 +153,31 @@ function SideBar() {
                 }`}
               >
                 Category
+              </span>
+            </>
+          )}
+        </NavLink>
+        {/* /reportedCourses */}
+        <NavLink
+          to="/admin/reportedCourses"
+          className={({ isActive }) =>
+            `flex items-center py-2.5 m-2 px-4 rounded-xl transition duration-200 ${
+              isActive ? "bg-gray-800 justify-center" : "hover:bg-gray-800"
+            }`
+          }
+        >
+          {({ isActive }) => (
+            <>
+              <GoReport 
+                size={isActive ? 18 : 20} // Change size based on isActive
+                className="mr-2"
+              />
+              <span
+                className={`transition-all duration-200 ${
+                  isActive ? "text-sm" : "font-mono"
+                }`}
+              >
+               Reports
               </span>
             </>
           )}

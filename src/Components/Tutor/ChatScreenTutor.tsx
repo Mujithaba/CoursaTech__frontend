@@ -3,6 +3,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import io, { Socket } from "socket.io-client";
 import { useLocation } from "react-router-dom";
+import { FiSend } from "react-icons/fi";
+
+
 
 interface Message {
   id: string;
@@ -77,7 +80,7 @@ const ChatScreenTutor: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-gray-100">
+    <div className="flex flex-col h-full bg-white rounded-md">
       <div className="flex-1 p-4 overflow-y-auto">
         <ul className="space-y-2">
           {messages.map((msg) => (
@@ -87,44 +90,44 @@ const ChatScreenTutor: React.FC = () => {
                 msg.senderId === receiverId ? "justify-end" : "justify-start"
               }`}
             >
-              {/* <div
-                className={`p-3 rounded-lg max-w-xs ${
-                  msg.senderId === receiverId
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-300 text-black"
-                }`}
-              >
-                <p className="text-xs text-gray-500">{msg.senderId === receiverId ? "You" : userName}</p>
-                <p className="font-mono">{msg.message}</p>
-                <p className="text-xs text-gray-500 flex justify-end">{formatTimestamp(msg.timestamp)}</p>
-              </div> */}
-               <div className={`chat chat-start max-w-xs`}>
-                  <div className="chat-header">
-                  {msg.senderId === receiverId ? "You" : userName}
-                  </div>
-                  <div className="chat-bubble">{msg.message}</div>
-                    <time className="text-xs opacity-50">{formatTimestamp(msg.timestamp)}</time>
-                  <div className="chat-footer opacity-50">Seen</div>
+            
+              {msg.senderId === receiverId ? 
+              ( <div className={`chat chat-end max-w-xs`}>
+                <div className="chat-header">
+                {msg.senderId === receiverId ? "You" : userName}
                 </div>
+                <div className="chat-bubble">{msg.message}</div>
+                  <time className="text-xs opacity-50">{formatTimestamp(msg.timestamp)}</time>
+                <div className="chat-footer opacity-50">Seen</div>
+              </div>)
+              :( <div className={`chat chat-start max-w-xs`}>
+                <div className="chat-header">
+                {msg.senderId === receiverId ? "You" : userName}
+                </div>
+                <div className="chat-bubble">{msg.message}</div>
+                  <time className="text-xs opacity-50">{formatTimestamp(msg.timestamp)}</time>
+                <div className="chat-footer opacity-50">Seen</div>
+              </div>)}
+              
             </li>
           ))}
         </ul>
       </div>
 
-      <div className="p-4 bg-white border-t">
+      <div className="p-4 bg-gray-800 border-t rounded-b-md">
         <form onSubmit={handleSubmit} className="flex space-x-2">
           <input
             type="text"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className="flex-1 p-2 border rounded-lg bg-blue-100"
+            className="flex-1 p-2 border rounded-lg bg-white"
             placeholder="Type a message..."
           />
           <button
-            type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg"
+            className="bg-white text-white px-2  rounded-full"
+            onClick={handleSubmit}
           >
-            Send
+            <FiSend size={23} className="text-black"/>
           </button>
         </form>
       </div>

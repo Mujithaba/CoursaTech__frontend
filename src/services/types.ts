@@ -2,7 +2,7 @@ export interface User {
   _id: string;
   name: string;
   email: string;
-  phone?:string;
+  phone?: string;
   isBlocked: boolean;
 }
 
@@ -10,19 +10,19 @@ export interface Tutor {
   _id: string;
   name: string;
   email: string;
-  phone?:string;
+  phone?: string;
   isBlocked: boolean;
-  isGoogle:boolean
+  isGoogle: boolean;
 }
 
 export interface ITutorDetails {
-  _id?:string;
-  profileImg:string;
-  profileImgUrl:string;
-  experience:string;
-  position:string;
-  companyName:string;
-  aboutBio:string;
+  _id?: string;
+  profileImg: string;
+  profileImgUrl: string;
+  experience: string;
+  position: string;
+  companyName: string;
+  aboutBio: string;
 }
 
 export interface UsersResponse {
@@ -77,7 +77,7 @@ export interface ICourse {
   trailerSignedUrl: string;
   trailer_vd: string;
   chapters?: Modules[];
-  modules?:any[];
+  modules?: any[];
   assigments?: Assignment[];
   is_verified?: boolean;
   is_listed?: boolean;
@@ -109,32 +109,51 @@ export interface Modules {
   createdAt?: Date;
 }
 
-
 export interface IMessage {
-  _id:string;
-  senderId:string;
-  receiverId:string;
-  message:string;
+  _id: string;
+  senderId: string;
+  receiverId: string;
+  message: string;
 }
-
 
 export interface IAssignment {
-  _id?:string;
-  title:string;
-  pdf_file:string;
-  assignmentUrl:string;
-  courseId:string;
+  _id?: string;
+  title: string;
+  pdf_file: string;
+  assignmentUrl: string;
+  courseId: string;
 }
-
 
 export interface ICoursesForAssignment {
   _id: string;
   courseName: string;
 }
 
-export interface IReviews{
-  _id?:string;
-  userName:string;
-  feedback:string;
-  rating:number;
+export interface IReviews {
+  _id?: string;
+  userName: string;
+  feedback: string;
+  rating: number;
+}
+
+export interface IReportIssues {
+  issueType: string;
+  description: string;
+}
+
+
+export interface ReportData {
+  courseId:string;
+  courseName: string;
+  instructor: {
+    instructorName: string;
+    email: string;
+  };
+  reportedCount: number;
+  thumbnail: string;
+}
+
+export interface ApiResponse {
+  data: ReportData[];
+  message: string;
 }

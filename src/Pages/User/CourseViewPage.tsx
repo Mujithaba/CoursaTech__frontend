@@ -2,6 +2,7 @@ import { FaBook, FaFileAlt, FaComments, FaUser } from "react-icons/fa";
 import { SiTicktick } from "react-icons/si";
 import useRazorpay, { RazorpayOptions } from "react-razorpay";
 import file from "/Logo/icon/file (1).png";
+import { MdOutlineReport } from "react-icons/md";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ICourse } from "../../services/types";
@@ -10,7 +11,7 @@ import {
   paymentSuccess,
   viewCoureseDetails,
 } from "../../api/user";
-import {Chip} from "@nextui-org/react";
+import { Chip } from "@nextui-org/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
@@ -20,6 +21,7 @@ import CuricculumsData from "../../Components/Common/CoursesCommon/CuricculumsDa
 import InstructorView from "../../Components/Common/CoursesCommon/InstructorView";
 import AssignmentsView from "../../Components/Common/CoursesCommon/AssignmentsView";
 import Reviews from "../../Components/Common/CoursesCommon/Reviews";
+import ReportModal from "../../Components/User/ReportModal";
 
 export default function CourseViewPage() {
   const [courseData, setCourse] = useState<ICourse | null>(null);
@@ -28,6 +30,10 @@ export default function CourseViewPage() {
   const [isPurchase, setIsPurchased] = useState<boolean>(false);
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const [Razorpay] = useRazorpay();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const location = useLocation();
   const course = location.state?.CourseData as ICourse;
@@ -112,6 +118,21 @@ export default function CourseViewPage() {
 
   return (
     <div className="max-full p-8 mx-auto  bg-whiye rounded-lg shadow-md ">
+      {/* report modal */}
+      {isPurchase && (
+        <div className="flex justify-end">
+          <ReportModal
+            courseId={courseId}
+            userId={userInfo._id}
+            Open={isModalOpen}
+            Close={closeModal}
+          />
+          <button className="flex" onClick={openModal}>
+            <MdOutlineReport size={25} className="text-gray-700 mr-1" />
+          </button>
+        </div>
+      )}
+
       <div className="flex  justify-around m-4">
         <div className="">
           <img
@@ -126,7 +147,9 @@ export default function CourseViewPage() {
                 {/* <span className="bg-green-300  text-black rounded-2xl py-1 px-2 mb-2 text-sm font-semibold font-mono">
                   {courseData.category_id.categoryName}
                 </span> */}
-                <Chip color="success" variant="dot">{courseData.category_id.categoryName}</Chip>
+                <Chip color="success" variant="dot">
+                  {courseData.category_id.categoryName}
+                </Chip>
               </div>
               <div>
                 {/* <p className="bg-yellow-100 px-2 flex items-center font-semibold rounded-full">${courseData.price}</p> */}
@@ -138,10 +161,14 @@ export default function CourseViewPage() {
                       <span className="text-xs text-green-600 mt-2 font-sans font-semibold">
                         Purchased
                       </span> */}
-                      <Chip   startContent={<SiTicktick  size={15} />} 
-                      variant="faded"
-                      className=""
-                      color="success">Purchased</Chip>
+                      <Chip
+                        startContent={<SiTicktick size={15} />}
+                        variant="faded"
+                        className=""
+                        color="success"
+                      >
+                        Purchased
+                      </Chip>
                     </p>
                   </div>
                 ) : (
@@ -175,7 +202,6 @@ export default function CourseViewPage() {
           <h1 className=" text-2xl font-bold ">Preview</h1>
         </div>
       </div>
-
       {/* course layouts */}
       <div className="flex border-b ms-32">
         <button
@@ -186,7 +212,12 @@ export default function CourseViewPage() {
           }`}
           onClick={() => setActiveTab("Curriculum")}
         >
-          <FaBook className="mr-2 mt-2" size={15} />
+          <FaBook
+            className={`mr-2 mt-2 ${
+              activeTab === "Curriculum" && "animate-bounce"
+            }`}
+            size={15}
+          />
           Curriculum
         </button>
         <button
@@ -197,7 +228,12 @@ export default function CourseViewPage() {
           }`}
           onClick={() => setActiveTab("Instructor")}
         >
-          <FaUser className="mr-2 mt-2" size={15} />
+          <FaUser
+            className={`mr-2 mt-2 ${
+              activeTab === "Instructor" && "animate-bounce"
+            }`}
+            size={15}
+          />
           Instructor
         </button>
 
@@ -209,7 +245,11 @@ export default function CourseViewPage() {
           }`}
           onClick={() => setActiveTab("Assignments")}
         >
-          <FaFileAlt className="mr-2 mt-2" />
+          <FaFileAlt
+            className={`mr-2 mt-2 ${
+              activeTab === "Assignments" && "animate-bounce"
+            }`}
+          />
           Assignments
         </button>
         <button
@@ -220,13 +260,15 @@ export default function CourseViewPage() {
           }`}
           onClick={() => setActiveTab("reviews")}
         >
-          <FaComments className="mr-2 mt-2" />
+          <FaComments
+            className={`mr-2 mt-2 ${
+              activeTab === "reviews" && "animate-bounce"
+            }`}
+          />
           Reviews
         </button>
       </div>
-
       {/* components of the nav bar in the course view page start*/}
-
       {/* Curriculum  start*/}
       {activeTab === "Curriculum" && (
         <div>

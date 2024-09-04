@@ -2,6 +2,7 @@ import Api from "../services/axios";
 import errorHandler from "./error";
 import userRoutes from "../services/endPoints/userEndPoints";
 import { AxiosError ,AxiosResponse} from "axios";
+import { IReportIssues } from "../services/types";
 
 interface userFormData {
   name?: string;
@@ -289,3 +290,15 @@ export const getInstructorData = async(instructorId:string)=>{
         return errorHandler(err);
       }
 }
+// submitTheReport
+export const submitTheReport = async(courseId:string,userId:string,formState:IReportIssues)=>{
+  try {
+    console.log(courseId, userId, formState, "Sending data");
+    const res = await Api.post(userRoutes.submitReport, { courseId, userId, formState });
+    return res.data;
+  } catch (error) {
+    console.log("error",error);
+    const err:Error = error as Error;
+    return errorHandler(err);
+  }
+} 

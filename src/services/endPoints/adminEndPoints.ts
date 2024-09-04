@@ -18,6 +18,8 @@ const adminRoutes = {
     reviewsFetch:'/admin/reviewsFetch',
     fetchAssignments:'/admin/fetchAssignments',
     getInstructor:'/admin/getInstructor',
+    getReports:'/admin/getReports',
+    deleteCourse:'/admin/deleteReportCourse',
 }
 
 export default adminRoutes
