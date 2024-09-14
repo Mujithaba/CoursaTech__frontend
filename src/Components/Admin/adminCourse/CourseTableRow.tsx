@@ -2,16 +2,21 @@ import React from 'react'
 
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
-import { FaArrowRight, FaStar } from "react-icons/fa";
+import { FaArrowRight, FaStar ,FaStarHalf} from "react-icons/fa";
 import { ICourse } from '../../../services/types';
+
+export interface CourseRating {
+  averageRating: number; 
+  totalRatings: number;  
+}
 
 interface CourseTableRowProps {
   data: ICourse;
   handleApprove: (courseId: string,  is_verified: boolean) => void; 
-
+ratings:CourseRating;
 }
 
-const CourseTableRow: React.FC<CourseTableRowProps> = ({ data ,handleApprove}) => {
+const CourseTableRow: React.FC<CourseTableRowProps> = ({ data ,handleApprove,ratings}) => {
     let formattedDate = data.createdAt
     ? new Date(data.createdAt).toLocaleDateString()
     : "Date not available";
@@ -32,6 +37,26 @@ const CourseTableRow: React.FC<CourseTableRowProps> = ({ data ,handleApprove}) =
   };
 const courseId = data._id
   console.log(courseId,"string");
+
+
+  
+ // Function to render stars dynamically based on the rating
+ const renderStars = () => {
+  const stars = [];
+  let roundedRating = Math.round(ratings.averageRating * 2) / 2; // Round to nearest 0.5
+
+  for (let i = 0; i < 5; i++) {
+    if (roundedRating >= i + 1) {
+      stars.push(<FaStar key={i} className="text-yellow-500" />);
+    } else if (roundedRating >= i + 0.5) {
+      stars.push(<FaStarHalf key={i} className="text-yellow-500" />);
+    } else {
+      stars.push(<FaStar key={i} className="text-gray-300" />);
+    }
+  }
+
+  return stars;
+};
   
 
   return (
@@ -52,9 +77,7 @@ const courseId = data._id
       <td className="p-2">${data.price}</td>
       <td className="p-2">
         <div className="flex">
-          <FaStar className="text-yellow-500" />
-          <FaStar className="text-yellow-500" />
-          <FaStar className="text-yellow-500" />
+         {renderStars()}
         </div>
       </td>
       <td className="p-2">{formattedDate}</td>

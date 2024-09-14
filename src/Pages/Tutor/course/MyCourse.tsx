@@ -9,11 +9,21 @@ import CardUI from "../../../Components/Ui/CardUI";
 import NoCourseDataAnimy from "../../../Components/Common/NoCourseDataAnimy";
 import Pagination from "../../../Components/Common/Pagination";
 
+
+export interface CourseRating {
+  _id: string;
+  title: string;
+  averageRating: number;
+  totalReviews: number;
+}
+
+
 export default function MyCourse() {
   const [courses, setCourses] = useState<ICourse[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalItems, setTotalItems] = useState<number>(0);
   const [itemsPerPage] = useState<number>(2);
+  const [ratings, setRatings] = useState<CourseRating[]>([]);
 console.log(courses,"getTutofghdgg");
 
   const dispatch = useDispatch();
@@ -64,6 +74,28 @@ console.log(courses,"getTutofghdgg");
   const handlePaginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
+
+
+   // fetching ratings
+  //  const getAllRatings = async () => {
+  //   try {
+  //     const response = await getRatings();
+
+  //     if (response) {
+  //       setRatings(response.getRate)
+  //     } else {
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching the rating:", error);
+  //     setRatings([]);
+  //   }
+  // };
+
+  const findRatingForCourse = (courseId:string)=>{
+    const rating = ratings.find((r)=>r._id === courseId);
+    return rating ? rating.averageRating : 0
+  }
+
   
 
   return (

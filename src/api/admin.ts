@@ -304,10 +304,29 @@ export const reportsFetching = async (): Promise<ReportData[]> => {
   }
 };
 // deleteReportCourse
-export const deleteReportCourse = async (courseId: string,email:string,instructorName:string,courseName:string) => {
+export const deleteReportCourse = async (
+  courseId: string,
+  email: string,
+  instructorName: string,
+  courseName: string
+) => {
   try {
-    const res = await Api.patch(adminRoutes.deleteCourse, { courseId,courseName,email,instructorName });
+    const res = await Api.delete(adminRoutes.deleteCourse, {
+      data: { courseId, courseName, email, instructorName },
+    });
     return res;
+  } catch (error) {
+    console.log("error", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};
+
+// getRatings
+export const getRatings = async () => {
+  try {
+    const res = await Api.get(adminRoutes.getRating);
+    return res.data;
   } catch (error) {
     console.log("error", error);
     const err: Error = error as Error;

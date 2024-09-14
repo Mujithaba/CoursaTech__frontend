@@ -1,16 +1,19 @@
 import React from "react";
 import { ICourse } from "../../../../services/types";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
 import { FaArrowRight } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { FaStar } from "react-icons/fa6";
+import { FaStar, FaStarHalf } from "react-icons/fa6";
 
+export interface CourseRating {
+  averageRating: number; 
+  totalRatings: number;  
+}
 interface CardUIProps {
   data: ICourse;
+  ratings:CourseRating;
 }
 
-const CardUi: React.FC<CardUIProps> = ({ data }) => {
+const CardUi: React.FC<CardUIProps> = ({ data,ratings }) => {
   let formattedDate = data.createdAt
     ? new Date(data.createdAt).toLocaleDateString()
     : "Date not available";
@@ -27,6 +30,25 @@ const CardUi: React.FC<CardUIProps> = ({ data }) => {
       console.log("fetching this course have some error, Please try later");
     }
   };
+
+
+ // Function to render stars dynamically based on the rating
+ const renderStars = () => {
+  const stars = [];
+  let roundedRating = Math.round(ratings.averageRating * 2) / 2; // Round to nearest 0.5
+
+  for (let i = 0; i < 5; i++) {
+    if (roundedRating >= i + 1) {
+      stars.push(<FaStar key={i} className="text-yellow-500" />);
+    } else if (roundedRating >= i + 0.5) {
+      stars.push(<FaStarHalf key={i} className="text-yellow-500" />);
+    } else {
+      stars.push(<FaStar key={i} className="text-gray-300" />);
+    }
+  }
+
+  return stars;
+};
 
   return (
     <div className=" w-full flex justify-center mb-3 mt-3   rounded-md">
@@ -58,9 +80,8 @@ const CardUi: React.FC<CardUIProps> = ({ data }) => {
           <p className="text-gray-500 text-sm">{data.description}</p>
           <div className="flex justify-between">
             <div className="flex mt-3">
-              <FaStar className="text-yellow-500" />
-              <FaStar className="text-yellow-500" />
-              <FaStar className="text-yellow-500" />
+            {renderStars()}
+            
             </div>
             <button
               className="w-10 h-10 flex justify-center items-center rounded-full bg-yellow-300 hover:shadow-md relative group"

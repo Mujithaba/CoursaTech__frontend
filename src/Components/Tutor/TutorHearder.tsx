@@ -10,7 +10,7 @@ import { RootState } from '../../redux/store';
 
 
   return (
-    <header className="bg-gray-800 text-white flex justify-between items-center p-4 mt-1 ms-6 me-1 rounded-lg">
+    <header className="bg-[#0a0e3c]  text-white flex justify-between items-center p-4 mt-1 ms-6 me-1 rounded-lg">
     <div className="text-xl  font-bold"></div>
     <div className="flex items-center">
       <div className="relative">

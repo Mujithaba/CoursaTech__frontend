@@ -20,6 +20,7 @@ const adminRoutes = {
     getInstructor:'/admin/getInstructor',
     getReports:'/admin/getReports',
     deleteCourse:'/admin/deleteReportCourse',
+    getRating:'/admin/getRating',
 }
 
 export default adminRoutes

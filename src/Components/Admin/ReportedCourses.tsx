@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { deleteReportCourse, reportsFetching } from "../../api/admin";
 import { MdDeleteSweep } from "react-icons/md";
+import NoCourseDataAnimy from "../Common/NoCourseDataAnimy";
 
 interface Report {
   courseId: string;
@@ -17,6 +18,7 @@ interface Report {
 export default function ReportedCourses() {
   const [reports, setReports] = useState<Report[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isState,setIsState]=useState<boolean>(false);
   const [selectedCourse, setSelectedCourse] = useState<{
     courseId: string;
     courseName: string;
@@ -27,7 +29,7 @@ export default function ReportedCourses() {
 
   useEffect(() => {
     fetchReports();
-  }, []);
+  }, [selectedCourse]);
 
   const fetchReports = async () => {
     setIsLoading(true);
@@ -76,26 +78,29 @@ export default function ReportedCourses() {
   // Confirm delete handler
   const confirmDelete = async () => {
     if (selectedCourse) {
-      // Perform delete operation
-      console.log("Deleting course:", selectedCourse);
-      setShowModal(false);
-      setSelectedCourse(null);
-      // You can call your delete API function here
-      const response = await deleteReportCourse(
-        selectedCourse.courseId,
-        selectedCourse.instructorMail,
-        selectedCourse.instructorName,
-        selectedCourse.courseName
-      );
-      if (response && response.data) {
-        toast.success(response.data.message);
-      } else {
-        toast.error("Failed to delete the course. Please try again.");
+      try {
+        const response = await deleteReportCourse(
+          selectedCourse.courseId,
+          selectedCourse.instructorMail,
+          selectedCourse.instructorName,
+          selectedCourse.courseName
+        );
+
+        if (response && response.data) {
+          toast.success(response.data.message);
+          // Update the reports state to remove the deleted course
+          setReports(reports.filter(report => report.courseId !== selectedCourse.courseId));
+          setShowModal(false);
+          setSelectedCourse(null);
+        } else {
+          toast.error("Failed to delete the course. Please try again.");
+        }
+      } catch (error) {
+        toast.error("An error occurred while deleting the course.");
       }
     }
   };
 
-  // Cancel delete handler
   const cancelDelete = () => {
     setShowModal(false);
     setSelectedCourse(null);
@@ -135,7 +140,7 @@ export default function ReportedCourses() {
                   <img
                     src={course.thumbnail}
                     alt={course.courseName}
-                    className="w-16 h-18 rounded-md border-1"
+                    className="w-16 h-18 rounded-md bg-gray-400 border-1"
                   />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap font-serif text-md text-gray-900">
@@ -171,7 +176,8 @@ export default function ReportedCourses() {
           </tbody>
         </table>
       ) : (
-        <p>No reported courses found.</p>
+        // <p>No reported courses found.</p>
+        <NoCourseDataAnimy/>
       )}
 
       {/* Confirmation Modal */}

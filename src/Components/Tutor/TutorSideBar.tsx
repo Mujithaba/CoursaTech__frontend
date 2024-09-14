@@ -29,7 +29,7 @@ function TutorSideBar() {
   };
 
   return (
-    <aside className="bg-gray-800 m-1 text-white w-64 space-y-6 py-7 px-6 absolute inset-y-0 left-0 rounded-lg">
+    <aside className="bg-[#0a0e3c] m-1 text-white w-64 space-y-6 py-7 px-6 absolute inset-y-0 left-0 rounded-lg">
       <div className="text-2xl font-semibold flex justify-center">
         <img className="" src={Logo} alt="logo" />
       </div>

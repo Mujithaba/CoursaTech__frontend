@@ -14,6 +14,9 @@ const ForgotPassEnter = lazy(()=> import("../Pages/User/ForgotPassEnter"))
 const Courses = lazy(()=> import("../Pages/User/Courses"))
 const CourseViewPage = lazy(()=> import("../Pages/User/CourseViewPage"))
 const ChatScreenUser = lazy(()=> import("../Components/User/ChatScreenUser"))
+const VideoCallRoom = lazy(()=> import("../Components/Common/VideoCallRoom"))
+const UserProfile = lazy(()=> import("../Pages/User/UserProfile"))
+
 
 
 function UserRoutes() {
@@ -28,7 +31,9 @@ function UserRoutes() {
             <Route path="/home" element={<Home />} />
             <Route path="/coursePage" element={<Courses />} />
             <Route path="/coursePage/viewCourse" element={<CourseViewPage />} />
+            <Route path="/userProfile" element={<UserProfile />} />
             <Route path="/userChatscreen" element={<ChatScreenUser/>}/>
+            <Route path="/viewCourse/videoCallRoom" element={<VideoCallRoom/>}/>
 
             
           </Route>

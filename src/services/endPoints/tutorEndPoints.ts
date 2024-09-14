@@ -23,7 +23,8 @@ const tutorRoutes ={
     reviewsFetch:'/tutors/reviewsFetch',
     fetchAssignments:'/tutors/fetchAssignments',
     getInstructor:'/tutors/getInstructor',
-
+    fetchDashboardData:'/tutors/fetchDashboardData',
+    
 }
 
 export default tutorRoutes;

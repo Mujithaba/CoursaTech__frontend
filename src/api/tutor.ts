@@ -368,7 +368,7 @@ export const assignmentFetching = async (instructorId: string) => {
         instructorId,
       },
     });
-    console.log(res.data,"uuuu")
+    console.log(res.data, "uuuu");
     return res.data;
   } catch (error) {
     console.log("error", error);
@@ -377,60 +377,73 @@ export const assignmentFetching = async (instructorId: string) => {
   }
 };
 // reviewsFetching
-export const reviewsFetchingT = async(courseId:string)=>{
+export const reviewsFetchingT = async (courseId: string) => {
   try {
+    const res = await Api.get(tutorRoutes.reviewsFetch, {
+      params: {
+        courseId,
+      },
+    });
 
-    const res = await Api.get(tutorRoutes.reviewsFetch,{
-      params:{
-        courseId
-      }
-    })
-
-   return res.data
-    
-  } catch (error) {
-    console.log("error",error);
-    const err:Error = error as Error;
-    return errorHandler(err);
-  }
-}
-// eachAssignmentsFetch
-export const eachAssignmentsFetchT = async(courseId:string)=>{
-  try {
-console.log(courseId,"ppp");
-
-    const res = await Api.get(tutorRoutes.fetchAssignments,{
-      params:{
-        courseId
-      }
-    })
-    console.log(res,"assignment res");
-    
     return res.data;
-    
   } catch (error) {
-    console.log("error",error);
-    const err:Error = error as Error;
+    console.log("error", error);
+    const err: Error = error as Error;
     return errorHandler(err);
   }
-}
-// getInstructorData
-export const getInstructorDataT = async(instructorId:string)=>{
+};
+// eachAssignmentsFetch
+export const eachAssignmentsFetchT = async (courseId: string) => {
   try {
-    console.log(instructorId,"ppp");
-    
-        const res = await Api.get(tutorRoutes.getInstructor,{
-          params:{
-            instructorId
-          }
-        })
-        console.log(res,"data instructor");
-        
-        return res.data;
-        
-      } catch (error) {
-        console.log("error",error);
-        const err:Error = error as Error;
-        return errorHandler(err);
-      }
-}
+    console.log(courseId, "ppp");
+
+    const res = await Api.get(tutorRoutes.fetchAssignments, {
+      params: {
+        courseId,
+      },
+    });
+    console.log(res, "assignment res");
+
+    return res.data;
+  } catch (error) {
+    console.log("error", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};
+// getInstructorData
+export const getInstructorDataT = async (instructorId: string) => {
+  try {
+    console.log(instructorId, "ppp");
+
+    const res = await Api.get(tutorRoutes.getInstructor, {
+      params: {
+        instructorId,
+      },
+    });
+    console.log(res, "data instructor");
+
+    return res.data;
+  } catch (error) {
+    console.log("error", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};
+// dashboardFetching
+export const dashboardFetching = async (instructorId: string) => {
+  try {
+    const res = await Api.get(tutorRoutes.fetchDashboardData, {
+      params: {
+        instructorId,
+      },
+    });
+    console.log(res.data, "response--------------");
+
+    return res;
+  } catch (error) {
+    console.log("error", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};
