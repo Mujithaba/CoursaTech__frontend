@@ -447,3 +447,20 @@ export const dashboardFetching = async (instructorId: string) => {
     return errorHandler(err);
   }
 };
+// getCourseGrowth
+export const getCourseGrowth = async (instructorId:string)=>{
+  try {
+    const res = await Api.get(tutorRoutes.courseGrowth, {
+      params: {
+        instructorId,
+      },
+    });
+    console.log(res.data.data, "response--------------");
+
+    return res.data.data;
+  } catch (error) {
+    console.log("error", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}

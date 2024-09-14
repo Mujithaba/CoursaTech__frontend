@@ -24,6 +24,7 @@ const tutorRoutes ={
     fetchAssignments:'/tutors/fetchAssignments',
     getInstructor:'/tutors/getInstructor',
     fetchDashboardData:'/tutors/fetchDashboardData',
+    courseGrowth:'/tutors/getCourseGrowth',
     
 }
 

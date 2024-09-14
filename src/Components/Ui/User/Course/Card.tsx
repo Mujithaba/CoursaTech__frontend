@@ -32,23 +32,23 @@ const CardUi: React.FC<CardUIProps> = ({ data,ratings }) => {
   };
 
 
- // Function to render stars dynamically based on the rating
- const renderStars = () => {
-  const stars = [];
-  let roundedRating = Math.round(ratings.averageRating * 2) / 2; // Round to nearest 0.5
+//  // Function to render stars dynamically based on the rating
+//  const renderStars = () => {
+//   const stars = [];
+//   let roundedRating = Math.round(ratings.averageRating * 2) / 2; // Round to nearest 0.5
 
-  for (let i = 0; i < 5; i++) {
-    if (roundedRating >= i + 1) {
-      stars.push(<FaStar key={i} className="text-yellow-500" />);
-    } else if (roundedRating >= i + 0.5) {
-      stars.push(<FaStarHalf key={i} className="text-yellow-500" />);
-    } else {
-      stars.push(<FaStar key={i} className="text-gray-300" />);
-    }
-  }
+//   for (let i = 0; i < 5; i++) {
+//     if (roundedRating >= i + 1) {
+//       stars.push(<FaStar key={i} className="text-yellow-500" />);
+//     } else if (roundedRating >= i + 0.5) {
+//       stars.push(<FaStarHalf key={i} className="text-yellow-500" />);
+//     } else {
+//       stars.push(<FaStar key={i} className="text-gray-300" />);
+//     }
+//   }
 
-  return stars;
-};
+//   return stars;
+// };
 
   return (
     <div className=" w-full flex justify-center mb-3 mt-3   rounded-md">
@@ -63,7 +63,7 @@ const CardUi: React.FC<CardUIProps> = ({ data,ratings }) => {
             className="w-auto h-auto object-cover"
           />
         </div>
-        <div className="h-[170px] w-full bg-white mt-3 flex flex-col justify-between m-1">
+        <div className="h-[170px] w-full bg-white mt-2 flex flex-col justify-between m-1">
           <div className=" flex justify-between">
             <p className="bg-green-200 text-xs font-serif px-2 flex items-center rounded-full">
               {data.category_id
@@ -79,8 +79,9 @@ const CardUi: React.FC<CardUIProps> = ({ data,ratings }) => {
           </h2>
           <p className="text-gray-500 text-sm">{data.description}</p>
           <div className="flex justify-between">
-            <div className="flex mt-3">
-            {renderStars()}
+            <div className="flex mt-1 font-mono font-semibold ">
+            {/* {renderStars()} */}
+            {ratings.averageRating.toFixed(1)}⭐
             
             </div>
             <button

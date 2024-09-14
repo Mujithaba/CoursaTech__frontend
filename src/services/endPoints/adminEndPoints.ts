@@ -21,6 +21,7 @@ const adminRoutes = {
     getReports:'/admin/getReports',
     deleteCourse:'/admin/deleteReportCourse',
     getRating:'/admin/getRating',
+    getDashboardData:'/admin/getDashboardData',
 }
 
 export default adminRoutes

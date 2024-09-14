@@ -333,3 +333,16 @@ export const getRatings = async () => {
     return errorHandler(err);
   }
 };
+// dashboardFetching
+export const adminDashboardFetching = async()=>{
+  try {
+    const res = await Api.get(adminRoutes.getDashboardData)
+    console.log(res.data,"getDashboardData");
+    
+    return res.data
+  } catch (error) {
+    console.log("error", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}

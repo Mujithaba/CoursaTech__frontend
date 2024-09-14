@@ -143,11 +143,13 @@ export const homePageData = async (userId: string): Promise<any> => {
 };
 
 // get all courses
-export const getCourses = async (page: number, limit: number) => {
+export const getCourses = async (page: number, limit: number, searchTerm: string, category: string) => {
   try {
     const res = await Api.get(userRoutes.getCourse, {
-      params: { page, limit },
+      params: { page, limit, searchTerm, category },
     });
+    console.log(res.data,"ooo");
+    
     return res.data;
   } catch (error) {
     console.log("error", error);
@@ -155,6 +157,18 @@ export const getCourses = async (page: number, limit: number) => {
     return errorHandler(err);
   }
 };
+// export const getCourses = async (page: number, limit: number) => {
+//   try {
+//     const res = await Api.get(userRoutes.getCourse, {
+//       params: { page, limit },
+//     });
+//     return res.data;
+//   } catch (error) {
+//     console.log("error", error);
+//     const err: Error = error as Error;
+//     return errorHandler(err);
+//   }
+// };
 // viewCoureseDetails
 export const viewCoureseDetails = async (course_id: string, userid: string) => {
   try {

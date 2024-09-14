@@ -4,7 +4,7 @@ import AdminLayouts from "../Layouts/AdminLayouts";
 import LoadingSpinner from "../Components/Common/LoadingSpinner";
 import AdminProtected from "../protected/adminProtected";
 
-const DashBoard = lazy(() => import("../Components/Admin/DashBoard"));
+const DashBoard = lazy(() => import("../Components/Admin/AdminDashBoard"));
 const UsersList = lazy(() => import("../Components/Admin/Users"));
 const TutorsList = lazy(() => import("../Components/Admin/Tutors"));
 const CategoryList = lazy(() => import("../Pages/Admin/Categories"));
