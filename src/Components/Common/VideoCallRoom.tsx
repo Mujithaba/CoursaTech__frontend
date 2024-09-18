@@ -1,13 +1,10 @@
+import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
+import { useNavigate, useParams } from "react-router-dom";
 
-
-import * as React from 'react';
-import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
-
-
-function randomID(len:any) {
-  let result = '';
+function randomID(len: number): string {
+  let result = "";
   if (result) return result;
-  var chars = '12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP',
+  var chars = "12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP",
     maxPos = chars.length,
     i;
   len = len || 5;
@@ -17,51 +14,62 @@ function randomID(len:any) {
   return result;
 }
 
-export function getUrlParams(
-  url = window.location.href
-) {
-  let urlStr = url.split('?')[1];
+export function getUrlParams(url = window.location.href) {
+  let urlStr = url.split("?")[1];
   return new URLSearchParams(urlStr);
 }
 
-
 export default function VideoCallRoom() {
-      const roomID = getUrlParams().get('roomID') || randomID(5);
-      let myMeeting = async (element:any) => {
-     // generate Kit Token
-      const appID = 623140942;
-      const serverSecret = "030e2db910df9d21f8f55122caae2619";
-      const kitToken =  ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID,  randomID(5),  randomID(5));
+  let { roomId } = useParams();
+  const roomID = roomId as string;
 
-    
-     // Create instance object from Kit Token.
-      const zp = ZegoUIKitPrebuilt.create(kitToken);
-      // start the call
-      zp.joinRoom({
-        container: element,
-        sharedLinks: [
-          {
-            name: 'GroupCall link',
-            url:
-             window.location.protocol + '//' + 
-             window.location.host + window.location.pathname +
-              '?roomID=' +
-              roomID,
-          },
-        ],
-        scenario: {
-          mode: ZegoUIKitPrebuilt.GroupCall, // To implement 1-on-1 calls, modify the parameter here to [ZegoUIKitPrebuilt.OneONoneCall].
+  const navigate = useNavigate();
+
+  let myMeeting = async (element: HTMLDivElement) => {
+    // generate Kit Token
+    const appID = 623140942;
+    const serverSecret = "030e2db910df9d21f8f55122caae2619";
+    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+      appID,
+      serverSecret,
+      roomID,
+      randomID(5),
+      randomID(5)
+    );
+
+    // Create instance object from Kit Token.
+    const zp = ZegoUIKitPrebuilt.create(kitToken);
+
+    // Start the call
+    zp.joinRoom({
+      container: element,
+      sharedLinks: [
+        {
+          name: "Personal link",
+          url:
+            window.location.protocol +
+            "//" +
+            window.location.host +
+            window.location.pathname +
+            "?roomID=" +
+            roomID,
         },
-      });
-
-    
+      ],
+      scenario: {
+        mode: ZegoUIKitPrebuilt.OneONoneCall, // 1-on-1 calls
+      },
+      onLeaveRoom: () => {
+        // Navigate back to the course view page
+        navigate("/tutor/chatList");
+      },
+    });
   };
 
   return (
     <div
       className="myCallContainer"
-      ref={myMeeting}
-      style={{ width: '100vw', height: '100vh' }}
+      ref={(element) => element && myMeeting(element)}
+      style={{ width: "100%", height: "100vh", maxWidth: "100vw" }}
     ></div>
   );
 }

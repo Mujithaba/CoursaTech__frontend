@@ -48,7 +48,9 @@ const ChatScreenUser: React.FC = () => {
 
     socket.emit("join", { userId, instructorId });
 
-    socket.on("private message", handlePrivateMessage);
+    socket.on("private  message", handlePrivateMessage);
+
+    
 
     return () => {
       socket.off("private message", handlePrivateMessage);
@@ -93,13 +95,12 @@ const ChatScreenUser: React.FC = () => {
       .padStart(2, "0")}`;
   };
 
-
   const handleVideoLinkClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     const target = e.target as HTMLAnchorElement;
-    if (target.tagName === 'A') {
-      const videoLink = target.getAttribute('data-video-link');
-      const roomID = target.getAttribute('data-room-id');
+    if (target.tagName === "A") {
+      const videoLink = target.getAttribute("data-video-link");
+      const roomID = target.getAttribute("data-room-id");
       if (videoLink && roomID) {
         navigate(videoLink, { state: { roomids: roomID, videoLink } });
       }
@@ -136,7 +137,7 @@ const ChatScreenUser: React.FC = () => {
             ))}
           </ul>
         </div> */}
-       <div className="flex-1 p-4 overflow-y-auto">
+        <div className="flex-1 p-4 overflow-y-auto">
           <ul className="space-y-2">
             {messages.map((msg) => (
               <li
@@ -145,7 +146,11 @@ const ChatScreenUser: React.FC = () => {
                   msg.senderId === userId ? "justify-end" : "justify-start"
                 }`}
               >
-                <div className={`chat ${msg.senderId === userId ? "chat-end" : "chat-start"} max-w-xs`}>
+                <div
+                  className={`chat ${
+                    msg.senderId === userId ? "chat-end" : "chat-start"
+                  } max-w-xs`}
+                >
                   <div className="chat-header">
                     {msg.senderId === userId ? "You" : "Instructor"}
                   </div>

@@ -15,8 +15,6 @@
 //   timestamp: string;
 // }
 
-
-
 // const ChatScreenTutor: React.FC = () => {
 //   const [message, setMessage] = useState<string>('');
 //   const [messages, setMessages] = useState<Message[]>([]);
@@ -134,22 +132,13 @@
 
 // export default ChatScreenTutor;
 
-
-
-
-
-
-
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import io, { Socket } from "socket.io-client";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FiSend } from "react-icons/fi";
 import { IoVideocam } from "react-icons/io5";
-
-
-
 
 interface Message {
   id: string;
@@ -166,9 +155,11 @@ const ChatScreenTutor: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const location = useLocation();
   const { senderId, userName } = location.state || {};
+  const navigate = useNavigate()
 
   const { tutorInfo } = useSelector((state: RootState) => state.tutorAuth);
   const receiverId = tutorInfo?._id;
+  const instructorName = tutorInfo.name;
 
   const socketRef = useRef<Socket | null>(null);
 
@@ -177,15 +168,15 @@ const ChatScreenTutor: React.FC = () => {
       console.error("Missing tutorId or senderId");
       return;
     }
-
     socketRef.current = io(SOCKET_SERVER_URL);
 
-    const roomId = [senderId, receiverId].sort().join('-');
-    socketRef.current.emit('joinRoom', { roomId });
 
-    socketRef.current.on('private message', (msg: Message) => {
+    const roomId = [senderId, receiverId].sort().join("-");
+    socketRef.current.emit("joinRoom", { roomId });
+
+    socketRef.current.on("private message", (msg: Message) => {
       setMessages((prevMessages) => {
-        if (!prevMessages.some(m => m.id === msg.id)) {
+        if (!prevMessages.some((m) => m.id === msg.id)) {
           return [...prevMessages, msg];
         }
         return prevMessages;
@@ -210,7 +201,7 @@ const ChatScreenTutor: React.FC = () => {
         timestamp: new Date().toISOString(), // Add current timestamp
       };
 
-      socketRef.current.emit('private message', newMessage);
+      socketRef.current.emit("private message", newMessage);
 
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       setMessage("");
@@ -220,14 +211,27 @@ const ChatScreenTutor: React.FC = () => {
   // Function to format the timestamp
   const formatTimestamp = (timestamp: string) => {
     const date = new Date(timestamp);
-    return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
+    return `${date.getHours()}:${date
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
   };
 
   // handleVideoCall
-
-  const handleVideoCall = async ()=>{
-    
-  }
+  const handleVideoCall = async (event: React.MouseEvent) => {
+    event.preventDefault();
+    if (socketRef.current) {
+      socketRef.current.emit("private Videocall", {
+        senderId: receiverId,
+        receiverId: senderId,
+        instructorName,
+      });
+      
+      const roomId = [senderId, receiverId].sort().join('-');
+      console.log("Navigating to room:", roomId);
+      navigate(`/tutor/videoCallRoom/${roomId}`);
+    }
+  };
 
   return (
     <div className="flex flex-col h-full bg-white rounded-md">
@@ -240,25 +244,29 @@ const ChatScreenTutor: React.FC = () => {
                 msg.senderId === receiverId ? "justify-end" : "justify-start"
               }`}
             >
-            
-              {msg.senderId === receiverId ? 
-              ( <div className={`chat chat-end max-w-xs`}>
-                <div className="chat-header">
-                {msg.senderId === receiverId ? "You" : userName}
+              {msg.senderId === receiverId ? (
+                <div className={`chat chat-end max-w-xs`}>
+                  <div className="chat-header">
+                    {msg.senderId === receiverId ? "You" : userName}
+                  </div>
+                  <div className="chat-bubble">{msg.message}</div>
+                  <time className="text-xs opacity-50">
+                    {formatTimestamp(msg.timestamp)}
+                  </time>
+                  <div className="chat-footer opacity-50">Seen</div>
                 </div>
-                <div className="chat-bubble">{msg.message}</div>
-                  <time className="text-xs opacity-50">{formatTimestamp(msg.timestamp)}</time>
-                <div className="chat-footer opacity-50">Seen</div>
-              </div>)
-              :( <div className={`chat chat-start max-w-xs`}>
-                <div className="chat-header">
-                {msg.senderId === receiverId ? "You" : userName}
+              ) : (
+                <div className={`chat chat-start max-w-xs`}>
+                  <div className="chat-header">
+                    {msg.senderId === receiverId ? "You" : userName}
+                  </div>
+                  <div className="chat-bubble">{msg.message}</div>
+                  <time className="text-xs opacity-50">
+                    {formatTimestamp(msg.timestamp)}
+                  </time>
+                  <div className="chat-footer opacity-50">Seen</div>
                 </div>
-                <div className="chat-bubble">{msg.message}</div>
-                  <time className="text-xs opacity-50">{formatTimestamp(msg.timestamp)}</time>
-                <div className="chat-footer opacity-50">Seen</div>
-              </div>)}
-              
+              )}
             </li>
           ))}
         </ul>
@@ -277,13 +285,13 @@ const ChatScreenTutor: React.FC = () => {
             className="bg-white text-white px-2  rounded-full"
             onClick={handleSubmit}
           >
-            <FiSend size={23} className="text-black"/>
+            <FiSend size={23} className="text-black" />
           </button>
           <button
             className="bg-white text-white px-2  rounded-full"
             onClick={handleVideoCall}
           >
-            <IoVideocam  size={23} className="text-black"/>
+            <IoVideocam size={23} className="text-black" />
           </button>
         </form>
       </div>

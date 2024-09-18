@@ -157,3 +157,19 @@ export interface ApiResponse {
   data: ReportData[];
   message: string;
 }
+
+
+export interface IStudentInfo {
+  name: string;
+  email: string;
+  phone: string;
+  profilePic: string;
+}
+
+export interface IFormData {
+  userId:string;
+  name?: string;
+  email?: string;
+  phoneNumber?: string;
+  profileImage?: File | string; 
+}

@@ -79,8 +79,8 @@ function Header() {
               <button
                 onClick={toggleSideMenu}
                 className={`${
-                  scrolled ? "text-gray-900" : "text-white"
-                } hover:text-gray-600 transition-colors`}
+                  scrolled ? "text-white" : "text-gray-900"
+                } hover:text-gray-300 transition-colors`}
               >
                 <FaBars size={24} />
               </button>
@@ -152,8 +152,8 @@ const NavLinks: React.FC<NavLinksProps> = ({
   const links = [
     { to: userInfo ? "/home" : "/", label: "Home" },
     { to: userInfo ? "/coursePage" : "#", label: "Courses" },
-    { to: "#", label: "About" },
-    { to: "#", label: "Contact" },
+    { to: userInfo ? "/aboutSection" : "/aboutSection", label: "About" },
+    { to: userInfo ? "/contactus" : "/contactus", label: "Contact" },
   ];
 
   return (

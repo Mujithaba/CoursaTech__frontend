@@ -21,6 +21,8 @@ const userRoutes={
     getInstructor:'/users/getInstructor',
     submitReport:'/users/submitReport',
     getRating:'/users/getRating',
+    getStudentInfo:'/users/getStudentInfo',
+    updatedUserData:'/users/updatedUserData',
 }
 
 export default userRoutes;

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { storeMsgsFetching } from '../../api/tutor';
-import { SocketProvider } from './SocketTutorContext';
+
 
 export interface IConversation {
     _id?: string;

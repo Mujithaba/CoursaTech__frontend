@@ -28,7 +28,6 @@ const Assignments = lazy(() => import("../Pages/Tutor/course/Assignments"));
 const VideoCallRoom = lazy(() => import("../Components/Common/VideoCallRoom"));
 const InstructorDashboard = lazy(() => import("../Components/Tutor/Dashboard"));
 
-
 function TutorRoutes() {
   return (
     <div>
@@ -45,8 +44,6 @@ function TutorRoutes() {
             <Route element={<TutorLayouts />}>
               <Route index element={<InstructorDashboard />} />
               <Route path="/tuturDashboard" element={<InstructorDashboard />} />
-              {/* <Route index element={<TutorDashboard />} />
-              <Route path="/tuturDashboard" element={<TutorDashboard />} /> */}
               <Route path="/myCourses" element={<MyCourse />} />
               <Route path="/createCourse" element={<CourseCreation />} />
               <Route path="/addCuricculum" element={<AddCuricculum />} />
@@ -58,7 +55,10 @@ function TutorRoutes() {
                 path="/chatList/viewChatScreen"
                 element={<ChatScreenTutor />}
               />
-              <Route  path="/videoCallRoom" element={<VideoCallRoom />} />
+              <Route
+                path="/videoCallRoom/:roomId"
+                element={<VideoCallRoom />}
+              />
             </Route>
           </Route>
         </Routes>

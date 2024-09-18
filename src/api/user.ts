@@ -2,7 +2,7 @@ import Api from "../services/axios";
 import errorHandler from "./error";
 import userRoutes from "../services/endPoints/userEndPoints";
 import { AxiosError, AxiosResponse } from "axios";
-import { IReportIssues } from "../services/types";
+import { IFormData, IReportIssues } from "../services/types";
 
 interface userFormData {
   name?: string;
@@ -157,18 +157,7 @@ export const getCourses = async (page: number, limit: number, searchTerm: string
     return errorHandler(err);
   }
 };
-// export const getCourses = async (page: number, limit: number) => {
-//   try {
-//     const res = await Api.get(userRoutes.getCourse, {
-//       params: { page, limit },
-//     });
-//     return res.data;
-//   } catch (error) {
-//     console.log("error", error);
-//     const err: Error = error as Error;
-//     return errorHandler(err);
-//   }
-// };
+
 // viewCoureseDetails
 export const viewCoureseDetails = async (course_id: string, userid: string) => {
   try {
@@ -340,6 +329,37 @@ export const getRatings = async () => {
   try {
     const res = await Api.get(userRoutes.getRating);
     return res.data;
+  } catch (error) {
+    console.log("error", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};
+// getUserInfo
+export const getUserInfo = async(userId:string)=>{
+  try {
+    const res = await Api.get(userRoutes.getStudentInfo,{
+      params:{
+        userId
+      }
+    })
+    return res;
+  } catch (error) {
+    console.log("error", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}
+// updateUserData
+export const updateUserData = async (formData: FormData) => {
+  try {
+    const res = await Api.patch(userRoutes.updatedUserData, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log(res, "updateUserData");
+    return res;
   } catch (error) {
     console.log("error", error);
     const err: Error = error as Error;

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import CardUi from "../../Components/Ui/User/Course/Card";
-import coverImage from "../../../public/Logo/images/Untitled design (2).png";
+import coverImage from "/Logo/images/Untitled design (2).png";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
 import { ICourse } from "../../services/types";
 import { getCourses, getRatings } from "../../api/user";
 import Pagination from "../../Components/Common/Pagination";
+import { FaSearch } from "react-icons/fa";
 
 export interface CourseRating {
   _id: string;
@@ -49,8 +50,13 @@ export default function Courses() {
   // Fetching courses
   const getAllCourses = async () => {
     try {
-      const response = await getCourses(currentPage, itemsPerPage, searchTerm, filterCategory);
-      if (response ) {
+      const response = await getCourses(
+        currentPage,
+        itemsPerPage,
+        searchTerm,
+        filterCategory
+      );
+      if (response) {
         setCourses(response.getCourses);
         setTotalItems(response.totalItems);
       } else {
@@ -83,107 +89,107 @@ export default function Courses() {
   };
 
   return (
-        <>
-        <div className="w-full h-20 bg-red-200"></div>
-          <div className="bg-gray-200 min-h-screen p-4 sm:p-6 lg:p-8 ">
-            <motion.div
-              className="relative flex items-center justify-center bg-pink-900 p-4 rounded-lg shadow-md overflow-hidden"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
-            >
-              {/* Background image */}
-              <img
-                className="absolute inset-0 bg-gray-900 h-full w-full object-cover"
-                src={coverImage}
-                alt="Cover Image"
-              />
-    
-              {/* Content */}
-              <motion.div
-                className="relative z-10 max-w-4xl w-full bg-black/50 p-6 sm:p-8 lg:p-10 rounded-lg shadow-lg m-4 lg:m-6"
-                initial={{ y: -50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.8 }}
+    <>
+      <div className="w-full h-20 bg-red-200"></div>
+      <div className="bg-gray-200 min-h-screen p-4 sm:p-6 lg:p-8 ">
+        <motion.div
+          className="relative flex items-center justify-center bg-pink-900 p-4 rounded-lg shadow-md overflow-hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          {/* Background image */}
+          <img
+            className="absolute inset-0 bg-gray-900 h-full w-full object-cover"
+            src={coverImage}
+            alt="Cover Image"
+          />
+
+          {/* Content */}
+          <motion.div
+            className="relative z-10 max-w-4xl w-full bg-black/50 p-6 sm:p-8 lg:p-10 rounded-lg shadow-lg m-4 lg:m-6"
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          >
+            <h1 className="text-lg sm:text-xl lg:text-2xl text-white font-sans font-semibold mb-2">
+              Take the first step,
+              <span className="block text-sm sm:text-base">
+                to learn with us
+              </span>
+            </h1>
+
+            {/* Search and Filter Section */}
+            <div className="w-full flex flex-col sm:flex-row gap-4 mb-6">
+              <div className="relative w-full sm:w-auto">
+                <FaSearch className="absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-500" />
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  placeholder="Search courses"
+                  className="pl-10 text-black p-2 rounded-lg border-2 border-black w-full sm:w-auto"
+                />
+              </div>
+              <select
+                value={filterCategory}
+                onChange={handleFilterChange}
+                className="text-black p-2 rounded-lg border-2 border-black w-full sm:w-auto"
               >
-                <h1 className="text-lg sm:text-xl lg:text-2xl text-white font-sans font-semibold mb-2">
-                  Take the first step,
-                  <span className="block text-sm sm:text-base">
-                    to learn with us
-                  </span>
-                </h1>
-    
-                {/* Search and Filter Section */}
-                <div className="w-full flex flex-col sm:flex-row gap-4 mb-6">
-                  <input
-                    type="text"
-                    value={searchTerm}
-                    onChange={handleSearch}
-                    placeholder="Search courses"
-                    className="text-black p-2 rounded-lg border-2 border-black w-full sm:w-auto"
-                  />
-                  <select
-                    value={filterCategory}
-                    onChange={handleFilterChange}
-                    className="text-black p-2 rounded-lg border-2 border-black w-full sm:w-auto"
-                  >
-                    <option value="">All Categories</option>
-                    <option value="programming">Programming</option>
-                    <option value="design">Design</option>
-                    <option value="marketing">Marketing</option>
-                    {/* Add more categories as needed */}
-                  </select>
-                </div>
-    
-                {!userInfo && (
-                  <motion.button
-                    className="mt-6 border border-black px-4 py-2 rounded-md text-white font-mono hover:bg-gray-700"
-                    onClick={() => navigate("/login")}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    Login
-                  </motion.button>
-                )}
-              </motion.div>
-            </motion.div>
-    
-            {/* Course Grid */}
-            <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {courses.map((course) => (
-                <motion.div
-                  key={course._id}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.5 }}
-                >
-                   <CardUi 
-                   data={course} 
-                   ratings={{ 
-                     averageRating: findRatingForCourse(course._id as string), 
-                     totalRatings: ratings.find((r) => r._id === course._id)?.totalReviews || 0 
-                   }} 
-                 />
-                </motion.div>
-              ))}
+                <option value="">All Categories</option>
+                <option value="programming">Programming</option>
+                <option value="design">Design</option>
+                <option value="marketing">Marketing</option>
+                {/* Add more categories as needed */}
+              </select>
             </div>
-    
-            {/* Pagination */}
-            <Pagination
-              itemsPerPage={itemsPerPage}
-              totalItems={totalItems}
-              paginate={handlePaginate}
-              currentPage={currentPage}
-            />
-          </div>
-        </>
-      );
+
+            {!userInfo && (
+              <motion.button
+                className="mt-6 border border-black px-4 py-2 rounded-md text-white font-mono hover:bg-gray-700"
+                onClick={() => navigate("/login")}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                Login
+              </motion.button>
+            )}
+          </motion.div>
+        </motion.div>
+
+        {/* Course Grid */}
+        <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {courses.map((course) => (
+            <motion.div
+              key={course._id}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
+              <CardUi
+                data={course}
+                ratings={{
+                  averageRating: findRatingForCourse(course._id as string),
+                  totalRatings:
+                    ratings.find((r) => r._id === course._id)?.totalReviews ||
+                    0,
+                }}
+              />
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Pagination */}
+        <Pagination
+          itemsPerPage={itemsPerPage}
+          totalItems={totalItems}
+          paginate={handlePaginate}
+          currentPage={currentPage}
+        />
+      </div>
+    </>
+  );
 }
-
-
-
-
-
 
 // import React, { useEffect, useState } from "react";
 // import { motion } from "framer-motion";
@@ -236,7 +242,7 @@ export default function Courses() {
 //   };
 
 //   console.log(ratings,"ooppoooppoooppooiiiuuu");
-  
+
 //   // Fetching courses
 //   const getAllCourses = async () => {
 //     try {
@@ -348,12 +354,12 @@ export default function Courses() {
 //               animate={{ opacity: 1, y: 0 }}
 //               transition={{ delay: 0.2, duration: 0.5 }}
 //             >
-//                <CardUi 
-//                data={course} 
-//                ratings={{ 
-//                  averageRating: findRatingForCourse(course._id as string), 
-//                  totalRatings: ratings.find((r) => r._id === course._id)?.totalReviews || 0 
-//                }} 
+//                <CardUi
+//                data={course}
+//                ratings={{
+//                  averageRating: findRatingForCourse(course._id as string),
+//                  totalRatings: ratings.find((r) => r._id === course._id)?.totalReviews || 0
+//                }}
 //              />
 //             </motion.div>
 //           ))}

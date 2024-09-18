@@ -2,13 +2,15 @@ import {configureStore} from "@reduxjs/toolkit";
 import authSlice from "./slices/authSlice";
 import tutorSlice from "./slices/tutorSlice";
 import adminSlice from "./slices/adminSlice";
+import socketSlice from "./slices/socketSlice";
 
 
 const store = configureStore({
     reducer:{
         auth:authSlice,
         tutorAuth:tutorSlice,
-        adminAuth:adminSlice
+        adminAuth:adminSlice,
+        socket:socketSlice,
     }
 })
 

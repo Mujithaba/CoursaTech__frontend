@@ -13,9 +13,10 @@ const ForgetPassOTP = lazy(()=>  import("../Pages/User/ForgetPassOTP"))
 const ForgotPassEnter = lazy(()=> import("../Pages/User/ForgotPassEnter"))
 const Courses = lazy(()=> import("../Pages/User/Courses"))
 const CourseViewPage = lazy(()=> import("../Pages/User/CourseViewPage"))
-const ChatScreenUser = lazy(()=> import("../Components/User/ChatScreenUser"))
-const VideoCallRoom = lazy(()=> import("../Components/Common/VideoCallRoom"))
 const UserProfile = lazy(()=> import("../Pages/User/UserProfile"))
+const About = lazy(()=> import("../Pages/User/About"))
+const ContactUs = lazy(()=> import("../Pages/User/ContactUs"))
+const VideoCallRoomUser = lazy(()=> import("../Components/Common/user/VideoCallRoomUser"))
 
 
 
@@ -32,8 +33,9 @@ function UserRoutes() {
             <Route path="/coursePage" element={<Courses />} />
             <Route path="/coursePage/viewCourse" element={<CourseViewPage />} />
             <Route path="/userProfile" element={<UserProfile />} />
-            <Route path="/userChatscreen" element={<ChatScreenUser/>}/>
-            <Route path="/viewCourse/videoCallRoom" element={<VideoCallRoom/>}/>
+            <Route path="/aboutSection" element={<About/>}/>
+            <Route path="/contactus" element={<ContactUs/>}/>
+            <Route path="/videoCallRoomUser/:roomId" element={<VideoCallRoomUser/>}/>
 
             
           </Route>

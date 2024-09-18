@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import {NextUIProvider} from "@nextui-org/react";
-import {ChakraProvider} from '@chakra-ui/react'
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <ChakraProvider>

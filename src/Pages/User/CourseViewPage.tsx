@@ -170,6 +170,7 @@ export default function CourseViewPage() {
             src={courseData.trailerSignedUrl}
             className="h-64 w-full sm:w-98 bg-gray-700 rounded-md mb-4"
             controls
+            controlsList="nodownload" 
           >
             Trailer video not working
           </video>
