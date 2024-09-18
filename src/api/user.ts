@@ -358,7 +358,7 @@ export const updateUserData = async (formData: FormData) => {
         'Content-Type': 'multipart/form-data',
       },
     });
-    console.log(res, "updateUserData");
+    console.log(res.data, "updateUserData");
     return res;
   } catch (error) {
     console.log("error", error);
@@ -366,3 +366,15 @@ export const updateUserData = async (formData: FormData) => {
     return errorHandler(err);
   }
 };
+// updatePassword
+export const updatePassword =async(userId:string,currentPassword: string, newPassword: string)=>{
+  try {
+    const res = await Api.patch(userRoutes.changePassword, { userId, currentPassword, newPassword });
+    console.log(res, "Password Change Response");
+    return res;
+  } catch (error) {
+    console.log("error", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}

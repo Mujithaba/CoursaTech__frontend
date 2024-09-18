@@ -4,6 +4,7 @@ import { Edit2, Check, X } from 'lucide-react';
 import { FiEdit } from "react-icons/fi";
 import { IStudentInfo } from '../../services/types'; // Adjust the import path
 import { updateUserData } from '../../api/user';
+import { toast } from 'react-toastify';
 
 interface UserDetailsProps {
     userId:string;
@@ -11,10 +12,10 @@ interface UserDetailsProps {
   email: string;
   phoneNumber: string;
   profileImage: string;
-  onSave: (updatedData: IStudentInfo) => void; // Updated type
+  // onSave: (updatedData: IStudentInfo) => void; // Updated type
 }
 
-const UserDetails: React.FC<UserDetailsProps> = ({userId, name, email, phoneNumber, profileImage, onSave }) => {
+const UserDetails: React.FC<UserDetailsProps> = ({userId, name, email, phoneNumber, profileImage }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState(name);
   const [editEmail, setEditEmail] = useState(email);
@@ -82,8 +83,9 @@ const UserDetails: React.FC<UserDetailsProps> = ({userId, name, email, phoneNumb
       try {
         const response = await updateUserData(formData);
   
-        if (response?.data.success) {
-          onSave(response.data.updatedUser);
+        if (response) {
+          toast.success(response.data.message)
+          // onSave(response.data.updatedUser);
         }
       } catch (error) {
         console.error('Error updating user profile:', error);

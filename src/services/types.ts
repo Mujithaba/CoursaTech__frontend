@@ -163,7 +163,8 @@ export interface IStudentInfo {
   name: string;
   email: string;
   phone: string;
-  profilePic: string;
+  img: string;
+  password?:string;
 }
 
 export interface IFormData {

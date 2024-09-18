@@ -23,6 +23,8 @@ const userRoutes={
     getRating:'/users/getRating',
     getStudentInfo:'/users/getStudentInfo',
     updatedUserData:'/users/updatedUserData',
+    changePassword:'/users/changePassword',
+    
 }
 
 export default userRoutes;

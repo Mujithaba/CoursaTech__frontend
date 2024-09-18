@@ -1,19 +1,27 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 interface ChangePasswordProps {
+  currPassword:string | undefined;
   onChangePassword: (currentPassword: string, newPassword: string) => void;
 }
 
-const ChangePassword: React.FC<ChangePasswordProps> = ({ onChangePassword }) => {
+const ChangePassword: React.FC<ChangePasswordProps> = ({currPassword, onChangePassword }) => {
+  const [actualPassword, setActualPassword] = useState(currPassword ?? '');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+console.log(actualPassword,"actual");
+
+
 
   // Error states
   const [currentPasswordError, setCurrentPasswordError] = useState<string | null>(null);
   const [newPasswordError, setNewPasswordError] = useState<string | null>(null);
   const [confirmPasswordError, setConfirmPasswordError] = useState<string | null>(null);
+
+
+  
 
   const handlePasswordChange = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,6 +38,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onChangePassword }) => 
       setCurrentPasswordError('Current password is required.');
       isValid = false;
     }
+    
 
     // Validate new password
     if (!newPassword) {
@@ -45,6 +54,11 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onChangePassword }) => 
       setConfirmPasswordError("Passwords don't match.");
       isValid = false;
     }
+
+    // if (actualPassword == newPassword ) {
+    //   setCurrentPasswordError('Current password is not correct.');
+    //   isValid = false;
+    // }
 
     // If all validations pass, trigger the password change
     if (isValid) {
