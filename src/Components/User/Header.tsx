@@ -151,7 +151,7 @@ const NavLinks: React.FC<NavLinksProps> = ({
 
   const links = [
     { to: userInfo ? "/home" : "/", label: "Home" },
-    { to: userInfo ? "/coursePage" : "#", label: "Courses" },
+    { to: userInfo ? "/coursePage" : "#", label: "Courses" } ,
     { to: userInfo ? "/aboutSection" : "/aboutSection", label: "About" },
     { to: userInfo ? "/contactus" : "/contactus", label: "Contact" },
   ];
@@ -199,7 +199,7 @@ const UserSection: React.FC<
   scrolled,
 }) => {
   const buttonClass =
-    "px-4 py-2 rounded-full text-white font-semibold bg-blue-600 hover:bg-blue-700 transition-colors";
+    "px-4 py-2 rounded-full text-white font-semibold bg-gray-900 hover:bg-gray-700 transition-colors border border-white";
 
   if (userInfo) {
     return (

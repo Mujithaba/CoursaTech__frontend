@@ -174,3 +174,22 @@ export interface IFormData {
   phoneNumber?: string;
   profileImage?: File | string; 
 }
+
+export interface ICourseEntrolled {
+  _id?: string;
+  title: string;
+  description: string;
+  instructor_id: string;
+  category_id: Category;
+  price: string;
+  thambnail_Img: string;
+thumbnailImgUrl: string;
+  trailerSignedUrl: string;
+  trailer_vd: string;
+  chapters?: Modules[];
+  modules?: any[];
+  assigments?: Assignment[];
+  is_verified?: boolean;
+  is_listed?: boolean;
+  createdAt?: Date;
+}

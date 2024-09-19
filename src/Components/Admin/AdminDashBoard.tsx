@@ -116,7 +116,7 @@ const Card: React.FC<CardProps> = ({ title, amount, icon }) => (
 
 const RecentEnrollments: React.FC<RecentEnrollmentsProps> = ({ enrollments }) => (
   <div className="bg-[#1c233e] p-6 rounded-lg shadow-md ">
-    <h3 className="text-xl font-semibold mb-7">Top 2 Rated Courses </h3>
+    <h3 className="text-xl font-semibold mb-7">Top  Rated Courses </h3>
   
     <ul className='font-mono'>
       {enrollments.map((item, idx) => (

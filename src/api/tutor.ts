@@ -464,3 +464,25 @@ export const getCourseGrowth = async (instructorId:string)=>{
     return errorHandler(err);
   }
 }
+
+// uploadProfileImage 
+export const uploadProfileImage = async(file:File,instructorId:string)=>{
+  try {
+    const formData = new FormData();
+  formData.append('profileImage', file);
+  formData.append('tutorId', instructorId);
+    const res = await Api.patch(tutorRoutes.updateProfileImg,formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log(res,"newImageUrl");
+    
+    return res.data;
+
+  } catch (error) {
+    console.log("error", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}

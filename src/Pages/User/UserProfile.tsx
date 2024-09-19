@@ -6,6 +6,7 @@ import { RootState } from "../../redux/store";
 import { getUserInfo, updatePassword } from "../../api/user";
 import { IStudentInfo } from "../../services/types";
 import { toast } from "react-toastify";
+import EntrolledCourses from "../../Components/User/EntrolledCourses";
 
 export default function UserProfile() {
   const [activeTab, setActiveTab] = useState("Your info");
@@ -37,7 +38,6 @@ export default function UserProfile() {
   // Function to handle password change
   const onChangePassword = async (currentPassword: string, newPassword: string) => {
     try {
-      // Implement your password change logic here
       console.log("Current Password:", currentPassword);
       console.log("New Password:", newPassword);
       if (!userId) {
@@ -124,6 +124,9 @@ export default function UserProfile() {
           )}
           {activeTab === "Change Password" && (
             <ChangePassword currPassword ={studentInfo?.password ?? ''} onChangePassword={onChangePassword} />
+          )}
+          {activeTab === "Enrolled Courses" && (
+            <EntrolledCourses  userId={userId} />
           )}
         </div>
       </div>

@@ -378,3 +378,45 @@ export const updatePassword =async(userId:string,currentPassword: string, newPas
     return errorHandler(err);
   }
 }
+// category fetch
+export const categoryData = async () => {
+  try {
+    const res = await Api.get(userRoutes.getAllCategories);
+    return res.data;
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};
+// getHomeData
+export const getHomeData = async ()=>{
+  try {
+    const res = await Api.get(userRoutes.getHomePageData)
+    console.log(res.data,"getHomePageData");
+    
+    return res.data
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}
+
+// entrolledCourseData
+export const entrolledCourseData = async(userId:string)=>{
+  try {
+    const res = await Api.get(userRoutes.getEntrolledCourse,{
+      params:{
+        userId
+      }
+    })
+    console.log(res);
+    
+    return res
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}

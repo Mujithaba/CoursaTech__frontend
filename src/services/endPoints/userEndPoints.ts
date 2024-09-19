@@ -24,6 +24,9 @@ const userRoutes={
     getStudentInfo:'/users/getStudentInfo',
     updatedUserData:'/users/updatedUserData',
     changePassword:'/users/changePassword',
+    getAllCategories:'/users/getAllCategories',
+    getHomePageData:'/users/getHomePageData',
+    getEntrolledCourse:'/users/getEntrolledCourse',
     
 }
 

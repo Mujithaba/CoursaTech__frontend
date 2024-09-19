@@ -2,7 +2,6 @@ import React from "react";
 import { ICourse } from "../../../../services/types";
 import { useNavigate } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
-import { FaStar, FaStarHalf } from "react-icons/fa6";
 
 export interface CourseRating {
   averageRating: number; 
@@ -23,7 +22,7 @@ const CardUi: React.FC<CardUIProps> = ({ data,ratings }) => {
     try {
       navigate("viewCourse", {
         state: {
-          CourseData: data,
+          CourseData: data._id,
         },
       });
     } catch (error) {
@@ -32,23 +31,7 @@ const CardUi: React.FC<CardUIProps> = ({ data,ratings }) => {
   };
 
 
-//  // Function to render stars dynamically based on the rating
-//  const renderStars = () => {
-//   const stars = [];
-//   let roundedRating = Math.round(ratings.averageRating * 2) / 2; // Round to nearest 0.5
 
-//   for (let i = 0; i < 5; i++) {
-//     if (roundedRating >= i + 1) {
-//       stars.push(<FaStar key={i} className="text-yellow-500" />);
-//     } else if (roundedRating >= i + 0.5) {
-//       stars.push(<FaStarHalf key={i} className="text-yellow-500" />);
-//     } else {
-//       stars.push(<FaStar key={i} className="text-gray-300" />);
-//     }
-//   }
-
-//   return stars;
-// };
 
   return (
     <div className=" w-full flex justify-center mb-3 mt-3   rounded-md">

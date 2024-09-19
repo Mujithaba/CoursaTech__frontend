@@ -1,6 +1,4 @@
-
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -16,56 +14,111 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { School, Laptop, Group } from "@mui/icons-material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { toast } from "react-toastify";
+import { getCourses, getHomeData } from "../../api/user";
+import { ICourse } from "../../services/types";
 
 const MotionBox = motion(Box);
 
-const Home: React.FC = () => {
-  const navigate = useNavigate()
-  const topCourses = [
-    {
-      id: 1,
-      title: "Web Development ",
-      instructor: "John Doe",
-      image: "https://cdn.dribbble.com/users/808903/screenshots/3831862/dribbble_szablon__1_1.png?resize=800x600&vertical=cen",
-    },
-    {
-      id: 2,
-      title: "Data Science Fundamentals",
-      instructor: "Jane Smith",
-      image: "https://cdn.dribbble.com/users/808903/screenshots/3831862/dribbble_szablon__1_1.png?resize=800x600&vertical=cen",
-    },
-    {
-      id: 3,
-      title: "Mobile App Development",
-      instructor: "Bob Johnson",
-      image: "https://cdn.dribbble.com/users/808903/screenshots/3831862/dribbble_szablon__1_1.png?resize=800x600&vertical=cen",
-    },
-  ];
+interface IInstructor {
+  _id: string;
+  name: string;
+  profileUrl: string;
+  position: string;
+}
 
-  const topInstructors = [
-    {
-      id: 1,
-      name: "Dr. Alice Brown",
-      specialization: "Computer Science",
-      image: "https://source.unsplash.com/random/200x200?woman",
-    },
-    {
-      id: 2,
-      name: "Prof. Charlie Green",
-      specialization: "Data Analysis",
-      image: "https://source.unsplash.com/random/200x200?man",
-    },
-    {
-      id: 3,
-      name: "Eng. David White",
-      specialization: "Software Engineering",
-      image: "https://source.unsplash.com/random/200x200?person",
-    },
-  ];
+interface ICourseHomePage {
+  _id: string;
+  courseName: string;
+  thumbnail: string;
+  averageRating: number;
+  instructor: IInstructor;
+}
+
+const Home: React.FC = () => {
+  const { userInfo } = useSelector((state: RootState) => state.auth);
+  const navigate = useNavigate();
+  const [ratedCourse, setRatedCourse] = useState<ICourseHomePage[]>([]);
+  const [topInstructor, setTopInstructor] = useState<IInstructor[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalItems, setTotalItems] = useState<number>(0);
+  const [itemsPerPage] = useState<number>(5);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [filterCategory, setFilterCategory] = useState<string>("");
+  const [courses, setCourses] = useState<ICourse[]>([]);
+
+  const handleCoursePage = () => {
+    if (userInfo) {
+      navigate("/coursePage");
+    } else {
+      toast.info(
+        <motion.div
+          className="p-4 text-center"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="text-lg font-semibold text-red-600 mb-2">
+            You are not logged in! Please log in to continue.
+          </div>
+          <motion.button
+            className="bg-gray-900 text-white py-2 px-6 rounded-full font-mono hover:bg-gray-700 transition-all ease-in-out duration-300"
+            onClick={() => navigate("/login")}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Login
+          </motion.button>
+        </motion.div>,
+        {
+          position: "top-center",
+          autoClose: false,
+          closeOnClick: true,
+          draggable: true,
+          hideProgressBar: true,
+          icon: <span>🔒</span>,
+        }
+      );
+    }
+  };
+
+  useEffect(() => {
+    getHomePageData();
+    
+  }, []);
+
+  const getHomePageData = async () => {
+    try {
+      const response = await getHomeData();
+      if (response) {
+        setRatedCourse(response.data.homeData);
+        setTopInstructor(response.data.instructorArray);
+      }
+    } catch (error) {
+      console.error("Error fetching the home data:", error);
+    }
+  };
+
+  console.log(ratedCourse, topInstructor, "popopop");
+
+ 
+
+  const handleCourseView = (courseId: string) => {
+    try {
+      navigate("/coursePage/viewCourse", {
+        state: {
+          CourseData: courseId,
+        },
+      });
+    } catch (error) {
+      console.log("fetching this course have some error, Please try later");
+    }
+  };
 
   return (
     <Box>
-
       {/* Hero Section */}
       <Box
         sx={{
@@ -74,38 +127,26 @@ const Home: React.FC = () => {
           display: "flex",
           alignItems: "center",
           color: "darkblue",
-          backgroundImage: "url('https://cdn.pixabay.com/photo/2024/08/14/14/41/home-based-learning-8968710_1280.png')", // Add your image URL here
-    backgroundSize: "cover", // Ensures the image covers the entire background
-    backgroundPosition: "center", // Centers the image
-    backgroundBlendMode: "overlay", // Blends the gradient with the image
+          backgroundImage:
+            "url('https://cdn.pixabay.com/photo/2024/08/14/14/41/home-based-learning-8968710_1280.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundBlendMode: "overlay",
         }}
       >
         <Container maxWidth="md">
-          
           <MotionBox
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             textAlign="center"
           >
-            {/* <Typography
-              variant="h2"
-              component="h1"
-              gutterBottom
-              fontWeight="bold"
-              
-            >
-              Unlock Your Potential with E-Learning
-            </Typography>
-            <Typography variant="h5" gutterBottom sx={{ mb: 4 }}>
-              Discover world-class courses and expert instructors to fuel your
-              learning journey.
-            </Typography> */}
             <Button
               variant="contained"
               color="secondary"
               size="large"
               sx={{ fontWeight: "bold", px: 4, py: 1.5 }}
+              onClick={handleCoursePage}
             >
               Explore Courses
             </Button>
@@ -177,8 +218,8 @@ const Home: React.FC = () => {
             Top-Rated Courses
           </Typography>
           <Grid container spacing={4}>
-            {topCourses.map((course, index) => (
-              <Grid item xs={12} sm={6} md={4} key={course.id}>
+            {ratedCourse.map((course, index) => (
+              <Grid item xs={12} sm={6} md={4} key={course.thumbnail}>
                 <MotionBox
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -193,9 +234,9 @@ const Home: React.FC = () => {
                   >
                     <CardMedia
                       component="img"
-                      height="200"
-                      image={course.image}
-                      alt={course.title}
+                      className="h-[200px]"
+                      image={course.thumbnail}
+                      alt={course.courseName}
                     />
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Typography
@@ -204,16 +245,36 @@ const Home: React.FC = () => {
                         component="div"
                         fontWeight="bold"
                       >
-                        {course.title}
+                        {course.courseName}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        Instructor: {course.instructor}
+                        Instructor: {course.instructor.name}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Reated:{" "}
+                        <span className="text-black font-serif font-semibold">
+                          {course.averageRating.toFixed(1)}⭐
+                        </span>
                       </Typography>
                     </CardContent>
                     <Box sx={{ p: 2 }}>
-                      <Button variant="outlined" fullWidth>
-                        Learn More
-                      </Button>
+                      {userInfo == null ? (
+                        <Button
+                          variant="outlined"
+                          fullWidth
+                          onClick={handleCoursePage}
+                        >
+                          Learn More
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="outlined"
+                          fullWidth
+                          onClick={() => handleCourseView(course._id)}
+                        >
+                          Learn More
+                        </Button>
+                      )}
                     </Box>
                   </Card>
                 </MotionBox>
@@ -235,8 +296,8 @@ const Home: React.FC = () => {
           Meet Our Top Instructors
         </Typography>
         <Grid container spacing={4} justifyContent="center">
-          {topInstructors.map((instructor, index) => (
-            <Grid item xs={12} sm={6} md={4} key={instructor.id}>
+          {topInstructor.map((instructor, index) => (
+            <Grid item xs={12} sm={6} md={4} key={instructor._id}>
               <MotionBox
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -244,7 +305,11 @@ const Home: React.FC = () => {
               >
                 <Paper elevation={3} sx={{ p: 3, textAlign: "center" }}>
                   <Avatar
-                    src={instructor.image}
+                    src={
+                      instructor.profileUrl == "nopic"
+                        ? "https://via.placeholder.com/100"
+                        : instructor.profileUrl
+                    }
                     alt={instructor.name}
                     sx={{ width: 120, height: 120, mx: "auto", mb: 2 }}
                   />
@@ -257,7 +322,7 @@ const Home: React.FC = () => {
                     {instructor.name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    {instructor.specialization}
+                    {instructor.position}
                   </Typography>
                 </Paper>
               </MotionBox>
@@ -292,7 +357,6 @@ const Home: React.FC = () => {
                 color="secondary"
                 size="large"
                 sx={{ fontWeight: "bold", px: 4, py: 1.5 }}
-                
               >
                 Start Teaching Today
               </Button>

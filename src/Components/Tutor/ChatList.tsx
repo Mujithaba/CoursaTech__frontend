@@ -46,6 +46,8 @@ const ChatList: React.FC = () => {
         fetchMsgs();
     }, [fetchMsgs]);
 
+    
+
     const handleViewChatScreen = (senderId: string, receiverId: string,userName:string) => {
         navigate('viewChatScreen', {
             state: {

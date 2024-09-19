@@ -28,6 +28,7 @@ const InstructorView: React.FC<IInstructorProps> = ({
 }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [instructor, setInstructor] = useState<IInstructor | null>(null);
+  const [instructorImgUrl,setInstructorUrl]= useState<string>("")
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -38,11 +39,12 @@ const InstructorView: React.FC<IInstructorProps> = ({
 
   const fetchInstructorData = async () => {
     try {
-      const response = await getInstructorData(instructorId);
-      console.log(response, "getInstructor");
+      const {getInstructor,instructorImgUrl} = await getInstructorData(instructorId);
+      console.log(getInstructor,instructorImgUrl, "getInstructor");
 
-      if (response) {
-        setInstructor(response);
+      if (getInstructor) {
+        setInstructor(getInstructor);
+        setInstructorUrl(instructorImgUrl)
       }
     } catch (error) {
       console.error("Assignments fetching error:", error);
@@ -79,7 +81,7 @@ const InstructorView: React.FC<IInstructorProps> = ({
                 src={
                   instructor?.profileImg === "nopic"
                     ? "https://avatars.githubusercontent.com/u/30373425?v=4"
-                    : instructor?.profileImg
+                    : instructorImgUrl
                 }
               />
               <div className="flex flex-col gap-1 items-start justify-center">
