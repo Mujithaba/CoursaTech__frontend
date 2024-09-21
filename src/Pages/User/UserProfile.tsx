@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from "react";
 import ChangePassword from "../../Components/Common/ChangePasswordUser";
-import UserDetails from "../../Components/User/UserDetails";
+import UserDetails, { updateData } from "../../Components/User/UserDetails";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { getUserInfo, updatePassword } from "../../api/user";
 import { IStudentInfo } from "../../services/types";
 import { toast } from "react-toastify";
 import EntrolledCourses from "../../Components/User/EntrolledCourses";
+import { GrContactInfo } from "react-icons/gr";
+import { RiLockPasswordLine } from "react-icons/ri";
+import { BiSolidPurchaseTagAlt } from "react-icons/bi";
+import { GiWallet } from "react-icons/gi";
+import Wallet from "../../Components/User/Wallet";
 
 export default function UserProfile() {
   const [activeTab, setActiveTab] = useState("Your info");
   const [studentInfo, setStudentInfo] = useState<IStudentInfo | null>(null);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true); 
+  const [profileUril,setProfileUrl]=useState<string>('')
+  const [isEdited,setIsEdited]=useState<boolean>(false)
 
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const userId = userInfo._id as string;
 
   useEffect(() => {
     getStudentInfo();
-  }, []);
+  }, [isEdited]);
 
   // Fetch student data
   const getStudentInfo = async () => {
@@ -26,7 +33,8 @@ export default function UserProfile() {
       setLoading(true);
       const response = await getUserInfo(userId);
       if (response) {
-        setStudentInfo(response?.data);
+        setStudentInfo(response?.data.userData);
+        setProfileUrl(response.data.profileUril)
       }
     } catch (error) {
       console.error("Failed to fetch student info:", error);
@@ -57,11 +65,12 @@ export default function UserProfile() {
   }
 };
 
-  // const updatedUserData = (userData: IStudentInfo) => {
-  //   setStudentInfo(userData);
-  // };
+  const updatedUserData = (userData: boolean) => {
+    setIsEdited(true)
+  };
 
-  console.log(studentInfo,"studentInfo");
+  console.log(studentInfo,"studentInfo----");
+  console.log(profileUril,"studentInfo----");
   
 
   return (
@@ -76,8 +85,8 @@ export default function UserProfile() {
           <div className="flex flex-col items-center mt-14 mb-28">
             <img
               src={
-                studentInfo?.img && studentInfo.img !== "nopic"
-                  ? studentInfo.img
+               profileUril && profileUril != "nopic"
+                  ? profileUril
                   : "https://via.placeholder.com/100"
               }
               alt="User Avatar"
@@ -90,19 +99,25 @@ export default function UserProfile() {
 
           {/* Menu Items */}
           <ul className="space-y-2">
-            {["Your info", "Change Password", "Enrolled Courses"].map((item) => (
-              <li key={item}>
-                <button
-                  onClick={() => setActiveTab(item)}
-                  className={`w-full text-left px-4 py-2 rounded-md focus:outline-none ${
-                    activeTab === item ? "bg-gray-300 font-bold" : "hover:bg-gray-200"
-                  }`}
-                >
-                  {item}
-                </button>
-              </li>
-            ))}
-          </ul>
+  {[
+    { label: "Your info", icon: <GrContactInfo size={19} className="ms-2"/> },
+    { label: "Change Password", icon:<RiLockPasswordLine size={18}/>},
+    { label: "Enrolled Courses" , icon:<BiSolidPurchaseTagAlt size={18}/>},
+    { label: "Wallet",icon:<GiWallet size={18}/> }
+  ].map((item, index) => (
+    <li key={index}>
+      <button
+        onClick={() => setActiveTab(item.label)}
+        className={`w-full flex items-center text-left px-4 py-2 rounded-md focus:outline-none ${
+          activeTab === item.label ? "bg-gray-300 font-bold" : "hover:bg-gray-200"
+        }`}
+      >
+        {item.icon && <span className="mr-2">{item.icon}</span>}
+        {item.label}
+      </button>
+    </li>
+  ))}
+</ul>
         </div>
 
         {/* Main Content */}
@@ -115,11 +130,11 @@ export default function UserProfile() {
               email={studentInfo.email}
               phoneNumber={studentInfo.phone}
               profileImage={
-                studentInfo?.img && studentInfo.img  !== "nopic"
-                  ? studentInfo.img
+                profileUril && profileUril  != "nopic"
+                  ? profileUril
                   : "https://via.placeholder.com/100"
               }
-              // onSave={updatedUserData}
+              onSave={updatedUserData}
             />
           )}
           {activeTab === "Change Password" && (
@@ -127,6 +142,9 @@ export default function UserProfile() {
           )}
           {activeTab === "Enrolled Courses" && (
             <EntrolledCourses  userId={userId} />
+          )}
+          {activeTab === "Wallet" && (
+            <Wallet  userId={userId} />
           )}
         </div>
       </div>

@@ -2,20 +2,27 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Edit2, Check, X } from 'lucide-react';
 import { FiEdit } from "react-icons/fi";
-import { IStudentInfo } from '../../services/types'; // Adjust the import path
 import { updateUserData } from '../../api/user';
 import { toast } from 'react-toastify';
+import { Spinner } from '@nextui-org/react'; // Ensure you import the spinner component
 
-interface UserDetailsProps {
-    userId:string;
+export interface updateData {
   name: string;
   email: string;
   phoneNumber: string;
   profileImage: string;
-  // onSave: (updatedData: IStudentInfo) => void; // Updated type
 }
 
-const UserDetails: React.FC<UserDetailsProps> = ({userId, name, email, phoneNumber, profileImage }) => {
+interface UserDetailsProps {
+  userId: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  profileImage: string;
+  onSave: (updatedData: boolean) => void;
+}
+
+const UserDetails: React.FC<UserDetailsProps> = ({ userId, name, email, phoneNumber, profileImage, onSave }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState(name);
   const [editEmail, setEditEmail] = useState(email);
@@ -24,6 +31,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({userId, name, email, phoneNumb
   const [newProfileImage, setNewProfileImage] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [errors, setErrors] = useState<{ name?: string; email?: string; phoneNumber?: string }>({});
+  const [loading, setLoading] = useState(false); // Spinner loading state
 
   const [originalValues, setOriginalValues] = useState({
     name,
@@ -39,6 +47,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({userId, name, email, phoneNumb
       phoneNumber,
       profileImage,
     });
+    setCurrentProfileImage(profileImage);
   }, [name, email, phoneNumber, profileImage]);
 
   const handleEditClick = () => {
@@ -68,29 +77,54 @@ const UserDetails: React.FC<UserDetailsProps> = ({userId, name, email, phoneNumb
 
   const handleSaveClick = async () => {
     if (validateFields()) {
+      setLoading(true); // Show spinner
       setIsEditing(false);
       const formData = new FormData();
-  
+
       formData.append('userId', userId);
       formData.append('name', editName);
       formData.append('email', editEmail);
       formData.append('phoneNumber', editPhoneNumber);
-  
+
       if (newProfileImage) {
         formData.append('profileImage', newProfileImage);
       }
-  
+
       try {
         const response = await updateUserData(formData);
-  
-        if (response) {
-          toast.success(response.data.message)
-          // onSave(response.data.updatedUser);
+
+        if (response && response.data) {
+          toast.success(response.data.message);
+
+          setOriginalValues({
+            name: editName,
+            email: editEmail,
+            phoneNumber: editPhoneNumber,
+            profileImage: response.data.updatedUser?.profileImage || currentProfileImage,
+          });
+
+          setCurrentProfileImage(response.data.updatedUser?.profileImage || currentProfileImage);
+          onSave(true);
         }
       } catch (error) {
         console.error('Error updating user profile:', error);
+        toast.error('Failed to update user profile');
+
+        onSave(false);
+      } finally {
+        setLoading(false); // Hide spinner
       }
     }
+  };
+
+  const handleCancelClick = () => {
+    setIsEditing(false);
+    setEditName(originalValues.name);
+    setEditEmail(originalValues.email);
+    setEditPhoneNumber(originalValues.phoneNumber);
+    setCurrentProfileImage(originalValues.profileImage);
+    setNewProfileImage(null);
+    setErrors({});
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -121,7 +155,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({userId, name, email, phoneNumb
         <img
           src={currentProfileImage}
           alt="Profile"
-          className="w-32 h-32 rounded-full border-4 border-blue-500 shadow-lg"
+          className="w-32 h-32 rounded-full border-4 border-blue-500 shadow-lg object-cover"
         />
         {isEditing && (
           <button
@@ -148,12 +182,22 @@ const UserDetails: React.FC<UserDetailsProps> = ({userId, name, email, phoneNumb
             <button
               onClick={handleSaveClick}
               className="bg-green-500 text-white px-4 py-2 rounded-lg focus:outline-none mr-2"
+              disabled={loading} // Disable button when loading
             >
-              <Check size={16} className="inline mr-1" /> Save
+              {loading ? (
+                <div className="inline-flex items-center">
+                  <Spinner size="sm" className="animate-spin mr-2" /> Saving...
+                </div>
+              ) : (
+                <>
+                  <Check size={16} className="inline mr-1" /> Save
+                </>
+              )}
             </button>
             <button
-              onClick={handleEditClick}
+              onClick={handleCancelClick}
               className="bg-red-500 text-white px-4 py-2 rounded-lg focus:outline-none"
+              disabled={loading} // Disable cancel button when loading
             >
               <X size={16} className="inline mr-1" /> Cancel
             </button>

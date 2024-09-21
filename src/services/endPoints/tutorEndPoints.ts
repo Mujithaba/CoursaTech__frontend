@@ -26,6 +26,8 @@ const tutorRoutes ={
     fetchDashboardData:'/tutors/fetchDashboardData',
     courseGrowth:'/tutors/getCourseGrowth',
     updateProfileImg:'/tutors/updateProfileImg',
+    sendInstructorMsg:'/tutors/sendInstructorMsg',
+    getInitialMsg:'/tutors/getInitialMsg',
     
 }
 

@@ -27,6 +27,7 @@ const userRoutes={
     getAllCategories:'/users/getAllCategories',
     getHomePageData:'/users/getHomePageData',
     getEntrolledCourse:'/users/getEntrolledCourse',
+    getInitialMsg:'/users/getInitialMsg',
     
 }
 

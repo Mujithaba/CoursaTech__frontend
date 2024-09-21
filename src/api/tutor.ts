@@ -486,3 +486,36 @@ export const uploadProfileImage = async(file:File,instructorId:string)=>{
     return errorHandler(err);
   }
 }
+
+// sendTutorMsg
+export const sendTutorMsg = async (msg:string,instructorId:string,userId:string,instructorName:string)=>{
+  try {
+    const res = await Api.post(tutorRoutes.sendInstructorMsg,{msg,instructorId,userId,instructorName})
+    console.log(res,"tutor chat ");
+    
+    return res
+  } catch (error) {
+    console.log("error", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}
+// getInitialMsgs
+export const getInitialMsgsT = async(senderId:string,receiverId:string)=>{
+  try {
+    console.log(senderId,receiverId,"api ");
+    
+    const res = await Api.get(tutorRoutes.getInitialMsg,{
+      params:{
+        senderId,
+        receiverId
+      }
+    })
+    
+    return res.data;
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}

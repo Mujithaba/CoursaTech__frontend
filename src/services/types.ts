@@ -193,3 +193,11 @@ thumbnailImgUrl: string;
   is_listed?: boolean;
   createdAt?: Date;
 }
+
+export interface MessagePrev {
+  id: string;
+  senderId: string;
+  receiverId: string;
+  message: string;
+  createdAt: string;
+}

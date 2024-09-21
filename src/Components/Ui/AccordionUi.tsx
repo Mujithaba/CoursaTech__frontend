@@ -172,7 +172,8 @@ export default function AccordionUi({ modules, isPurchased }: AccordionProps) {
                           <video
                             src={lecture.lectureVideo}
                             controls
-                            className="w-full h-48 object-cover border border-gray-300 rounded-lg"
+                            controlsList="nodownload" 
+                            className="w-full h-56 object-cover border border-gray-300 rounded-md"
                           >
                             Your browser does not support the video tag.
                           </video>
@@ -186,14 +187,14 @@ export default function AccordionUi({ modules, isPurchased }: AccordionProps) {
                               href={lecture.lecturePdf}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="ml-2 text-green-800 bg-gray-300 flex items-center text-xs px-2 py-1 rounded-lg shadow hover:bg-gray-200"
+                              className="ml-2 text-green-800 bg-gray-300 flex items-center text-xs px-2 py-1 rounded-md shadow hover:bg-gray-200"
                             >
                               <FaFilePdf className="mr-1" /> View
                             </a>
                           </div>
                           <iframe
                             src={lecture.lecturePdf}
-                            className="mt-2 w-full h-48 border border-gray-300 rounded-lg"
+                            className="mt-2 w-full h-56 border border-gray-300 rounded-lg"
                             title="PDF Preview"
                           >
                             This browser does not support PDFs. Please download
