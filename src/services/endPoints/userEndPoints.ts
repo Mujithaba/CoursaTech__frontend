@@ -28,6 +28,9 @@ const userRoutes={
     getHomePageData:'/users/getHomePageData',
     getEntrolledCourse:'/users/getEntrolledCourse',
     getInitialMsg:'/users/getInitialMsg',
+    getWallet:'/users/getWallet',
+    paymentWallet:'/users/paymentWallet',
+
     
 }
 

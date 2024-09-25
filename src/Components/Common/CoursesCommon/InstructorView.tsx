@@ -128,7 +128,7 @@ const userId = userInfo._id
                   onClose={closeModal}
                   receiverId={instructorId}
                   previousMsgs={initialMsgs}
-
+                  instructorName={instructor?.instructorName as string}
                 />
               </div>
             )}

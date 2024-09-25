@@ -4,6 +4,7 @@ export interface User {
   email: string;
   phone?: string;
   isBlocked: boolean;
+  isGoogle: boolean;
 }
 
 export interface Tutor {
@@ -11,6 +12,7 @@ export interface Tutor {
   name: string;
   email: string;
   phone?: string;
+  // password?:string;
   isBlocked: boolean;
   isGoogle: boolean;
 }
@@ -71,7 +73,7 @@ export interface ICourse {
   description: string;
   instructor_id: string;
   category_id: Category;
-  price: string;
+  price: number;
   thambnail_Img: string;
   thumbnailSignedUrl: string;
   trailerSignedUrl: string;
@@ -164,7 +166,9 @@ export interface IStudentInfo {
   email: string;
   phone: string;
   img: string;
-  password?:string;
+  isBlocked: boolean;
+  isGoogle: boolean;
+  // password?:string;
 }
 
 export interface IFormData {
@@ -200,4 +204,18 @@ export interface MessagePrev {
   receiverId: string;
   message: string;
   createdAt: string;
+}
+
+// wallet
+export interface IWalletHistory {
+  _id:string;
+  type?: string;
+  amount?: number; 
+  reason?: string;
+  date: Date;
+}
+export interface IWallet {
+  userId:string;
+  balance: number;
+  history: IWalletHistory[];
 }

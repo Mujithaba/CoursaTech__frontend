@@ -74,7 +74,7 @@ const ChatScreenTutor: React.FC = () => {
       socketRef.current.emit("private message", newMessage);
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       try {
-        await sendTutorMsg(message, receiverId, senderId, instructorName);
+        await sendTutorMsg(message, receiverId, senderId, userName,instructorName);
       } catch (error) {
         
       }

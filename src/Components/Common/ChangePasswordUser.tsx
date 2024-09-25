@@ -1,17 +1,16 @@
-import React, { useState, FormEvent, useEffect } from 'react';
+import React, { useState, FormEvent } from 'react';
 import { motion } from 'framer-motion';
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 interface ChangePasswordProps {
-  currPassword:string | undefined;
   onChangePassword: (currentPassword: string, newPassword: string) => void;
 }
 
-const ChangePassword: React.FC<ChangePasswordProps> = ({currPassword, onChangePassword }) => {
-  const [actualPassword, setActualPassword] = useState(currPassword ?? '');
+const ChangePassword: React.FC<ChangePasswordProps> = ({ onChangePassword }) => {
+  // const [actualPassword, setActualPassword] = useState(currPassword ?? '');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-console.log(actualPassword,"actual");
 
 
 
@@ -20,7 +19,10 @@ console.log(actualPassword,"actual");
   const [newPasswordError, setNewPasswordError] = useState<string | null>(null);
   const [confirmPasswordError, setConfirmPasswordError] = useState<string | null>(null);
 
-
+ // Eye toggle state
+ const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+ const [showNewPassword, setShowNewPassword] = useState(false);
+ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   
 
   const handlePasswordChange = (e: FormEvent<HTMLFormElement>) => {
@@ -63,6 +65,9 @@ console.log(actualPassword,"actual");
     // If all validations pass, trigger the password change
     if (isValid) {
       onChangePassword(currentPassword, newPassword);
+      setCurrentPassword("")
+      setNewPassword("")
+      setConfirmPassword("")
     }
   };
 
@@ -84,20 +89,29 @@ console.log(actualPassword,"actual");
           <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700">
             Current Password
           </label>
-          <input
-            type="password"
-            id="currentPassword"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-            className={`w-full mt-1 px-4 py-2 border ${
-              currentPasswordError ? 'border-red-500' : 'border-gray-300'
-            } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-800`}
-            aria-invalid={!!currentPasswordError}
-            required
-          />
+          <div className="relative">
+            <input
+              type={showCurrentPassword ? "text" : "password"}
+              id="currentPassword"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              className={`w-full mt-1 px-4 py-2 border ${
+                currentPasswordError ? "border-red-500" : "border-gray-300"
+              } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-800`}
+              aria-invalid={!!currentPasswordError}
+              required
+            />
+            <span
+              className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
+              onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+            >
+              {showCurrentPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+            </span>
+          </div>
           {currentPasswordError && (
             <p className="text-red-500 text-sm mt-1">{currentPasswordError}</p>
           )}
+          
         </motion.div>
 
         {/* New Password */}
@@ -109,17 +123,25 @@ console.log(actualPassword,"actual");
           <label htmlFor="newPassword" className="block text-sm font-medium text-gray-800">
             New Password
           </label>
-          <input
-            type="password"
-            id="newPassword"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            className={`w-full mt-1 px-4 py-2 border ${
-              newPasswordError ? 'border-red-500' : 'border-gray-300'
-            } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-800`}
-            aria-invalid={!!newPasswordError}
-            required
-          />
+          <div className="relative">
+            <input
+              type={showNewPassword ? "text" : "password"}
+              id="newPassword"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className={`w-full mt-1 px-4 py-2 border ${
+                newPasswordError ? "border-red-500" : "border-gray-300"
+              } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-800`}
+              aria-invalid={!!newPasswordError}
+              required
+            />
+            <span
+              className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
+              onClick={() => setShowNewPassword(!showNewPassword)}
+            >
+              {showNewPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+            </span>
+          </div>
           {newPasswordError && (
             <p className="text-red-500 text-sm mt-1">{newPasswordError}</p>
           )}
@@ -134,17 +156,25 @@ console.log(actualPassword,"actual");
           <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
             Confirm New Password
           </label>
-          <input
-            type="password"
-            id="confirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className={`w-full mt-1 px-4 py-2 border ${
-              confirmPasswordError ? 'border-red-500' : 'border-gray-300'
-            } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-800`}
-            aria-invalid={!!confirmPasswordError}
-            required
-          />
+          <div className="relative">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className={`w-full mt-1 px-4 py-2 border ${
+                confirmPasswordError ? "border-red-500" : "border-gray-300"
+              } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-800`}
+              aria-invalid={!!confirmPasswordError}
+              required
+            />
+            <span
+              className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              {showConfirmPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+            </span>
+          </div>
           {confirmPasswordError && (
             <p className="text-red-500 text-sm mt-1">{confirmPasswordError}</p>
           )}

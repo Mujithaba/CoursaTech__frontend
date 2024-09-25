@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {Card, CardHeader, CardBody,Avatar} from "@nextui-org/react";
 
 
-import { getInstructorData } from "../../../api/user";
+
 import { getInstructorDataT } from "../../../api/tutor";
 
 interface IInstructorProps {
@@ -82,7 +82,7 @@ try {
         <p>Company: {instructor?.companyName == 'Please give Company' ? "CompanyName not available" :(<span className="text-black">{instructor?.companyName}</span>) }</p>
         <p>Positions: {instructor?.position == 'Please give your role' ?   "position not available"  :(<span className="text-black">{instructor?.position}</span>) }</p>
         <p>Positions: {instructor?.experience == 'Please give your experience' ?   "position not available"  :(<span className="text-black">{ instructor?.experience}</span>)}</p>
-        <p>Bio: {instructor?.aboutBio == 'write something about youself' ? "Bio not available" :(<span className="text-black">{instructor?.aboutBio}</span>)}</p>
+        <p>Bio: {instructor?.aboutBio == 'write something about yourself' ? "Bio not available" :(<span className="text-black">{instructor?.aboutBio}</span>)}</p>
         {/* <span className="pt-2">
           #FrontendWithZoey{" "}
           <span className="py-2" aria-label="computer" role="img">

@@ -28,6 +28,7 @@ const tutorRoutes ={
     updateProfileImg:'/tutors/updateProfileImg',
     sendInstructorMsg:'/tutors/sendInstructorMsg',
     getInitialMsg:'/tutors/getInitialMsg',
+    updatePassword:'/tutors/updatePassword',
     
 }
 

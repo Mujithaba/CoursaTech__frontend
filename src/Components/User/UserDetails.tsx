@@ -1,10 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect ,useCallback, useMemo} from 'react';
 import { motion } from 'framer-motion';
 import { Edit2, Check, X } from 'lucide-react';
 import { FiEdit } from "react-icons/fi";
 import { updateUserData } from '../../api/user';
 import { toast } from 'react-toastify';
 import { Spinner } from '@nextui-org/react'; // Ensure you import the spinner component
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '../../redux/slices/authSlice';
 
 export interface updateData {
   name: string;
@@ -19,10 +21,12 @@ interface UserDetailsProps {
   email: string;
   phoneNumber: string;
   profileImage: string;
+  isBlocked: boolean;
+  isGoogle: boolean;
   onSave: (updatedData: boolean) => void;
 }
 
-const UserDetails: React.FC<UserDetailsProps> = ({ userId, name, email, phoneNumber, profileImage, onSave }) => {
+const UserDetails: React.FC<UserDetailsProps> = ({ userId, name, email, phoneNumber, profileImage,isBlocked,isGoogle, onSave }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState(name);
   const [editEmail, setEditEmail] = useState(email);
@@ -32,12 +36,15 @@ const UserDetails: React.FC<UserDetailsProps> = ({ userId, name, email, phoneNum
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [errors, setErrors] = useState<{ name?: string; email?: string; phoneNumber?: string }>({});
   const [loading, setLoading] = useState(false); // Spinner loading state
+  const dispatch = useDispatch()
 
   const [originalValues, setOriginalValues] = useState({
     name,
     email,
     phoneNumber,
     profileImage,
+    isBlocked,
+    isGoogle
   });
 
   useEffect(() => {
@@ -46,9 +53,12 @@ const UserDetails: React.FC<UserDetailsProps> = ({ userId, name, email, phoneNum
       email,
       phoneNumber,
       profileImage,
+      isBlocked,
+    isGoogle
     });
     setCurrentProfileImage(profileImage);
   }, [name, email, phoneNumber, profileImage]);
+
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);
@@ -92,15 +102,20 @@ const UserDetails: React.FC<UserDetailsProps> = ({ userId, name, email, phoneNum
 
       try {
         const response = await updateUserData(formData);
+        console.log(response,"updatedUser");
+        
 
         if (response && response.data) {
           toast.success(response.data.message);
-
+          const updateStore = response.data.updatedUser
+dispatch(setCredentials(updateStore))
           setOriginalValues({
             name: editName,
             email: editEmail,
             phoneNumber: editPhoneNumber,
             profileImage: response.data.updatedUser?.profileImage || currentProfileImage,
+            isBlocked,
+    isGoogle
           });
 
           setCurrentProfileImage(response.data.updatedUser?.profileImage || currentProfileImage);
@@ -112,7 +127,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ userId, name, email, phoneNum
 
         onSave(false);
       } finally {
-        setLoading(false); // Hide spinner
+        setLoading(false); 
       }
     }
   };
@@ -275,3 +290,4 @@ const UserDetails: React.FC<UserDetailsProps> = ({ userId, name, email, phoneNum
 };
 
 export default UserDetails;
+ 

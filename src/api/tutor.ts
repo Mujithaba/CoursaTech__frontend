@@ -291,6 +291,8 @@ export const fetchtutorRegisterData = async (tutorId: string) => {
         tutorID: tutorId,
       },
     });
+    console.log(res,"getInstructorDetails");
+    
 
     return res.data;
   } catch (error) {
@@ -488,9 +490,9 @@ export const uploadProfileImage = async(file:File,instructorId:string)=>{
 }
 
 // sendTutorMsg
-export const sendTutorMsg = async (msg:string,instructorId:string,userId:string,instructorName:string)=>{
+export const sendTutorMsg = async (msg:string,instructorId:string,userId:string,userName:string,instructorName:string)=>{
   try {
-    const res = await Api.post(tutorRoutes.sendInstructorMsg,{msg,instructorId,userId,instructorName})
+    const res = await Api.post(tutorRoutes.sendInstructorMsg,{msg,instructorId,userId,userName,instructorName})
     console.log(res,"tutor chat ");
     
     return res
@@ -513,6 +515,19 @@ export const getInitialMsgsT = async(senderId:string,receiverId:string)=>{
     })
     
     return res.data;
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}
+// updateTutorPassword
+export const updateTutorPassword = async (instructorId:string,currentPassword:string,newPassword:string)=>{
+  try {
+    const res = await Api.patch(tutorRoutes.updatePassword,{instructorId,currentPassword,newPassword})
+    console.log(res);
+    return res;
+    
   } catch (error) {
     console.log("error:", error);
     const err: Error = error as Error;

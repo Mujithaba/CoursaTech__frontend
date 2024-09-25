@@ -13,6 +13,7 @@ interface UserChatScreenModalProps {
   onClose: () => void;
   receiverId: string;
   previousMsgs: MessagePrev[] | null;
+  instructorName:string
 }
 
 export interface Message {
@@ -30,6 +31,7 @@ function UserChatScreenModal({
   onClose,
   receiverId,
   previousMsgs,
+  instructorName
 }: UserChatScreenModalProps) {
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
@@ -109,7 +111,7 @@ function UserChatScreenModal({
       setMessages((prevMessages) => [...prevMessages, newMessage]);
 
       try {
-        await sendUserMsg(message, userId, receiverId, username);
+        await sendUserMsg(message, userId, receiverId, username,instructorName);
       } catch (error) {
         console.error("Error sending message:", error);
       }

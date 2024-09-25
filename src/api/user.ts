@@ -207,15 +207,18 @@ export const sendUserMsg = async (
   message: string,
   userId: string,
   instructorId: string,
-  username: string
+  username: string,
+  instructorName:string
+
 ) => {
   try {
-    console.log(message, userId, instructorId, username, "ppppppppp");
+    console.log(message, userId, instructorId, username,instructorName, "ppppppppp");
     const res = await Api.post(userRoutes.sendusermsg, {
       message,
       userId,
       instructorId,
       username,
+      instructorName
     });
     console.log(res, "res chat ");
 
@@ -433,6 +436,36 @@ export const getInitialMsgs = async(senderId:string,receiverId:string)=>{
     })
     
     return res.data;
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}
+// getWalletData
+export const getWalletData = async(userId:string)=>{
+  try {
+    const res = await Api.get(userRoutes.getWallet,{
+      params:{
+        userId
+      }
+    })
+    console.log(res,"APi wallet")
+    return res;
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+}
+
+// walletPayment
+export const walletPayment = async(userId:string,instructorId:string,courseId:string,coursePrice:number,courseName:string)=>{
+  try {
+    const res = await Api.post(userRoutes.paymentWallet,{userId,instructorId,courseId,coursePrice,courseName})
+    console.log(res,"paymentWallet");
+    return res;
+    
   } catch (error) {
     console.log("error:", error);
     const err: Error = error as Error;

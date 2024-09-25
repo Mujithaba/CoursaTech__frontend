@@ -19,6 +19,7 @@ export default function UserProfile() {
   const [loading, setLoading] = useState(true); 
   const [profileUril,setProfileUrl]=useState<string>('')
   const [isEdited,setIsEdited]=useState<boolean>(false)
+  
 
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const userId = userInfo._id as string;
@@ -57,6 +58,8 @@ export default function UserProfile() {
     if (response && response.status === 200) {
       toast.success("Password changed successfully")
       console.log("Password changed successfully.");
+      
+      
     } else {
       console.error("Failed to change password:", response?.data.message);
     }
@@ -80,9 +83,9 @@ export default function UserProfile() {
 
       <div className="flex h-screen bg-gray-100">
         {/* Sidebar */}
-        <div className="w-1/4 bg-white border-r border-gray-300 p-4">
+        <div className="w-1/4 bg-white border-r border-gray-300 p-4 ">
           {/* User Profile */}
-          <div className="flex flex-col items-center mt-14 mb-28">
+          {/* <div className="flex flex-col items-center mt-14 mb-28">
             <img
               src={
                profileUril && profileUril != "nopic"
@@ -94,11 +97,11 @@ export default function UserProfile() {
             />
             <h2 className="text-xl font-semibold">{studentInfo?.name}</h2>
             <p className="text-gray-500">{studentInfo?.email}</p>
-          </div>
+          </div> */}
           <hr className="bg-red-500 font-extrabold" />
 
           {/* Menu Items */}
-          <ul className="space-y-2">
+          <ul className="space-y-2 mt-16">
   {[
     { label: "Your info", icon: <GrContactInfo size={19} className="ms-2"/> },
     { label: "Change Password", icon:<RiLockPasswordLine size={18}/>},
@@ -134,11 +137,13 @@ export default function UserProfile() {
                   ? profileUril
                   : "https://via.placeholder.com/100"
               }
+              isBlocked={studentInfo.isBlocked}
+              isGoogle={studentInfo.isGoogle}
               onSave={updatedUserData}
             />
           )}
           {activeTab === "Change Password" && (
-            <ChangePassword currPassword ={studentInfo?.password ?? ''} onChangePassword={onChangePassword} />
+            <ChangePassword onChangePassword={onChangePassword} />
           )}
           {activeTab === "Enrolled Courses" && (
             <EntrolledCourses  userId={userId} />
