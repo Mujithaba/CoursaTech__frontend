@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { Badge, Button } from "@nextui-org/react";
-import NotificationIcon from "../Ui/NotificationIcon";
+import { Button } from "@nextui-org/react";
 import { fetchNotApprovedCourses } from "../../api/admin";
 import { ICourse } from "../../services/types";
 
@@ -56,8 +55,18 @@ function Header() {
           </Badge>
         </div> */}
         <button className="rounded-md bg-gray-800 p-2 focus:outline-none">
-          <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 6h18M3 12h18m-7 6h7"></path>
+          <svg
+            className="h-6 w-6 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M3 6h18M3 12h18m-7 6h7"
+            ></path>
           </svg>
         </button>
       </div>

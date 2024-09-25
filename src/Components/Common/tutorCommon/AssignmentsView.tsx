@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -10,7 +10,6 @@ import {
 } from "@nextui-org/react";
 import { IAssignment } from "../../../services/types";
 import document from "/Logo/images/documentImg.png";
-import { eachAssignmentsFetch } from "../../../api/user";
 import { eachAssignmentsFetchT } from "../../../api/tutor";
 
 interface AssignmentProps {
@@ -27,7 +26,7 @@ function AssignmentsViewCommon({ courseID }: AssignmentProps) {
   const fetchEachAssignments = async () => {
     try {
       const response = await eachAssignmentsFetchT(courseID);
-      if (response ) {
+      if (response) {
         setAssignments(response);
       } else {
         setAssignments([]);
@@ -38,8 +37,7 @@ function AssignmentsViewCommon({ courseID }: AssignmentProps) {
     }
   };
 
-  console.log(assignments,'assignments----');
-  
+  console.log(assignments, "assignments----");
 
   return (
     <div className="m-5 border-2 p-11 rounded-md bg-card">

@@ -1,16 +1,14 @@
-import React from 'react'
-import AccordionCommon from '../../Ui/tutorUi/AccordionCommon';
-import { Modules } from '../../../services/types';
+import AccordionCommon from "../../Ui/tutorUi/AccordionCommon";
+import { Modules } from "../../../services/types";
 
 interface CurriculumDataProps {
-    modules: Modules[] | undefined;
-    
-  }
+  modules: Modules[] | undefined;
+}
 
-export default function CommonCuricculum({modules}: CurriculumDataProps) {
+export default function CommonCuricculum({ modules }: CurriculumDataProps) {
   return (
     <div>
-        {modules && modules.length > 0 ? (
+      {modules && modules.length > 0 ? (
         <div className="mt-3 mx-2 bg-card p-3 rounded-md">
           <AccordionCommon modules={modules} />
         </div>
@@ -20,5 +18,5 @@ export default function CommonCuricculum({modules}: CurriculumDataProps) {
         </div>
       )}
     </div>
-  )
+  );
 }

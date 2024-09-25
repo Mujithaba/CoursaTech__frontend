@@ -11,26 +11,22 @@ import CommonReviewsA from "../../Components/Common/adminCommon/Reviews";
 
 const ViewMyCourse: React.FC = () => {
   const [courseData, setCourse] = useState<ICourse | null>(null);
-  const [state, setState] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState("Curriculum");
 
   console.log(courseData, "setCourseData");
 
   const location = useLocation();
   const course = location.state?.CourseData as ICourse;
-  console.log(course._id, "lecture............");
 
   useEffect(() => {
     getViewCourse();
   }, []);
 
-  console.log(courseData, "setCourseData...........");
   const getViewCourse = async () => {
     try {
       let courseId = course._id as string;
       const response = await viewCoureseDetails(courseId);
       if (response && response.getViewCourses) {
-        console.log(response.getViewCourses, "getViewCourses..........");
         setCourse(response.getViewCourses);
       } else {
         console.error("No course data in the response");
@@ -48,7 +44,6 @@ const ViewMyCourse: React.FC = () => {
 
   const courseid = courseData._id as string;
   const instructor_id = courseData.instructor_id as string;
-
 
   return (
     <>
@@ -79,89 +74,85 @@ const ViewMyCourse: React.FC = () => {
           </div>
         </div>
 
+        {/* course layouts */}
+        <div className="flex border-b ms-32">
+          <button
+            className={`px-4 py-2 text-lg flex font-semibold ${
+              activeTab === "Curriculum"
+                ? "text-black border-b-2 border-green-800"
+                : "text-gray-500"
+            }`}
+            onClick={() => setActiveTab("Curriculum")}
+          >
+            <FaBook className="mr-2 mt-2" size={15} />
+            Curriculum
+          </button>
+          <button
+            className={`px-4 py-2 flex text-lg font-semibold ${
+              activeTab === "Instructor"
+                ? "text-black border-b-2 border-green-800"
+                : "text-gray-500"
+            }`}
+            onClick={() => setActiveTab("Instructor")}
+          >
+            <FaUser className="mr-2 mt-2" size={15} />
+            Instructor
+          </button>
 
-           {/* course layouts */}
-      <div className="flex border-b ms-32">
-        <button
-          className={`px-4 py-2 text-lg flex font-semibold ${
-            activeTab === "Curriculum"
-              ? "text-black border-b-2 border-green-800"
-              : "text-gray-500"
-          }`}
-          onClick={() => setActiveTab("Curriculum")}
-        >
-          <FaBook className="mr-2 mt-2" size={15} />
-          Curriculum
-        </button>
-        <button
-          className={`px-4 py-2 flex text-lg font-semibold ${
-            activeTab === "Instructor"
-              ? "text-black border-b-2 border-green-800"
-              : "text-gray-500"
-          }`}
-          onClick={() => setActiveTab("Instructor")}
-        >
-          <FaUser className="mr-2 mt-2" size={15} />
-          Instructor
-        </button>
+          <button
+            className={`px-4 py-2 flex text-lg font-semibold ${
+              activeTab === "Assignments"
+                ? "text-black border-b-2 border-green-800"
+                : "text-gray-500"
+            }`}
+            onClick={() => setActiveTab("Assignments")}
+          >
+            <FaFileAlt className="mr-2 mt-2" />
+            Assignments
+          </button>
+          <button
+            className={`px-4 py-2 flex text-lg font-semibold ${
+              activeTab === "reviews"
+                ? "text-black border-b-2 border-green-800"
+                : "text-gray-500"
+            }`}
+            onClick={() => setActiveTab("reviews")}
+          >
+            <FaComments className="mr-2 mt-2" />
+            Reviews
+          </button>
+        </div>
 
-        <button
-          className={`px-4 py-2 flex text-lg font-semibold ${
-            activeTab === "Assignments"
-              ? "text-black border-b-2 border-green-800"
-              : "text-gray-500"
-          }`}
-          onClick={() => setActiveTab("Assignments")}
-        >
-          <FaFileAlt className="mr-2 mt-2" />
-          Assignments
-        </button>
-        <button
-          className={`px-4 py-2 flex text-lg font-semibold ${
-            activeTab === "reviews"
-              ? "text-black border-b-2 border-green-800"
-              : "text-gray-500"
-          }`}
-          onClick={() => setActiveTab("reviews")}
-        >
-          <FaComments className="mr-2 mt-2" />
-          Reviews
-        </button>
-      </div>
+        {/* components of the nav bar in the course view page start*/}
 
-         {/* components of the nav bar in the course view page start*/}
-
-          {/* Curriculum  start*/}
-          {activeTab === "Curriculum" && (
-            <div>
-              <CommonCuricculum modules={courseData.modules} />
-            </div>
-          )}
-          {/* instructor page start */}
-          {activeTab === "Instructor" && (
-            <div>
-              <CommonInstructorViewA instructorId={instructor_id} />
-            </div>
-          )}
-          {/* assignments page start */}
-          {activeTab === "Assignments" && (
-            <div>
-              <AssignmentsViewCommonA courseID={courseid} />
-            </div>
-          )}
-          {/* reviews page start */}
-          {activeTab === "reviews" && (
-            <div>
-              <CommonReviewsA courseID={courseid} />
-            </div>
-          )}
-          {/* components of the nav bar in the course view page  end*/}
-
-      
+        {/* Curriculum  start*/}
+        {activeTab === "Curriculum" && (
+          <div>
+            <CommonCuricculum modules={courseData.modules} />
+          </div>
+        )}
+        {/* instructor page start */}
+        {activeTab === "Instructor" && (
+          <div>
+            <CommonInstructorViewA instructorId={instructor_id} />
+          </div>
+        )}
+        {/* assignments page start */}
+        {activeTab === "Assignments" && (
+          <div>
+            <AssignmentsViewCommonA courseID={courseid} />
+          </div>
+        )}
+        {/* reviews page start */}
+        {activeTab === "reviews" && (
+          <div>
+            <CommonReviewsA courseID={courseid} />
+          </div>
+        )}
+        {/* components of the nav bar in the course view page  end*/}
       </div>
     </>
   );
 };
 
 export default ViewMyCourse;
-

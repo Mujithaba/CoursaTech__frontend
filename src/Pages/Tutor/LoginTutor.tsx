@@ -16,17 +16,15 @@ export default function LoginTutor() {
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
     {}
   );
-  const {tutorInfo}= useSelector((state:RootState)=> state.tutorAuth);
+  const { tutorInfo } = useSelector((state: RootState) => state.tutorAuth);
 
-  
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  useEffect(()=>{
-  if (tutorInfo) {
-    navigate('/tutor/tuturDashboard')
-  }
-},[navigate,tutorInfo])
-  
+  useEffect(() => {
+    if (tutorInfo) {
+      navigate("/tutor/tuturDashboard");
+    }
+  }, [navigate, tutorInfo]);
 
   const handleInputChange =
     (setter: React.Dispatch<React.SetStateAction<string>>) =>
@@ -138,7 +136,6 @@ export default function LoginTutor() {
               placeholder="Email"
               value={email}
               onChange={handleInputChange(setEmail)}
-              // required
             />
             {errors.email && (
               <p className="text-sm text-red-500">{errors.email}</p>
@@ -159,7 +156,6 @@ export default function LoginTutor() {
               placeholder="Password"
               value={password}
               onChange={handleInputChange(setPassword)}
-              // required
             />
             {errors.password && (
               <p className="text-sm text-red-500">{errors.password}</p>
@@ -172,7 +168,12 @@ export default function LoginTutor() {
           >
             Login
           </button>
-          <Link className=" mt-5 text-gray-400 hover:text-gray-800" to='/tutor/tutorForgetPassword'>Forgot Password</Link>
+          <Link
+            className=" mt-5 text-gray-400 hover:text-gray-800"
+            to="/tutor/tutorForgetPassword"
+          >
+            Forgot Password
+          </Link>
 
           <p className="text-gray-600 mt-3 mb-3 text-center">
             Don't have an account?{" "}

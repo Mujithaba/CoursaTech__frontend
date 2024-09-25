@@ -1,8 +1,8 @@
 import Api from "../services/axios";
 import errorHandler from "./error";
 import userRoutes from "../services/endPoints/userEndPoints";
-import { AxiosError, AxiosResponse } from "axios";
-import { IFormData, IReportIssues } from "../services/types";
+import { AxiosError } from "axios";
+import {  IReportIssues } from "../services/types";
 
 interface userFormData {
   name?: string;
@@ -11,12 +11,7 @@ interface userFormData {
   password?: string;
 }
 
-// interface User {
-//   _id: string;
-//   name: string;
-//   email: string;
-//   isBlocked: boolean;
-// }
+
 
 interface loginInfo {
   email: string;
@@ -33,7 +28,7 @@ export const signup = async (userData: userFormData) => {
     if (error instanceof AxiosError) {
       return errorHandler(error);
     }
-    // If it's not an AxiosError, rethrow or handle it differently
+  
     throw error;
   }
 };

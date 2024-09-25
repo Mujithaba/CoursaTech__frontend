@@ -1,29 +1,31 @@
-import React, { useState, FormEvent } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, FormEvent } from "react";
+import { motion } from "framer-motion";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 interface ChangePasswordProps {
   onChangePassword: (currentPassword: string, newPassword: string) => void;
 }
 
-const ChangePassword: React.FC<ChangePasswordProps> = ({ onChangePassword }) => {
-  // const [actualPassword, setActualPassword] = useState(currPassword ?? '');
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-
-
+const ChangePassword: React.FC<ChangePasswordProps> = ({
+  onChangePassword,
+}) => {
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   // Error states
-  const [currentPasswordError, setCurrentPasswordError] = useState<string | null>(null);
+  const [currentPasswordError, setCurrentPasswordError] = useState<
+    string | null
+  >(null);
   const [newPasswordError, setNewPasswordError] = useState<string | null>(null);
-  const [confirmPasswordError, setConfirmPasswordError] = useState<string | null>(null);
+  const [confirmPasswordError, setConfirmPasswordError] = useState<
+    string | null
+  >(null);
 
- // Eye toggle state
- const [showCurrentPassword, setShowCurrentPassword] = useState(false);
- const [showNewPassword, setShowNewPassword] = useState(false);
- const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  
+  // Eye toggle state
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handlePasswordChange = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,17 +39,16 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onChangePassword }) => 
 
     // Validate current password
     if (!currentPassword) {
-      setCurrentPasswordError('Current password is required.');
+      setCurrentPasswordError("Current password is required.");
       isValid = false;
     }
-    
 
     // Validate new password
     if (!newPassword) {
-      setNewPasswordError('New password is required.');
+      setNewPasswordError("New password is required.");
       isValid = false;
     } else if (newPassword.length < 6) {
-      setNewPasswordError('New password must be at least 6 characters long.');
+      setNewPasswordError("New password must be at least 6 characters long.");
       isValid = false;
     }
 
@@ -57,17 +58,12 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onChangePassword }) => 
       isValid = false;
     }
 
-    // if (actualPassword == newPassword ) {
-    //   setCurrentPasswordError('Current password is not correct.');
-    //   isValid = false;
-    // }
-
     // If all validations pass, trigger the password change
     if (isValid) {
       onChangePassword(currentPassword, newPassword);
-      setCurrentPassword("")
-      setNewPassword("")
-      setConfirmPassword("")
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
     }
   };
 
@@ -78,7 +74,9 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onChangePassword }) => 
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h2 className="text-3xl font-bold text-gray-900 mb-8 flex justify-center">Change Password</h2>
+      <h2 className="text-3xl font-bold text-gray-900 mb-8 flex justify-center">
+        Change Password
+      </h2>
       <form onSubmit={handlePasswordChange} className="space-y-6">
         {/* Current Password */}
         <motion.div
@@ -86,7 +84,10 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onChangePassword }) => 
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
         >
-          <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="currentPassword"
+            className="block text-sm font-medium text-gray-700"
+          >
             Current Password
           </label>
           <div className="relative">
@@ -111,7 +112,6 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onChangePassword }) => 
           {currentPasswordError && (
             <p className="text-red-500 text-sm mt-1">{currentPasswordError}</p>
           )}
-          
         </motion.div>
 
         {/* New Password */}
@@ -120,7 +120,10 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onChangePassword }) => 
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
         >
-          <label htmlFor="newPassword" className="block text-sm font-medium text-gray-800">
+          <label
+            htmlFor="newPassword"
+            className="block text-sm font-medium text-gray-800"
+          >
             New Password
           </label>
           <div className="relative">
@@ -153,7 +156,10 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onChangePassword }) => 
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
         >
-          <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="confirmPassword"
+            className="block text-sm font-medium text-gray-700"
+          >
             Confirm New Password
           </label>
           <div className="relative">

@@ -40,7 +40,6 @@ function Otp() {
     setTimer(30);
 
     let response = await resendOTP(roleData.name, roleData.email);
-    console.log(response, "resendotp data");
 
     if (response) {
       toast.success(response.data.message);
@@ -59,8 +58,6 @@ function Otp() {
         toast.success(response.data.message);
         navigate("/login");
       }
-
-      // toast.success(response)
     } catch (error: any) {
       errorHandler(error);
     }
@@ -74,7 +71,9 @@ function Otp() {
         alt="signupImage"
       />
       <div className="relative w-full max-w-md px-4 py-8 bg-white rounded-lg shadow-lg shadow-red-400">
-        <h2 className="text-center text-black text-2xl font-bold mb-4">Enter OTP</h2>
+        <h2 className="text-center text-black text-2xl font-bold mb-4">
+          Enter OTP
+        </h2>
         <form onSubmit={submitOtp}>
           <div className="mb-4 flex justify-center items-center">
             <input

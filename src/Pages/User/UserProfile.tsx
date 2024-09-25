@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ChangePassword from "../../Components/Common/ChangePasswordUser";
 import UserDetails, { updateData } from "../../Components/User/UserDetails";
 import { useSelector } from "react-redux";
@@ -16,10 +16,9 @@ import Wallet from "../../Components/User/Wallet";
 export default function UserProfile() {
   const [activeTab, setActiveTab] = useState("Your info");
   const [studentInfo, setStudentInfo] = useState<IStudentInfo | null>(null);
-  const [loading, setLoading] = useState(true); 
-  const [profileUril,setProfileUrl]=useState<string>('')
-  const [isEdited,setIsEdited]=useState<boolean>(false)
-  
+  const [loading, setLoading] = useState(true);
+  const [profileUril, setProfileUrl] = useState<string>("");
+  const [isEdited, setIsEdited] = useState<boolean>(false);
 
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const userId = userInfo._id as string;
@@ -35,7 +34,7 @@ export default function UserProfile() {
       const response = await getUserInfo(userId);
       if (response) {
         setStudentInfo(response?.data.userData);
-        setProfileUrl(response.data.profileUril)
+        setProfileUrl(response.data.profileUril);
       }
     } catch (error) {
       console.error("Failed to fetch student info:", error);
@@ -45,82 +44,79 @@ export default function UserProfile() {
   };
 
   // Function to handle password change
-  const onChangePassword = async (currentPassword: string, newPassword: string) => {
+  const onChangePassword = async (
+    currentPassword: string,
+    newPassword: string
+  ) => {
     try {
       console.log("Current Password:", currentPassword);
       console.log("New Password:", newPassword);
       if (!userId) {
         console.error("User ID is missing.");
-        return; 
+        return;
       }
-      const response = await updatePassword(userId, currentPassword, newPassword);
-    
-    if (response && response.status === 200) {
-      toast.success("Password changed successfully")
-      console.log("Password changed successfully.");
-      
-      
-    } else {
-      console.error("Failed to change password:", response?.data.message);
-    }
-  } catch (error) {
-    console.error("Error while changing password:", error);
-  }
-};
+      const response = await updatePassword(
+        userId,
+        currentPassword,
+        newPassword
+      );
 
-  const updatedUserData = (userData: boolean) => {
-    setIsEdited(true)
+      if (response && response.status === 200) {
+        toast.success("Password changed successfully");
+        console.log("Password changed successfully.");
+      } else {
+        console.error("Failed to change password:", response?.data.message);
+      }
+    } catch (error) {
+      console.error("Error while changing password:", error);
+    }
   };
 
-  console.log(studentInfo,"studentInfo----");
-  console.log(profileUril,"studentInfo----");
-  
+  const updatedUserData = (userData: boolean) => {
+    setIsEdited(true);
+  };
 
   return (
     <>
       <div className="w-full h-20 bg-gray-100"></div>
-      
 
       <div className="flex h-screen bg-gray-100">
         {/* Sidebar */}
         <div className="w-1/4 bg-white border-r border-gray-300 p-4 ">
-          {/* User Profile */}
-          {/* <div className="flex flex-col items-center mt-14 mb-28">
-            <img
-              src={
-               profileUril && profileUril != "nopic"
-                  ? profileUril
-                  : "https://via.placeholder.com/100"
-              }
-              alt="User Avatar"
-              className="w-24 h-24 rounded-full mb-2"
-            />
-            <h2 className="text-xl font-semibold">{studentInfo?.name}</h2>
-            <p className="text-gray-500">{studentInfo?.email}</p>
-          </div> */}
           <hr className="bg-red-500 font-extrabold" />
 
           {/* Menu Items */}
           <ul className="space-y-2 mt-16">
-  {[
-    { label: "Your info", icon: <GrContactInfo size={19} className="ms-2"/> },
-    { label: "Change Password", icon:<RiLockPasswordLine size={18}/>},
-    { label: "Enrolled Courses" , icon:<BiSolidPurchaseTagAlt size={18}/>},
-    { label: "Wallet",icon:<GiWallet size={18}/> }
-  ].map((item, index) => (
-    <li key={index}>
-      <button
-        onClick={() => setActiveTab(item.label)}
-        className={`w-full flex items-center text-left px-4 py-2 rounded-md focus:outline-none ${
-          activeTab === item.label ? "bg-gray-300 font-bold" : "hover:bg-gray-200"
-        }`}
-      >
-        {item.icon && <span className="mr-2">{item.icon}</span>}
-        {item.label}
-      </button>
-    </li>
-  ))}
-</ul>
+            {[
+              {
+                label: "Your info",
+                icon: <GrContactInfo size={19} className="ms-2" />,
+              },
+              {
+                label: "Change Password",
+                icon: <RiLockPasswordLine size={18} />,
+              },
+              {
+                label: "Enrolled Courses",
+                icon: <BiSolidPurchaseTagAlt size={18} />,
+              },
+              { label: "Wallet", icon: <GiWallet size={18} /> },
+            ].map((item, index) => (
+              <li key={index}>
+                <button
+                  onClick={() => setActiveTab(item.label)}
+                  className={`w-full flex items-center text-left px-4 py-2 rounded-md focus:outline-none ${
+                    activeTab === item.label
+                      ? "bg-gray-300 font-bold"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  {item.icon && <span className="mr-2">{item.icon}</span>}
+                  {item.label}
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Main Content */}
@@ -128,12 +124,12 @@ export default function UserProfile() {
           {loading && <div className="text-center">Loading...</div>}
           {!loading && activeTab === "Your info" && studentInfo && (
             <UserDetails
-            userId={userId}
+              userId={userId}
               name={studentInfo.name}
               email={studentInfo.email}
               phoneNumber={studentInfo.phone}
               profileImage={
-                profileUril && profileUril  != "nopic"
+                profileUril && profileUril != "nopic"
                   ? profileUril
                   : "https://via.placeholder.com/100"
               }
@@ -146,11 +142,9 @@ export default function UserProfile() {
             <ChangePassword onChangePassword={onChangePassword} />
           )}
           {activeTab === "Enrolled Courses" && (
-            <EntrolledCourses  userId={userId} />
+            <EntrolledCourses userId={userId} />
           )}
-          {activeTab === "Wallet" && (
-            <Wallet  userId={userId} />
-          )}
+          {activeTab === "Wallet" && <Wallet userId={userId} />}
         </div>
       </div>
     </>

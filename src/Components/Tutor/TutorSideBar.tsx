@@ -1,9 +1,7 @@
-import React from "react";
 import { useDispatch } from "react-redux";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { logOut } from "../../redux/slices/tutorSlice";
 import Logo from "/Logo/icon/SVG-Logo.svg";
-
 
 import {
   HiOutlineLogout,
@@ -17,7 +15,6 @@ import { LuMessagesSquare } from "react-icons/lu";
 function TutorSideBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const logoutHandler = async () => {
     try {
@@ -62,36 +59,33 @@ function TutorSideBar() {
           )}
         </NavLink>
 
-      
-          <NavLink
-            to="/tutor/createCourse"
-            className={({ isActive }) =>
-              `flex items-center py-2.5 m-2 px-4 rounded-xl transition duration-200 ${
-                isActive
-                  ? "bg-gray-300 justify-center text-black"
-                  : "hover:border text-white"
-              }`
-            }
-          >
-            {({ isActive }) => (
-              <>
-                <HiOutlinePlusCircle
-                  size={isActive ? 13 : 20} // Change size based on isActive
-                  className="mr-2"
-                />
-                <span
-                  className={`transition-all duration-200 ${
-                    isActive ? "text-sm" : "text-sm"
-                  }`}
-                >
-                  Add Course
-                </span>
-              </>
-            )}
-          </NavLink>
-        
+        <NavLink
+          to="/tutor/createCourse"
+          className={({ isActive }) =>
+            `flex items-center py-2.5 m-2 px-4 rounded-xl transition duration-200 ${
+              isActive
+                ? "bg-gray-300 justify-center text-black"
+                : "hover:border text-white"
+            }`
+          }
+        >
+          {({ isActive }) => (
+            <>
+              <HiOutlinePlusCircle
+                size={isActive ? 13 : 20} // Change size based on isActive
+                className="mr-2"
+              />
+              <span
+                className={`transition-all duration-200 ${
+                  isActive ? "text-sm" : "text-sm"
+                }`}
+              >
+                Add Course
+              </span>
+            </>
+          )}
+        </NavLink>
 
-        
         <NavLink
           to="/tutor/myCourses"
           className={({ isActive }) =>
@@ -132,18 +126,16 @@ function TutorSideBar() {
         >
           {({ isActive }) => (
             <>
-              
               <MdAssignment
-            size={isActive ? 15 : 20} // Change size based on isActive
-              className="mr-2"
-            />
+                size={isActive ? 15 : 20} // Change size based on isActive
+                className="mr-2"
+              />
               <span
                 className={`transition-all duration-200 ${
                   isActive ? "text-sm" : "text-sm"
                 }`}
               >
-
-              Assignments
+                Assignments
               </span>
             </>
           )}
@@ -161,17 +153,15 @@ function TutorSideBar() {
         >
           {({ isActive }) => (
             <>
-              
               <LuMessagesSquare
-            size={isActive ? 15 : 20} // Change size based on isActive
-              className="mr-2"
-            />
+                size={isActive ? 15 : 20} // Change size based on isActive
+                className="mr-2"
+              />
               <span
                 className={`transition-all duration-200 ${
                   isActive ? "text-sm" : "text-sm"
                 }`}
               >
-
                 Chat List
               </span>
             </>
@@ -192,10 +182,6 @@ function TutorSideBar() {
           <HiOutlineLogout size={22} className="mr-2" />
           Logout
         </NavLink>
-        
-        
-
-
       </nav>
     </aside>
   );

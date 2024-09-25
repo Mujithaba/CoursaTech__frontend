@@ -70,50 +70,48 @@ export default function ForgotNewPass() {
           Enter New Password
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* <div className="flex justify-between max-md:flex-col"> */}
-            <div className="flex flex-col ">
-              <label
-                htmlFor="password"
-                className="text-sm font-sans text-black font-medium"
-              >
-                New Password
-              </label>
-              <input
-                className="border text-black bg-gray-200 p-2 rounded-md h-9"
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Enter New Password"
-                value={password}
-                onChange={handleInputChange(setPassword)}
-                required
-              />
-              {errors.password && (
-                <p className="text-sm  text-red-500">{errors.password}</p>
-              )}
-            </div>
-            <div className="flex flex-col max-md:mt-3">
-              <label
-                htmlFor="confirmpass"
-                className="text-sm font-sans text-black font-medium"
-              >
-                Confirm Password
-              </label>
-              <input
-                className="border text-black bg-gray-200 p-2 rounded-md h-9 border-none"
-                type="password"
-                id="confirmpass"
-                name="confirmpass"
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={handleInputChange(setConfirmPassword)}
-                required
-              />
-              {errors.confirmPassword && (
-                <p className="text-sm text-red-500">{errors.confirmPassword}</p>
-              )}
-            </div>
-          {/* </div> */}
+          <div className="flex flex-col ">
+            <label
+              htmlFor="password"
+              className="text-sm font-sans text-black font-medium"
+            >
+              New Password
+            </label>
+            <input
+              className="border text-black bg-gray-200 p-2 rounded-md h-9"
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter New Password"
+              value={password}
+              onChange={handleInputChange(setPassword)}
+              required
+            />
+            {errors.password && (
+              <p className="text-sm  text-red-500">{errors.password}</p>
+            )}
+          </div>
+          <div className="flex flex-col max-md:mt-3">
+            <label
+              htmlFor="confirmpass"
+              className="text-sm font-sans text-black font-medium"
+            >
+              Confirm Password
+            </label>
+            <input
+              className="border text-black bg-gray-200 p-2 rounded-md h-9 border-none"
+              type="password"
+              id="confirmpass"
+              name="confirmpass"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={handleInputChange(setConfirmPassword)}
+              required
+            />
+            {errors.confirmPassword && (
+              <p className="text-sm text-red-500">{errors.confirmPassword}</p>
+            )}
+          </div>
 
           <button
             type="submit"

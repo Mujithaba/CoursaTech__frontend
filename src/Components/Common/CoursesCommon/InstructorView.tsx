@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { MdMessage } from "react-icons/md";
-import { Card, CardHeader, CardBody, Avatar, Button, useSlider } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, Avatar, Button } from "@nextui-org/react";
 import { motion } from "framer-motion";
-import UserChatScreenModal, { Message } from "../../User/UserChatScreenModal";
+import UserChatScreenModal from "../../User/UserChatScreenModal";
 import { getInitialMsgs, getInstructorData } from "../../../api/user";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
@@ -31,14 +31,14 @@ const InstructorView: React.FC<IInstructorProps> = ({
 }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [instructor, setInstructor] = useState<IInstructor | null>(null);
-  const [instructorImgUrl,setInstructorUrl]= useState<string>("")
-  const [initialMsgs,setInitialMsgs]= useState<MessagePrev[]>([])
+  const [instructorImgUrl, setInstructorUrl] = useState<string>("");
+  const [initialMsgs, setInitialMsgs] = useState<MessagePrev[]>([]);
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
-  const {userInfo}= useSelector((state:RootState)=>state.auth)
-const userId = userInfo._id
+  const { userInfo } = useSelector((state: RootState) => state.auth);
+  const userId = userInfo._id;
   useEffect(() => {
     fetchInstructorData();
     loadInitialMessages();
@@ -46,13 +46,14 @@ const userId = userInfo._id
 
   const fetchInstructorData = async () => {
     try {
-      const {getInstructor,instructorImgUrl} = await getInstructorData(instructorId);
-      console.log(getInstructor,instructorImgUrl, "getInstructor");
-     
+      const { getInstructor, instructorImgUrl } = await getInstructorData(
+        instructorId
+      );
+      console.log(getInstructor, instructorImgUrl, "getInstructor");
 
       if (getInstructor) {
         setInstructor(getInstructor);
-        setInstructorUrl(instructorImgUrl)
+        setInstructorUrl(instructorImgUrl);
       }
     } catch (error) {
       console.error("Assignments fetching error:", error);
@@ -63,16 +64,13 @@ const userId = userInfo._id
     try {
       const initialMessages = await getInitialMsgs(userId, instructorId);
       setInitialMsgs(initialMessages);
-      console.log(initialMessages,"initialMessages");
-      
+      console.log(initialMessages, "initialMessages");
     } catch (error) {
       console.error("Error loading initial messages:", error);
-     
     }
   };
 
-
-  console.log(instructor,initialMsgs, "99999");
+  console.log(instructor, initialMsgs, "99999");
 
   return (
     <motion.div
@@ -81,7 +79,6 @@ const userId = userInfo._id
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
     >
-      {/* <h1>Instructor ID: {instructorId}</h1> */}
       <div className="w-full max-w-md">
         <div className="flex mb-3 text-sm">
           {!isPurchase && (
@@ -136,27 +133,35 @@ const userId = userInfo._id
           <CardBody className="px-3 py-2 text-sm text-default-400">
             <p>
               Company:{" "}
-              {instructor?.companyName === "Please give Company"
-                ? "Company Name not available"
-                : <span className="text-black">{instructor?.companyName}</span>}
+              {instructor?.companyName === "Please give Company" ? (
+                "Company Name not available"
+              ) : (
+                <span className="text-black">{instructor?.companyName}</span>
+              )}
             </p>
             <p>
               Position:{" "}
-              {instructor?.position === "Please give your role"
-                ? "Position not available"
-                : <span className="text-black">{instructor?.position}</span>}
+              {instructor?.position === "Please give your role" ? (
+                "Position not available"
+              ) : (
+                <span className="text-black">{instructor?.position}</span>
+              )}
             </p>
             <p>
               Experience:{" "}
-              {instructor?.experience === "Please give your experience"
-                ? "Experience not available"
-                : <span className="text-black">{instructor?.experience}</span>}
+              {instructor?.experience === "Please give your experience" ? (
+                "Experience not available"
+              ) : (
+                <span className="text-black">{instructor?.experience}</span>
+              )}
             </p>
             <p>
               Bio:{" "}
-              {instructor?.aboutBio === "write something about yourself"
-                ? "Bio not available"
-                : <span className="text-black">{instructor?.aboutBio}</span>}
+              {instructor?.aboutBio === "write something about yourself" ? (
+                "Bio not available"
+              ) : (
+                <span className="text-black">{instructor?.aboutBio}</span>
+              )}
             </p>
           </CardBody>
         </Card>
@@ -166,10 +171,3 @@ const userId = userInfo._id
 };
 
 export default InstructorView;
-
-
-
-
-
-
-

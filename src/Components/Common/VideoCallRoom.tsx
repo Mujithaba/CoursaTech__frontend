@@ -56,7 +56,7 @@ export default function VideoCallRoom() {
         },
       ],
       scenario: {
-        mode: ZegoUIKitPrebuilt.OneONoneCall, // 1-on-1 calls
+        mode: ZegoUIKitPrebuilt.OneONoneCall,
       },
       onLeaveRoom: () => {
         // Navigate back to the course view page

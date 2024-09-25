@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ICourse } from "../../../services/types";
 import { FaBook, FaFileAlt, FaComments, FaUser } from "react-icons/fa";
@@ -21,22 +21,17 @@ const ViewMyCourse: React.FC = () => {
   const [render, setRender] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState("Curriculum");
 
-  console.log(courseData, "setCourseData");
-
   const location = useLocation();
   const course = location.state?.CourseData as ICourse;
-  console.log(course._id, "lecture............");
 
   useEffect(() => {
     getViewCourse();
   }, [render]);
-  console.log(courseData, "setCourseData...........");
   const getViewCourse = async () => {
     try {
       let courseId = course._id as string;
       const response = await viewCoureseDetails(courseId);
       if (response && response.getTutorCourses) {
-        console.log(response.getTutorCourses, "getInstructorCourses..........");
         setCourse(response.getTutorCourses);
       } else {
         console.error("No course data in the response");
@@ -60,12 +55,10 @@ const ViewMyCourse: React.FC = () => {
   };
 
   const handleSubmitCurriculum = async (modules: any) => {
-    console.log("Submitted curriculum:", course._id, modules);
     const id = course._id as string;
     try {
       setIsLoading(true);
       const response = await uploadCuricculum(id, modules);
-      console.log("Response from curcculum:", response);
       if (response) {
         setRender(true);
         toast.success(response.data.message, {
@@ -108,7 +101,6 @@ const ViewMyCourse: React.FC = () => {
                       onClick={handleCloseModal}
                     />
                   </div>
-                  {/* <h2 className="text-2xl font-bold mb-4">Add Curriculum</h2> */}
                   <CurriculumOfCourse
                     onSubmit={handleSubmitCurriculum}
                     onModulesChange={(modules) =>

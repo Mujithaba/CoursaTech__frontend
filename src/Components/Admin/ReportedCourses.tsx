@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { deleteReportCourse, reportsFetching } from "../../api/admin";
 import { MdDeleteSweep } from "react-icons/md";
@@ -18,7 +18,6 @@ interface Report {
 export default function ReportedCourses() {
   const [reports, setReports] = useState<Report[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isState,setIsState]=useState<boolean>(false);
   const [selectedCourse, setSelectedCourse] = useState<{
     courseId: string;
     courseName: string;
@@ -89,7 +88,11 @@ export default function ReportedCourses() {
         if (response && response.data) {
           toast.success(response.data.message);
           // Update the reports state to remove the deleted course
-          setReports(reports.filter(report => report.courseId !== selectedCourse.courseId));
+          setReports(
+            reports.filter(
+              (report) => report.courseId !== selectedCourse.courseId
+            )
+          );
           setShowModal(false);
           setSelectedCourse(null);
         } else {
@@ -176,8 +179,7 @@ export default function ReportedCourses() {
           </tbody>
         </table>
       ) : (
-        // <p>No reported courses found.</p>
-        <NoCourseDataAnimy/>
+        <NoCourseDataAnimy />
       )}
 
       {/* Confirmation Modal */}

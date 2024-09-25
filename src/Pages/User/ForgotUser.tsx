@@ -49,19 +49,19 @@ export default function ForgotUser() {
   return (
     <div className="relative w-full min-h-screen bg-gray-900 flex justify-center items-center">
       <div className="relative w-full max-w-md px-4 py-8 bg-white rounded-lg shadow-lg">
-      <div className="flex justify-end mb-4">
-        <button
+        <div className="flex justify-end mb-4">
+          <button
             type="button"
             className="py-2 px-4 rounded-md"
             onClick={() => navigate("/login")}
           >
-            <CloseIcon style={{ color: 'black' }}/>
+            <CloseIcon style={{ color: "black" }} />
           </button>
         </div>
         <h2 className="text-xl font-bold text-center mb-4 text-black">
           Forget Passwrod Recovery
         </h2>
-      
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex flex-col">
             <label
@@ -78,14 +78,11 @@ export default function ForgotUser() {
               placeholder="Email"
               value={email}
               onChange={handleInputChange(setEmail)}
-              // required
             />
             {errors.email && (
               <p className="text-sm text-red-500">{errors.email}</p>
             )}
           </div>
-
-         
 
           <div className="flex justify-center space-x-4">
             <button

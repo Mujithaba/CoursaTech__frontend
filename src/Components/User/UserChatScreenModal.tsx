@@ -13,7 +13,7 @@ interface UserChatScreenModalProps {
   onClose: () => void;
   receiverId: string;
   previousMsgs: MessagePrev[] | null;
-  instructorName:string
+  instructorName: string;
 }
 
 export interface Message {
@@ -31,7 +31,7 @@ function UserChatScreenModal({
   onClose,
   receiverId,
   previousMsgs,
-  instructorName
+  instructorName,
 }: UserChatScreenModalProps) {
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
@@ -59,8 +59,6 @@ function UserChatScreenModal({
     });
 
     socketRef.current.on("joinVideoCall", ({ roomId, instructorName }) => {
-      console.log(roomId, instructorName, "ppppppppppp--------------");
-
       toast.info(
         <div className="flex items-center p-4 bg-gray-800 text-white rounded-lg shadow-lg">
           <div className="flex-1">
@@ -111,7 +109,13 @@ function UserChatScreenModal({
       setMessages((prevMessages) => [...prevMessages, newMessage]);
 
       try {
-        await sendUserMsg(message, userId, receiverId, username,instructorName);
+        await sendUserMsg(
+          message,
+          userId,
+          receiverId,
+          username,
+          instructorName
+        );
       } catch (error) {
         console.error("Error sending message:", error);
       }
@@ -142,34 +146,32 @@ function UserChatScreenModal({
         <div className="flex-1 overflow-y-auto bg-white px-4 py-2">
           {previousMsgs != null ? (
             <ul className="space-y-4">
-              {previousMsgs.map((msgs)=>(
-
-              <li key={msgs.id}
-             className={`flex ${
-                msgs.senderId === userId ? "justify-end" : "justify-start"
-              }`}
-              >
-                 <div
-                  className={`chat ${
-                    msgs.senderId === userId ? "chat-end" : "chat-start"
-                  } max-w-xs`}
+              {previousMsgs.map((msgs) => (
+                <li
+                  key={msgs.id}
+                  className={`flex ${
+                    msgs.senderId === userId ? "justify-end" : "justify-start"
+                  }`}
                 >
-                  <div className="chat-header">
-                    {msgs.senderId === userId ? "You" : "Instructor"}
+                  <div
+                    className={`chat ${
+                      msgs.senderId === userId ? "chat-end" : "chat-start"
+                    } max-w-xs`}
+                  >
+                    <div className="chat-header">
+                      {msgs.senderId === userId ? "You" : "Instructor"}
+                    </div>
+                    <div className="chat-bubble">{msgs.message}</div>
+                    <time className="text-xs opacity-50">
+                      {formatTimestamp(msgs.createdAt)}
+                    </time>
+                    <div className="chat-footer opacity-50">send</div>
                   </div>
-                  <div className="chat-bubble">{msgs.message}</div>
-                  <time className="text-xs opacity-50">
-                    {formatTimestamp(msgs.createdAt)}
-                  </time>
-                  <div className="chat-footer opacity-50">send</div>
-                </div>
-
-              </li>
+                </li>
               ))}
-
             </ul>
           ) : (
-            <ul  className="space-y-4">
+            <ul className="space-y-4">
               <li className="flex justify-center items-center">
                 No conversations yet
               </li>

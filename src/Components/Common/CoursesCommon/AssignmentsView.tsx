@@ -110,8 +110,8 @@ const AssignmentsView: React.FC<AssignmentProps> = ({
         )
       ) : (
         <p className="text-center text-gray-700">
-        Please purchase the course to view the assignments.
-      </p>
+          Please purchase the course to view the assignments.
+        </p>
       )}
     </motion.div>
   );

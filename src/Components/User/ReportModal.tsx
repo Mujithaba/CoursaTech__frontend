@@ -52,31 +52,29 @@ const ReportModal: FC<ReportModalProps> = ({
       const response = await submitTheReport(courseId, userId, formState);
       if (response) {
         console.log(response, "Response Data");
-  
+
         // Check the response data for different cases
         if (response.status === 200 && response.data === "AlreadyAdded") {
-          toast.info(response.message,{
-            position:"top-center",
-            hideProgressBar: true, 
+          toast.info(response.message, {
+            position: "top-center",
+            hideProgressBar: true,
             autoClose: 3000,
-            closeButton:false,
-          
-          }); 
+            closeButton: false,
+          });
         } else if (response.status === 200) {
-          toast.success(response.message,{
-            hideProgressBar: true, 
+          toast.success(response.message, {
+            hideProgressBar: true,
             autoClose: 3000,
-            closeButton:false,
-          }); 
+            closeButton: false,
+          });
           console.log("Reported Issue: ", response);
           setFormState({ issueType: "", description: "" });
           Close();
         } else if (response.status === 400) {
-          toast.error(response.message); 
+          toast.error(response.message);
         }
       }
     } catch (error) {
-     
       console.error("Submission error:");
     } finally {
       setFormState({ issueType: "", description: "" });

@@ -17,8 +17,7 @@ import { School, Laptop, Group } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { toast } from "react-toastify";
-import { getCourses, getHomeData } from "../../api/user";
-import { ICourse } from "../../services/types";
+import { getHomeData } from "../../api/user";
 
 const MotionBox = motion(Box);
 
@@ -42,12 +41,6 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   const [ratedCourse, setRatedCourse] = useState<ICourseHomePage[]>([]);
   const [topInstructor, setTopInstructor] = useState<IInstructor[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalItems, setTotalItems] = useState<number>(0);
-  const [itemsPerPage] = useState<number>(5);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [filterCategory, setFilterCategory] = useState<string>("");
-  const [courses, setCourses] = useState<ICourse[]>([]);
 
   const handleCoursePage = () => {
     if (userInfo) {
@@ -86,7 +79,6 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     getHomePageData();
-    
   }, []);
 
   const getHomePageData = async () => {
@@ -102,8 +94,6 @@ const Home: React.FC = () => {
   };
 
   console.log(ratedCourse, topInstructor, "popopop");
-
- 
 
   const handleCourseView = (courseId: string) => {
     try {
@@ -217,9 +207,13 @@ const Home: React.FC = () => {
           >
             Top-Rated Courses
           </Typography>
-          <Grid container className="flex justify-center items-center" spacing={4}>
+          <Grid
+            container
+            className="flex justify-center items-center"
+            spacing={4}
+          >
             {ratedCourse.map((course, index) => (
-              <Grid item  xs={12} sm={6} md={4} key={course.thumbnail}>
+              <Grid item xs={12} sm={6} md={4} key={course.thumbnail}>
                 <MotionBox
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}

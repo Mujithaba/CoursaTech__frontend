@@ -31,7 +31,6 @@ export default function ForgotPassOTP() {
 
   const location = useLocation();
   const roleData = location.state;
-  // console.log(roleData);
 
   const role = "Tutor";
 
@@ -52,25 +51,23 @@ export default function ForgotPassOTP() {
   const submitOtp = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     try {
       e.preventDefault();
-      console.log(data,"otp1111");
+      console.log(data, "otp1111");
 
       let response = await forgotOTPverify(data);
       console.log(response, "otp page");
 
       if (response) {
         if (response.status === 200) {
-          toast.success(response.data.message); // Show success message
+          toast.success(response.data.message);
           navigate("/tutor/resetPassword", {
             state: {
               email: response.data.data.email,
             },
           });
         } else if (response.status === 400) {
-          toast.error(response.data.message); // Show error message
+          toast.error(response.data.message);
         }
       }
-
-      // toast.success(response)
     } catch (error: any) {
       errorHandler(error);
     }

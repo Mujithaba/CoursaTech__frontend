@@ -1,12 +1,12 @@
-import React, { useState, useRef, useEffect ,useCallback, useMemo} from 'react';
-import { motion } from 'framer-motion';
-import { Edit2, Check, X } from 'lucide-react';
+import React, { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Edit2, Check, X } from "lucide-react";
 import { FiEdit } from "react-icons/fi";
-import { updateUserData } from '../../api/user';
-import { toast } from 'react-toastify';
-import { Spinner } from '@nextui-org/react'; // Ensure you import the spinner component
-import { useDispatch } from 'react-redux';
-import { setCredentials } from '../../redux/slices/authSlice';
+import { updateUserData } from "../../api/user";
+import { toast } from "react-toastify";
+import { Spinner } from "@nextui-org/react";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../../redux/slices/authSlice";
 
 export interface updateData {
   name: string;
@@ -26,7 +26,16 @@ interface UserDetailsProps {
   onSave: (updatedData: boolean) => void;
 }
 
-const UserDetails: React.FC<UserDetailsProps> = ({ userId, name, email, phoneNumber, profileImage,isBlocked,isGoogle, onSave }) => {
+const UserDetails: React.FC<UserDetailsProps> = ({
+  userId,
+  name,
+  email,
+  phoneNumber,
+  profileImage,
+  isBlocked,
+  isGoogle,
+  onSave,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState(name);
   const [editEmail, setEditEmail] = useState(email);
@@ -34,9 +43,13 @@ const UserDetails: React.FC<UserDetailsProps> = ({ userId, name, email, phoneNum
   const [currentProfileImage, setCurrentProfileImage] = useState(profileImage);
   const [newProfileImage, setNewProfileImage] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [errors, setErrors] = useState<{ name?: string; email?: string; phoneNumber?: string }>({});
+  const [errors, setErrors] = useState<{
+    name?: string;
+    email?: string;
+    phoneNumber?: string;
+  }>({});
   const [loading, setLoading] = useState(false); // Spinner loading state
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [originalValues, setOriginalValues] = useState({
     name,
@@ -44,7 +57,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ userId, name, email, phoneNum
     phoneNumber,
     profileImage,
     isBlocked,
-    isGoogle
+    isGoogle,
   });
 
   useEffect(() => {
@@ -54,30 +67,30 @@ const UserDetails: React.FC<UserDetailsProps> = ({ userId, name, email, phoneNum
       phoneNumber,
       profileImage,
       isBlocked,
-    isGoogle
+      isGoogle,
     });
     setCurrentProfileImage(profileImage);
   }, [name, email, phoneNumber, profileImage]);
-
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);
   };
 
   const validateFields = (): boolean => {
-    const newErrors: { name?: string; email?: string; phoneNumber?: string } = {};
+    const newErrors: { name?: string; email?: string; phoneNumber?: string } =
+      {};
     let isValid = true;
 
-    if (editName.trim() === '') {
-      newErrors.name = 'Name is required.';
+    if (editName.trim() === "") {
+      newErrors.name = "Name is required.";
       isValid = false;
     }
     if (!/^[\w-.]+@([\w-]+\.)+[a-zA-Z]{2,}$/.test(editEmail)) {
-      newErrors.email = 'Email is invalid.';
+      newErrors.email = "Email is invalid.";
       isValid = false;
     }
     if (!/^\d{10}$/.test(editPhoneNumber)) {
-      newErrors.phoneNumber = 'Phone number must be 10 digits.';
+      newErrors.phoneNumber = "Phone number must be 10 digits.";
       isValid = false;
     }
 
@@ -91,43 +104,45 @@ const UserDetails: React.FC<UserDetailsProps> = ({ userId, name, email, phoneNum
       setIsEditing(false);
       const formData = new FormData();
 
-      formData.append('userId', userId);
-      formData.append('name', editName);
-      formData.append('email', editEmail);
-      formData.append('phoneNumber', editPhoneNumber);
+      formData.append("userId", userId);
+      formData.append("name", editName);
+      formData.append("email", editEmail);
+      formData.append("phoneNumber", editPhoneNumber);
 
       if (newProfileImage) {
-        formData.append('profileImage', newProfileImage);
+        formData.append("profileImage", newProfileImage);
       }
 
       try {
         const response = await updateUserData(formData);
-        console.log(response,"updatedUser");
-        
+        console.log(response, "updatedUser");
 
         if (response && response.data) {
           toast.success(response.data.message);
-          const updateStore = response.data.updatedUser
-dispatch(setCredentials(updateStore))
+          const updateStore = response.data.updatedUser;
+          dispatch(setCredentials(updateStore));
           setOriginalValues({
             name: editName,
             email: editEmail,
             phoneNumber: editPhoneNumber,
-            profileImage: response.data.updatedUser?.profileImage || currentProfileImage,
+            profileImage:
+              response.data.updatedUser?.profileImage || currentProfileImage,
             isBlocked,
-    isGoogle
+            isGoogle,
           });
 
-          setCurrentProfileImage(response.data.updatedUser?.profileImage || currentProfileImage);
+          setCurrentProfileImage(
+            response.data.updatedUser?.profileImage || currentProfileImage
+          );
           onSave(true);
         }
       } catch (error) {
-        console.error('Error updating user profile:', error);
-        toast.error('Failed to update user profile');
+        console.error("Error updating user profile:", error);
+        toast.error("Failed to update user profile");
 
         onSave(false);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     }
   };
@@ -189,7 +204,9 @@ dispatch(setCredentials(updateStore))
         />
       </div>
 
-      <h2 className="text-3xl font-extrabold text-gray-900 mb-6 text-center">User Details</h2>
+      <h2 className="text-3xl font-extrabold text-gray-900 mb-6 text-center">
+        User Details
+      </h2>
 
       <div className="text-center mb-4">
         {isEditing ? (
@@ -229,7 +246,9 @@ dispatch(setCredentials(updateStore))
 
       <div className="space-y-4">
         <div className="flex flex-col items-center bg-gray-50 p-4 rounded-lg shadow-sm">
-          <div className="w-full text-sm font-semibold text-gray-700 mb-1">Name:</div>
+          <div className="w-full text-sm font-semibold text-gray-700 mb-1">
+            Name:
+          </div>
           <div className="w-full text-sm text-gray-900">
             {isEditing ? (
               <>
@@ -239,7 +258,9 @@ dispatch(setCredentials(updateStore))
                   onChange={(e) => setEditName(e.target.value)}
                   className="w-full border border-gray-300 p-2 rounded-lg"
                 />
-                {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+                {errors.name && (
+                  <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+                )}
               </>
             ) : (
               <span>{editName}</span>
@@ -248,7 +269,9 @@ dispatch(setCredentials(updateStore))
         </div>
 
         <div className="flex flex-col items-center bg-gray-50 p-4 rounded-lg shadow-sm">
-          <div className="w-full text-sm font-semibold text-gray-700 mb-1">Email:</div>
+          <div className="w-full text-sm font-semibold text-gray-700 mb-1">
+            Email:
+          </div>
           <div className="w-full text-sm text-gray-900">
             {isEditing ? (
               <>
@@ -258,7 +281,9 @@ dispatch(setCredentials(updateStore))
                   onChange={(e) => setEditEmail(e.target.value)}
                   className="w-full border border-gray-300 p-2 rounded-lg"
                 />
-                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                )}
               </>
             ) : (
               <span>{editEmail}</span>
@@ -267,7 +292,9 @@ dispatch(setCredentials(updateStore))
         </div>
 
         <div className="flex flex-col items-center bg-gray-50 p-4 rounded-lg shadow-sm">
-          <div className="w-full text-sm font-semibold text-gray-700 mb-1">Phone Number:</div>
+          <div className="w-full text-sm font-semibold text-gray-700 mb-1">
+            Phone Number:
+          </div>
           <div className="w-full text-sm text-gray-900">
             {isEditing ? (
               <>
@@ -277,7 +304,11 @@ dispatch(setCredentials(updateStore))
                   onChange={(e) => setEditPhoneNumber(e.target.value)}
                   className="w-full border border-gray-300 p-2 rounded-lg"
                 />
-                {errors.phoneNumber && <p className="text-red-500 text-xs mt-1">{errors.phoneNumber}</p>}
+                {errors.phoneNumber && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.phoneNumber}
+                  </p>
+                )}
               </>
             ) : (
               <span>{editPhoneNumber}</span>
@@ -290,4 +321,3 @@ dispatch(setCredentials(updateStore))
 };
 
 export default UserDetails;
- 

@@ -1,5 +1,5 @@
-import { Outlet, NavLink } from 'react-router-dom';
-import { FaBook, FaFileAlt, FaComments, FaUser } from 'react-icons/fa';
+import { Outlet, NavLink } from "react-router-dom";
+import { FaBook, FaFileAlt, FaComments, FaUser } from "react-icons/fa";
 
 export default function CourseDataLayouts() {
   return (
@@ -9,7 +9,9 @@ export default function CourseDataLayouts() {
           to="curriculums"
           className={({ isActive }) =>
             `flex items-center px-4 py-2 font-medium ${
-              isActive ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-600'
+              isActive
+                ? "text-purple-600 border-b-2 border-purple-600"
+                : "text-gray-600"
             }`
           }
         >
@@ -20,7 +22,9 @@ export default function CourseDataLayouts() {
           to="assignmentsview"
           className={({ isActive }) =>
             `flex items-center px-4 py-2 font-medium ${
-              isActive ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-600'
+              isActive
+                ? "text-purple-600 border-b-2 border-purple-600"
+                : "text-gray-600"
             }`
           }
         >
@@ -31,7 +35,9 @@ export default function CourseDataLayouts() {
           to="instructorview"
           className={({ isActive }) =>
             `flex items-center px-4 py-2 font-medium ${
-              isActive ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-600'
+              isActive
+                ? "text-purple-600 border-b-2 border-purple-600"
+                : "text-gray-600"
             }`
           }
         >
@@ -42,7 +48,9 @@ export default function CourseDataLayouts() {
           to="reviews"
           className={({ isActive }) =>
             `flex items-center px-4 py-2 font-medium ${
-              isActive ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-600'
+              isActive
+                ? "text-purple-600 border-b-2 border-purple-600"
+                : "text-gray-600"
             }`
           }
         >
@@ -50,7 +58,7 @@ export default function CourseDataLayouts() {
           Reviews
         </NavLink>
       </div>
-     
+
       <div className="p-4">
         <Outlet />
       </div>

@@ -13,7 +13,7 @@ interface Message {
   senderId: string;
   receiverId: string;
   message: string;
-  timestamp: string; 
+  timestamp: string;
 }
 
 const SOCKET_SERVER_URL = "http://localhost:3000";
@@ -21,11 +21,11 @@ const SOCKET_SERVER_URL = "http://localhost:3000";
 const ChatScreenTutor: React.FC = () => {
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
-  const [initialMsgs,setInitialMsgs]= useState<MessagePrev[]>([])
+  const [initialMsgs, setInitialMsgs] = useState<MessagePrev[]>([]);
 
   const location = useLocation();
   const { senderId, userName } = location.state || {};
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const { tutorInfo } = useSelector((state: RootState) => state.tutorAuth);
   const receiverId = tutorInfo?._id;
@@ -39,7 +39,6 @@ const ChatScreenTutor: React.FC = () => {
       return;
     }
     socketRef.current = io(SOCKET_SERVER_URL);
-
 
     const roomId = [senderId, receiverId].sort().join("-");
     socketRef.current.emit("joinRoom", { roomId });
@@ -64,20 +63,24 @@ const ChatScreenTutor: React.FC = () => {
     e.preventDefault();
     if (message && senderId && receiverId && socketRef.current) {
       const newMessage: Message = {
-        id: Date.now().toString(), // Use timestamp as a unique ID
+        id: Date.now().toString(),
         senderId: receiverId,
         receiverId: senderId,
         message: message,
-        timestamp: new Date().toISOString(), // Add current timestamp
+        timestamp: new Date().toISOString(),
       };
 
       socketRef.current.emit("private message", newMessage);
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       try {
-        await sendTutorMsg(message, receiverId, senderId, userName,instructorName);
-      } catch (error) {
-        
-      }
+        await sendTutorMsg(
+          message,
+          receiverId,
+          senderId,
+          userName,
+          instructorName
+        );
+      } catch (error) {}
       setMessage("");
     }
   };
@@ -100,24 +103,22 @@ const ChatScreenTutor: React.FC = () => {
         receiverId: senderId,
         instructorName,
       });
-      
-      const roomId = [senderId, receiverId].sort().join('-');
+
+      const roomId = [senderId, receiverId].sort().join("-");
       console.log("Navigating to room:", roomId);
       navigate(`/tutor/videoCallRoom/${roomId}`);
     }
   };
-useEffect(()=>{
-  loadInitialMessages()
-},[])
+  useEffect(() => {
+    loadInitialMessages();
+  }, []);
   const loadInitialMessages = async () => {
     try {
       const initialMessages = await getInitialMsgsT(receiverId, senderId);
       setInitialMsgs(initialMessages);
-      console.log(initialMessages,"initialMessages");
-      
+      console.log(initialMessages, "initialMessages");
     } catch (error) {
       console.error("Error loading initial messages:", error);
-     
     }
   };
 
@@ -125,34 +126,33 @@ useEffect(()=>{
     <div className="flex flex-col h-full bg-white rounded-md">
       <div className="flex-1 p-4 overflow-y-auto">
         <ul className="space-y-2">
-
-        {initialMsgs.length !== 0 ? (
+          {initialMsgs.length !== 0 ? (
             <ul className="space-y-4">
-              {initialMsgs.map((msgs)=>(
-
-              <li key={msgs.id}
-             className={`flex ${
-                msgs.senderId === receiverId ? "justify-end" : "justify-start"
-              }`}
-              >
-                 <div
-                  className={`chat ${
-                    msgs.senderId === receiverId ? "chat-end" : "chat-start"
-                  } max-w-xs`}
+              {initialMsgs.map((msgs) => (
+                <li
+                  key={msgs.id}
+                  className={`flex ${
+                    msgs.senderId === receiverId
+                      ? "justify-end"
+                      : "justify-start"
+                  }`}
                 >
-                  <div className="chat-header">
-                    {msgs.senderId === receiverId ? "You" : userName}
+                  <div
+                    className={`chat ${
+                      msgs.senderId === receiverId ? "chat-end" : "chat-start"
+                    } max-w-xs`}
+                  >
+                    <div className="chat-header">
+                      {msgs.senderId === receiverId ? "You" : userName}
+                    </div>
+                    <div className="chat-bubble">{msgs.message}</div>
+                    <time className="text-xs opacity-50">
+                      {formatTimestamp(msgs.createdAt)}
+                    </time>
+                    <div className="chat-footer opacity-50">send</div>
                   </div>
-                  <div className="chat-bubble">{msgs.message}</div>
-                  <time className="text-xs opacity-50">
-                    {formatTimestamp(msgs.createdAt)}
-                  </time>
-                  <div className="chat-footer opacity-50">send</div>
-                </div>
-
-              </li>
+                </li>
               ))}
-
             </ul>
           ) : (
             <div>
@@ -161,7 +161,6 @@ useEffect(()=>{
               </p>
             </div>
           )}
-
 
           {messages.map((msg) => (
             <li

@@ -9,17 +9,19 @@ import {
   FaInstagram,
 } from "react-icons/fa";
 
-
 const ContactPage: React.FC = () => {
   return (
     <>
       <div className="w-full h-20 bg-red-200"></div>
       <div className=" bg-gray-50">
         {/* Background Image */}
-        
+
         <div className="flex ">
-            <img className="w-full mx-8 h-96  mt-8 rounded-md" src="https://img.freepik.com/free-photo/contact-us-communication-support-service-assistance-concept_53876-128103.jpg?t=st=1726651789~exp=1726655389~hmac=618210b9e547520afe68cf8eea3d12174b233cf06391f31134b2604d1ac24de9&w=1380" alt="" />
-            
+          <img
+            className="w-full mx-8 h-96  mt-8 rounded-md"
+            src="https://img.freepik.com/free-photo/contact-us-communication-support-service-assistance-concept_53876-128103.jpg?t=st=1726651789~exp=1726655389~hmac=618210b9e547520afe68cf8eea3d12174b233cf06391f31134b2604d1ac24de9&w=1380"
+            alt=""
+          />
         </div>
 
         {/* Content Section */}
@@ -29,10 +31,6 @@ const ContactPage: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          {/* <h1 className="text-5xl font-bold text-center text-gray-900 mb-2">
-            Contact Us
-          </h1> */}
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Contact Information */}
             <motion.div

@@ -9,7 +9,6 @@ import CardUI from "../../../Components/Ui/CardUI";
 import NoCourseDataAnimy from "../../../Components/Common/NoCourseDataAnimy";
 import Pagination from "../../../Components/Common/Pagination";
 
-
 export interface CourseRating {
   _id: string;
   title: string;
@@ -17,14 +16,12 @@ export interface CourseRating {
   totalReviews: number;
 }
 
-
 export default function MyCourse() {
   const [courses, setCourses] = useState<ICourse[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalItems, setTotalItems] = useState<number>(0);
   const [itemsPerPage] = useState<number>(2);
   const [ratings, setRatings] = useState<CourseRating[]>([]);
-console.log(courses,"getTutofghdgg");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,7 +32,6 @@ console.log(courses,"getTutofghdgg");
     try {
       if (tutorInfo) {
         const response = await tutorUpdateCheck(tutorInfo._id);
-        // console.log(response, "home response");
         if (response.data.data) {
           if (response.data.data.isBlocked) {
             dispatch(logOut());
@@ -56,7 +52,11 @@ console.log(courses,"getTutofghdgg");
   // getting course
   const getInstructorCourses = async () => {
     try {
-      const response = await getCoursesInstructor(tutorInfo._id,currentPage, itemsPerPage);
+      const response = await getCoursesInstructor(
+        tutorInfo._id,
+        currentPage,
+        itemsPerPage
+      );
       if (response && response.getTutorCourses) {
         console.log(response.getTutorCourses, "getInstructorCourses");
         setCourses(response.getTutorCourses);
@@ -75,46 +75,21 @@ console.log(courses,"getTutofghdgg");
     setCurrentPage(pageNumber);
   };
 
-
-   // fetching ratings
-  //  const getAllRatings = async () => {
-  //   try {
-  //     const response = await getRatings();
-
-  //     if (response) {
-  //       setRatings(response.getRate)
-  //     } else {
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching the rating:", error);
-  //     setRatings([]);
-  //   }
-  // };
-
-  const findRatingForCourse = (courseId:string)=>{
-    const rating = ratings.find((r)=>r._id === courseId);
-    return rating ? rating.averageRating : 0
-  }
-
-  
-
   return (
     <div className="m-4">
-        {courses.length === 0 &&  <NoCourseDataAnimy />}
-      {/* <h1>My course</h1> */}
+      {courses.length === 0 && <NoCourseDataAnimy />}
       <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {courses.map((course)=>(
-        <CardUI key={course._id} data={course} />
+        {courses.map((course) => (
+          <CardUI key={course._id} data={course} />
         ))}
       </div>
 
       <Pagination
-          itemsPerPage={itemsPerPage}
-          totalItems={totalItems}
-          paginate={handlePaginate}
-          currentPage={currentPage}
-        />
-
+        itemsPerPage={itemsPerPage}
+        totalItems={totalItems}
+        paginate={handlePaginate}
+        currentPage={currentPage}
+      />
     </div>
   );
 }

@@ -1,14 +1,16 @@
-import React from 'react';
-import { Modules } from '../../../services/types';
-import AccordionUi from '../../Ui/AccordionUi';
-import { motion } from 'framer-motion';
+import { Modules } from "../../../services/types";
+import AccordionUi from "../../Ui/AccordionUi";
+import { motion } from "framer-motion";
 
 interface CurriculumDataProps {
   modules: Modules[] | undefined;
   isPurchase: boolean;
 }
 
-export default function CuricculumsData({ modules, isPurchase }: CurriculumDataProps) {
+export default function CuricculumsData({
+  modules,
+  isPurchase,
+}: CurriculumDataProps) {
   return (
     <motion.div
       className="mt-3 mx-2 bg-card p-3 rounded-md"
@@ -27,11 +29,6 @@ export default function CuricculumsData({ modules, isPurchase }: CurriculumDataP
   );
 }
 
-
-
-
-
-
 // import React from 'react'
 // import { Modules } from '../../../services/types'
 // import AccordionUi from '../../Ui/AccordionUi'
@@ -42,7 +39,7 @@ export default function CuricculumsData({ modules, isPurchase }: CurriculumDataP
 // }
 
 // export default function CuricculumsData({modules, isPurchase}: CurriculumDataProps) {
-  
+
 //   return (
 //     <div>
 //       {modules && modules.length > 0 ? (

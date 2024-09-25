@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import { forgotPasswordEmail } from "../../api/tutor";
 import CloseIcon from "@mui/icons-material/Close";
 
-
 export default function ForgotTutor() {
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState<{ email?: string }>({});
@@ -28,9 +27,6 @@ export default function ForgotTutor() {
     if (isValid) {
       const response = await forgotPasswordEmail(email);
       if (response) {
-       
-        
-        // if(response.dat)
         toast.success(response.data.message);
         navigate("/tutor/forgotPassOTP", {
           state: {
@@ -53,13 +49,13 @@ export default function ForgotTutor() {
   return (
     <div className="relative w-full min-h-screen bg-gray-900 flex justify-center items-center">
       <div className="relative w-full max-w-md px-4 py-8 bg-white rounded-lg shadow-lg">
-      <div className="flex justify-end mb-4">
-        <button
+        <div className="flex justify-end mb-4">
+          <button
             type="button"
             className="py-2 px-4 rounded-md"
             onClick={() => navigate("/tutor/tutorLogin")} // or your desired back action
           >
-            <CloseIcon style={{ color: 'black' }}/>
+            <CloseIcon style={{ color: "black" }} />
           </button>
         </div>
         <h2 className="text-xl font-bold text-center mb-4 text-black">
@@ -81,7 +77,6 @@ export default function ForgotTutor() {
               placeholder="Email"
               value={email}
               onChange={handleInputChange(setEmail)}
-              // required
             />
             {errors.email && (
               <p className="text-sm text-red-500">{errors.email}</p>

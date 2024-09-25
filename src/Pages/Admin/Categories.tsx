@@ -5,7 +5,6 @@ import { categoryList, categoryUnlist, getCategory } from "../../api/admin";
 import Pagination from "../../Components/Common/Pagination";
 import { toast } from "react-toastify";
 import { FaEdit } from "react-icons/fa";
-// import { MdDeleteForever } from "react-icons/md";
 import EditModal from "../../Components/Ui/Category/EditModal";
 
 export default function Categories() {
@@ -123,7 +122,6 @@ export default function Categories() {
                   <tr key={item._id} className="border-b border-gray-200">
                     <td className="py-3 px-3 font-mono font-semibold text-gray-800">
                       <div className="flex items-center">
-                      {/* <MdDeleteForever size={19} className="text-black hover:text-red-800 cursor-pointer" /> */}
                         <p
                           className="ms-2 me-3 cursor-pointer"
                           onClick={() =>

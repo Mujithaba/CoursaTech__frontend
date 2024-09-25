@@ -2,8 +2,6 @@ import Header from "../Components/User/Header";
 import Footer from "../Components/User/Footer";
 import { Outlet } from "react-router-dom";
 
-
-
 function UserLayouts() {
   return (
     <>
@@ -11,7 +9,7 @@ function UserLayouts() {
       <Outlet />
       <Footer />
     </>
-  )
+  );
 }
 
-export default UserLayouts
+export default UserLayouts;

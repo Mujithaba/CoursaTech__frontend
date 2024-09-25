@@ -60,7 +60,6 @@ const LoginPage: React.FC = () => {
       const response = await login(data);
 
       if (response) {
-        console.log(response.data.message, "jiiii");
         if (response.data.isAdmin) {
           localStorage.setItem("token", response.data.token);
           dispatch(adminSetCredentials(response.data.message)); // Dispatch admin credentials
@@ -149,7 +148,6 @@ const LoginPage: React.FC = () => {
               placeholder="Email"
               value={email}
               onChange={handleInputChange(setEmail)}
-              // required
             />
             {errors.email && (
               <p className="text-sm text-red-500">{errors.email}</p>
@@ -170,7 +168,6 @@ const LoginPage: React.FC = () => {
               placeholder="Password"
               value={password}
               onChange={handleInputChange(setPassword)}
-              // required
             />
             {errors.password && (
               <p className="text-sm text-red-500">{errors.password}</p>
@@ -183,7 +180,12 @@ const LoginPage: React.FC = () => {
           >
             Login
           </button>
-          <Link className=" mt-5 text-gray-400 hover:text-gray-800" to='/userForgetPassword'>Forgot Password</Link>
+          <Link
+            className=" mt-5 text-gray-400 hover:text-gray-800"
+            to="/userForgetPassword"
+          >
+            Forgot Password
+          </Link>
           <p className="text-gray-600 mt-3 mb-3 text-center">
             Don't have an account?{" "}
             <Link to="/register" className="text-indigo-600 hover:underline">

@@ -1,7 +1,6 @@
 import Api from "../services/axios";
 import adminRoutes from "../services/endPoints/adminEndPoints";
 import errorHandler from "./error";
-// import { AxiosError } from "axios";
 import axios from "axios";
 import {
   TutorsResponse,

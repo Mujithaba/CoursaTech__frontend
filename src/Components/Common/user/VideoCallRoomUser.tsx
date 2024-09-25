@@ -1,11 +1,12 @@
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { useNavigate, useParams } from "react-router-dom";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 function randomID(len: number): string {
   let result = "";
   if (result) return result;
-  const chars = "12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP";
+  const chars =
+    "12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP";
   const maxPos = chars.length;
   len = len || 5;
   for (let i = 0; i < len; i++) {
@@ -20,7 +21,9 @@ export default function VideoCallRoomUser() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const element = document.querySelector(".myCallContainer") as HTMLDivElement;
+    const element = document.querySelector(
+      ".myCallContainer"
+    ) as HTMLDivElement;
 
     const myMeeting = async () => {
       const appID = 623140942;
@@ -54,7 +57,6 @@ export default function VideoCallRoomUser() {
           mode: ZegoUIKitPrebuilt.OneONoneCall,
         },
         onLeaveRoom: () => {
-          
           navigate("/coursePage");
         },
       });
@@ -65,11 +67,11 @@ export default function VideoCallRoomUser() {
 
   return (
     <>
-    <div className="w-full h-20 bg-red-200"></div>
-    <div
-      className="myCallContainer w-full h-[calc(100vh-50px)] max-w-4xl mx-auto m-3"
-      style={{ width: "100%", height: "100%" }}
-    ></div>
+      <div className="w-full h-20 bg-red-200"></div>
+      <div
+        className="myCallContainer w-full h-[calc(100vh-50px)] max-w-4xl mx-auto m-3"
+        style={{ width: "100%", height: "100%" }}
+      ></div>
     </>
   );
 }

@@ -3,12 +3,7 @@
 @tailwind utilities;
 
 
-/* .centre {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-} */
+
 
 .arrow-icon {
   transition: transform 0.3s ease-in-out;

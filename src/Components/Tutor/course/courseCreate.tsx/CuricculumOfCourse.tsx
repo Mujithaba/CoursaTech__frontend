@@ -86,7 +86,7 @@ const CurriculumOfCourse: React.FC<CurriculumOfCourseProps> = ({
     onModulesChange?.(updatedModules);
   };
 
-  const  handleFileChange = (
+  const handleFileChange = (
     moduleIndex: number,
     lectureIndex: number,
     field: "video" | "pdf",
@@ -108,7 +108,7 @@ const CurriculumOfCourse: React.FC<CurriculumOfCourseProps> = ({
       <h2 className="text-2xl font-mono font-bold text-gray-800 mb-6 text-center">
         Curriculum
       </h2>
-      
+
       {modules.map((module, moduleIndex) => (
         <div
           key={moduleIndex}
@@ -270,19 +270,16 @@ const CurriculumOfCourse: React.FC<CurriculumOfCourseProps> = ({
           Add Module
         </button>
       </div>
-      {modules.length !== 0 && 
-      
-      <Button
-        type="submit"
-        className="ms-52 mt-4 w-80 bg-gray-950 text-white font-bold py-3 px-6 rounded-lg shadow-lg focus:ring-1 focus:ring-gray-900"
-      >
-        Submit Curriculum
-      </Button>
-      }
-      
+      {modules.length !== 0 && (
+        <Button
+          type="submit"
+          className="ms-52 mt-4 w-80 bg-gray-950 text-white font-bold py-3 px-6 rounded-lg shadow-lg focus:ring-1 focus:ring-gray-900"
+        >
+          Submit Curriculum
+        </Button>
+      )}
     </form>
   );
 };
 
-export default CurriculumOfCourse
-// export default CurriculumOfCourse;
+export default CurriculumOfCourse;

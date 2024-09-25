@@ -1,10 +1,8 @@
 import React from "react";
 import { ICourse } from "../../services/types";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
 import { FaArrowRight } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+
 import { FaStar } from "react-icons/fa6";
 
 interface CardUIProps {
@@ -12,13 +10,7 @@ interface CardUIProps {
 }
 
 const CardUI: React.FC<CardUIProps> = ({ data }) => {
-  let formattedDate = data.createdAt
-    ? new Date(data.createdAt).toLocaleDateString()
-    : "Date not available";
   const navigate = useNavigate();
-
-  const { tutorInfo } = useSelector((state: RootState) => state.tutorAuth);
-  const { adminInfo } = useSelector((state: RootState) => state.adminAuth);
 
   const handleCourseView = () => {
     try {
@@ -45,19 +37,7 @@ const CardUI: React.FC<CardUIProps> = ({ data }) => {
             className="w-full h-full object-cover"
           />
         </div>
-        {/* <div className="absolute left-0 right-0 top-0 p-3 flex justify-end">
-          {tutorInfo && (
-            <Button color="warning" variant="contained" size="small">
-              Unlist
-            </Button>
-          )}
 
-          {adminInfo && (
-            <Button color="warning" variant="contained" size="small">
-              Approved
-            </Button>
-          )}
-        </div> */}
         <div className="h-[170px] w-full bg-white mt-3 flex flex-col justify-between m-1">
           <div className=" flex justify-between">
             <p className="bg-green-100 px-2 flex items-center rounded-full">

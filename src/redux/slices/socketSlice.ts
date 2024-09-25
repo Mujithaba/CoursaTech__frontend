@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction, Draft } from '@reduxjs/toolkit';
-import { Socket } from 'socket.io-client';
+import { createSlice, PayloadAction, Draft } from "@reduxjs/toolkit";
+import { Socket } from "socket.io-client";
 
 export interface SocketState {
   socket: Socket | null;
@@ -10,11 +10,11 @@ const initialState: SocketState = {
 };
 
 const socketSlice = createSlice({
-  name: 'socket',
+  name: "socket",
   initialState,
   reducers: {
     setSocket: (state, action: PayloadAction<Socket | null>) => {
-      state.socket = action.payload as Draft<Socket> | null;  
+      state.socket = action.payload as Draft<Socket> | null;
     },
   },
 });

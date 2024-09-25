@@ -12,7 +12,6 @@ export interface Tutor {
   name: string;
   email: string;
   phone?: string;
-  // password?:string;
   isBlocked: boolean;
   isGoogle: boolean;
 }
@@ -143,9 +142,8 @@ export interface IReportIssues {
   description: string;
 }
 
-
 export interface ReportData {
-  courseId:string;
+  courseId: string;
   courseName: string;
   instructor: {
     instructorName: string;
@@ -160,7 +158,6 @@ export interface ApiResponse {
   message: string;
 }
 
-
 export interface IStudentInfo {
   name: string;
   email: string;
@@ -168,15 +165,14 @@ export interface IStudentInfo {
   img: string;
   isBlocked: boolean;
   isGoogle: boolean;
-  // password?:string;
 }
 
 export interface IFormData {
-  userId:string;
+  userId: string;
   name?: string;
   email?: string;
   phoneNumber?: string;
-  profileImage?: File | string; 
+  profileImage?: File | string;
 }
 
 export interface ICourseEntrolled {
@@ -187,7 +183,7 @@ export interface ICourseEntrolled {
   category_id: Category;
   price: string;
   thambnail_Img: string;
-thumbnailImgUrl: string;
+  thumbnailImgUrl: string;
   trailerSignedUrl: string;
   trailer_vd: string;
   chapters?: Modules[];
@@ -208,14 +204,14 @@ export interface MessagePrev {
 
 // wallet
 export interface IWalletHistory {
-  _id:string;
+  _id: string;
   type?: string;
-  amount?: number; 
+  amount?: number;
   reason?: string;
   date: Date;
 }
 export interface IWallet {
-  userId:string;
+  userId: string;
   balance: number;
   history: IWalletHistory[];
 }

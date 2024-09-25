@@ -7,7 +7,6 @@ import LoadingSpinner from "../Components/Common/LoadingSpinner";
 const SignupTutor = lazy(() => import("../Pages/Tutor/SignupTutor"));
 const OtpTutor = lazy(() => import("../Pages/Tutor/OtpTutor"));
 const LoginTutor = lazy(() => import("../Pages/Tutor/LoginTutor"));
-const TutorDashboard = lazy(() => import("../Components/Tutor/TutorDashboard"));
 const ForgotTutor = lazy(() => import("../Pages/Tutor/ForgotTutor"));
 const ForgotPassOTP = lazy(() => import("../Pages/Tutor/ForgotPassOTP"));
 const ForgotNewPass = lazy(() => import("../Pages/Tutor/ForgotNewPass"));

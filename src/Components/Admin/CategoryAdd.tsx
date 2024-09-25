@@ -25,10 +25,10 @@ export default function CategoryAdd({ onCategoryAdded }: CategoryAddProps) {
   const [category, setCategory] = useState("");
   const [errors, setErrors] = useState<Errors>({});
 
-  const close = ()=>{
-    setCategory("")
-    onClose()
-  }
+  const close = () => {
+    setCategory("");
+    onClose();
+  };
 
   // validation
   const validateForm = () => {
@@ -48,20 +48,18 @@ export default function CategoryAdd({ onCategoryAdded }: CategoryAddProps) {
       console.log(response, "cate response");
 
       if (response) {
-        toast.success(response.data.message,{
-          autoClose: 2000, 
+        toast.success(response.data.message, {
+          autoClose: 2000,
           hideProgressBar: true,
-          position: "top-center"
+          position: "top-center",
         });
         console.log("Category saved:", category);
-        onClose(); 
+        onClose();
         setCategory("");
-        onCategoryAdded(); 
+        onCategoryAdded();
       }
     }
-    
   };
-
 
   return (
     <>
@@ -70,37 +68,31 @@ export default function CategoryAdd({ onCategoryAdded }: CategoryAddProps) {
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
         <ModalContent>
-         
-            <>
-              <ModalHeader className="flex  items-center flex-col gap-1">
-                Add Category
-              </ModalHeader>
-              <ModalBody>
-                <Input
-                  autoFocus
-                  // endContent={
-                  //   <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                  // }
-                  value={category}
-                  label="Category Name"
-                  // placeholder="Add new category name"
-                  variant="underlined"
-                  onChange={(e) => setCategory(e.target.value)}
-                />
-                {errors.category && (
-                  <p style={{ color: "red" }}>{errors.category}</p>
-                )}
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="flat" onClick={close}>
-                  Close
-                </Button>
-                <Button color="success" onClick={handleCategory}>
-                  Save
-                </Button>
-              </ModalFooter>
-            </>
-          
+          <>
+            <ModalHeader className="flex  items-center flex-col gap-1">
+              Add Category
+            </ModalHeader>
+            <ModalBody>
+              <Input
+                autoFocus
+                value={category}
+                label="Category Name"
+                variant="underlined"
+                onChange={(e) => setCategory(e.target.value)}
+              />
+              {errors.category && (
+                <p style={{ color: "red" }}>{errors.category}</p>
+              )}
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" variant="flat" onClick={close}>
+                Close
+              </Button>
+              <Button color="success" onClick={handleCategory}>
+                Save
+              </Button>
+            </ModalFooter>
+          </>
         </ModalContent>
       </Modal>
     </>

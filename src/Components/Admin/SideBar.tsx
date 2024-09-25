@@ -34,7 +34,6 @@ function SideBar() {
       <hr />
 
       <nav className="font-sans font-semibold ">
-      
         <NavLink
           to="/admin/dashboard"
           className={({ isActive }) =>
@@ -46,7 +45,7 @@ function SideBar() {
           {({ isActive }) => (
             <>
               <HiOutlineChartSquareBar
-                size={isActive ? 13 : 20} 
+                size={isActive ? 13 : 20}
                 className="mr-2"
               />
               <span
@@ -70,7 +69,7 @@ function SideBar() {
           {({ isActive }) => (
             <>
               <FaUsers
-                size={isActive ? 13 : 20} // Change size based on isActive
+                size={isActive ? 13 : 20} 
                 className="mr-2"
               />
               <span
@@ -94,7 +93,7 @@ function SideBar() {
           {({ isActive }) => (
             <>
               <GiTeacher
-                size={isActive ? 13 : 20} // Change size based on isActive
+                size={isActive ? 13 : 20} 
                 className="mr-2"
               />
               <span
@@ -107,7 +106,7 @@ function SideBar() {
             </>
           )}
         </NavLink>
-       
+
         <NavLink
           to="/admin/coursesList"
           className={({ isActive }) =>
@@ -119,7 +118,7 @@ function SideBar() {
           {({ isActive }) => (
             <>
               <HiOutlineCollection
-                size={isActive ? 13 : 20} // Change size based on isActive
+                size={isActive ? 13 : 20} 
                 className="mr-2"
               />
               <span
@@ -127,7 +126,7 @@ function SideBar() {
                   isActive ? "text-sm" : "font-mono"
                 }`}
               >
-               Cousrse List
+                Cousrse List
               </span>
             </>
           )}
@@ -144,7 +143,7 @@ function SideBar() {
           {({ isActive }) => (
             <>
               <TbCategoryPlus
-                size={isActive ? 16 : 20} // Change size based on isActive
+                size={isActive ? 16 : 20} 
                 className="mr-2"
               />
               <span
@@ -168,8 +167,8 @@ function SideBar() {
         >
           {({ isActive }) => (
             <>
-              <GoReport 
-                size={isActive ? 18 : 20} // Change size based on isActive
+              <GoReport
+                size={isActive ? 18 : 20} 
                 className="mr-2"
               />
               <span
@@ -177,18 +176,19 @@ function SideBar() {
                   isActive ? "text-sm" : "font-mono"
                 }`}
               >
-               Reports
+                Reports
               </span>
             </>
           )}
         </NavLink>
-      
 
         <NavLink
           to="/login"
           className={({ isActive }) =>
             `flex items-center mt-11 py-2.5 m-2 px-4 rounded-xl transition duration-200 ${
-              isActive ? "bg-gray-800 justify-center" : "hover:bg-red-900 border border-gray-900 hover:border-0 hover:opacity-90"
+              isActive
+                ? "bg-gray-800 justify-center"
+                : "hover:bg-red-900 border border-gray-900 hover:border-0 hover:opacity-90"
             }`
           }
           onClick={logoutHandler}
