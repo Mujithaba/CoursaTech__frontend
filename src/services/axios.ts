@@ -1,8 +1,14 @@
 import axios from "axios";
 import errorHandle from "../api/error";
 
+const backendBaseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
+
+if (!backendBaseUrl) {
+  console.error('VITE_BACKEND_BASE_URL is not defined in the environment');
+}
+
 const Api = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_BASE_URL,
+  baseURL: backendBaseUrl  || 'https://shoeone.shop/api',
   withCredentials: true,
 });
 
