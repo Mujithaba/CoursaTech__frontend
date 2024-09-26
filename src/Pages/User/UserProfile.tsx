@@ -49,8 +49,6 @@ export default function UserProfile() {
     newPassword: string
   ) => {
     try {
-      console.log("Current Password:", currentPassword);
-      console.log("New Password:", newPassword);
       if (!userId) {
         console.error("User ID is missing.");
         return;
@@ -63,7 +61,6 @@ export default function UserProfile() {
 
       if (response && response.status === 200) {
         toast.success("Password changed successfully");
-        console.log("Password changed successfully.");
       } else {
         console.error("Failed to change password:", response?.data.message);
       }
@@ -80,13 +77,13 @@ export default function UserProfile() {
     <>
       <div className="w-full h-20 bg-gray-100"></div>
 
-      <div className="flex h-screen bg-gray-100">
+      <div className="flex flex-col lg:flex-row h-full lg:h-screen bg-gray-100">
         {/* Sidebar */}
-        <div className="w-1/4 bg-white border-r border-gray-300 p-4 ">
+        <div className="lg:w-1/4 bg-white border-r border-gray-300 p-4 h-auto lg:h-full overflow-auto">
           <hr className="bg-red-500 font-extrabold" />
 
           {/* Menu Items */}
-          <ul className="space-y-2 mt-16">
+          <ul className="space-y-4 mt-8">
             {[
               {
                 label: "Your info",
@@ -105,13 +102,13 @@ export default function UserProfile() {
               <li key={index}>
                 <button
                   onClick={() => setActiveTab(item.label)}
-                  className={`w-full flex items-center text-left px-4 py-2 rounded-md focus:outline-none ${
+                  className={`w-full flex items-center text-left px-4 py-3 rounded-lg focus:outline-none transition-all duration-200 ${
                     activeTab === item.label
-                      ? "bg-gray-300 font-bold"
-                      : "hover:bg-gray-200"
+                      ? "bg-gray-300 font-bold shadow-md"
+                      : "hover:bg-gray-100"
                   }`}
                 >
-                  {item.icon && <span className="mr-2">{item.icon}</span>}
+                  {item.icon && <span className="mr-3">{item.icon}</span>}
                   {item.label}
                 </button>
               </li>
@@ -120,8 +117,9 @@ export default function UserProfile() {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 p-8">
+        <div className="flex-1 p-4 sm:p-8 lg:p-12 bg-gray-50">
           {loading && <div className="text-center">Loading...</div>}
+
           {!loading && activeTab === "Your info" && studentInfo && (
             <UserDetails
               userId={userId}
@@ -129,7 +127,7 @@ export default function UserProfile() {
               email={studentInfo.email}
               phoneNumber={studentInfo.phone}
               profileImage={
-                profileUril && profileUril != "nopic"
+                profileUril && profileUril !== "nopic"
                   ? profileUril
                   : "https://via.placeholder.com/100"
               }
@@ -138,12 +136,15 @@ export default function UserProfile() {
               onSave={updatedUserData}
             />
           )}
+
           {activeTab === "Change Password" && (
-            <ChangePassword onChangePassword={onChangePassword} />
+            <ChangePassword onChangePassword={onChangePassword} isGoogle={studentInfo?.isGoogle as boolean} />
           )}
+
           {activeTab === "Enrolled Courses" && (
             <EntrolledCourses userId={userId} />
           )}
+
           {activeTab === "Wallet" && <Wallet userId={userId} />}
         </div>
       </div>

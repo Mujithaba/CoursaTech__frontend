@@ -24,6 +24,7 @@ export interface ITutorDetails {
   position: string;
   companyName: string;
   aboutBio: string;
+ 
 }
 
 export interface UsersResponse {

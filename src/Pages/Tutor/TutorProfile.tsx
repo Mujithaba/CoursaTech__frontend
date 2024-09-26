@@ -251,7 +251,7 @@ const TutorProfile: React.FC = () => {
               Tutor Profile
             </h2>
             {showChangePassword ? (
-              <ChangePassword onChangePassword={saveChangePassword} />
+              <ChangePassword onChangePassword={saveChangePassword} isGoogle={registerData?.isGoogle as boolean}/>
             ) : (
               <form className="space-y-4">
                 <div>

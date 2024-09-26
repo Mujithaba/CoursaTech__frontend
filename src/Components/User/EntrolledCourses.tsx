@@ -12,7 +12,6 @@ import {
   Container,
   Rating,
 } from "@mui/material";
-
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -87,14 +86,14 @@ export default function EnrolledCourses({ userId }: EnrolledCoursesProps) {
   return (
     <Box
       sx={{
-        height: "calc(100vh - 64px - 64px)", 
+        height: "calc(100vh - 64px - 64px)", // Adjust height for header and footer
         overflow: "auto",
         backgroundColor: "#f5f5f5",
       }}
     >
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Typography
-          variant="h3"
+          variant="h4" // Adjust for responsive typography
           component="h2"
           align="center"
           gutterBottom
@@ -105,7 +104,14 @@ export default function EnrolledCourses({ userId }: EnrolledCoursesProps) {
         <Grid container spacing={4}>
           {courses.length > 0 ? (
             courses.map((course, index) => (
-              <Grid item xs={12} sm={6} md={4} key={course._id}>
+              <Grid
+                item
+                xs={12} // Full width on small screens
+                sm={6}  // Half width on small devices
+                md={4}  // One-third width on medium and larger devices
+                lg={3}  // Four cards per row on large screens
+                key={course._id}
+              >
                 <MotionBox
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -125,14 +131,17 @@ export default function EnrolledCourses({ userId }: EnrolledCoursesProps) {
                   >
                     <CardMedia
                       component="img"
-                      sx={{ height: 200, objectFit: "cover" }}
+                      sx={{
+                        height: { xs: 180, sm: 200 }, // Responsive height for images
+                        objectFit: "cover",
+                      }}
                       image={course.thumbnailImgUrl}
                       alt={course.title}
                     />
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Typography
                         gutterBottom
-                        variant="h5"
+                        variant="h6" // Adjust the size of the title
                         component="div"
                         sx={{ fontWeight: "bold", mb: 2 }}
                       >

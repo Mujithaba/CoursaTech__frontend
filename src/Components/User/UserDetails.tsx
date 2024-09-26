@@ -48,7 +48,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
     email?: string;
     phoneNumber?: string;
   }>({});
-  const [loading, setLoading] = useState(false); // Spinner loading state
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const [originalValues, setOriginalValues] = useState({
@@ -85,7 +85,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
       newErrors.name = "Name is required.";
       isValid = false;
     }
-    if (!/^[\w-.]+@([\w-]+\.)+[a-zA-Z]{2,}$/.test(editEmail)) {
+    if (!isGoogle && !/^[\w-.]+@([\w-]+\.)+[a-zA-Z]{2,}$/.test(editEmail)) {
       newErrors.email = "Email is invalid.";
       isValid = false;
     }
@@ -176,7 +176,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
 
   return (
     <motion.div
-      className="w-full max-w-md mx-auto bg-white p-8 rounded-xl shadow-lg mt-10 border border-gray-200"
+      className="w-full max-w-md mx-auto bg-white p-6 sm:p-8 md:p-10 rounded-xl shadow-lg mt-10 border border-gray-200"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -185,7 +185,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
         <img
           src={currentProfileImage}
           alt="Profile"
-          className="w-32 h-32 rounded-full border-4 border-blue-500 shadow-lg object-cover"
+          className="w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full border-4 border-blue-500 shadow-lg object-cover"
         />
         {isEditing && (
           <button
@@ -204,17 +204,17 @@ const UserDetails: React.FC<UserDetailsProps> = ({
         />
       </div>
 
-      <h2 className="text-3xl font-extrabold text-gray-900 mb-6 text-center">
+      <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-6 text-center">
         User Details
       </h2>
 
       <div className="text-center mb-4">
         {isEditing ? (
-          <>
+          <div className="flex justify-center flex-wrap space-y-2 sm:space-y-0">
             <button
               onClick={handleSaveClick}
               className="bg-green-500 text-white px-4 py-2 rounded-lg focus:outline-none mr-2"
-              disabled={loading} // Disable button when loading
+              disabled={loading}
             >
               {loading ? (
                 <div className="inline-flex items-center">
@@ -229,11 +229,11 @@ const UserDetails: React.FC<UserDetailsProps> = ({
             <button
               onClick={handleCancelClick}
               className="bg-red-500 text-white px-4 py-2 rounded-lg focus:outline-none"
-              disabled={loading} // Disable cancel button when loading
+              disabled={loading}
             >
               <X size={16} className="inline mr-1" /> Cancel
             </button>
-          </>
+          </div>
         ) : (
           <button
             onClick={handleEditClick}
@@ -259,34 +259,37 @@ const UserDetails: React.FC<UserDetailsProps> = ({
                   className="w-full border border-gray-300 p-2 rounded-lg"
                 />
                 {errors.name && (
-                  <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+                  <p className="text-red-500 text-xs">{errors.name}</p>
                 )}
               </>
             ) : (
-              <span>{editName}</span>
+              <span>{originalValues.name}</span>
             )}
           </div>
         </div>
-
         <div className="flex flex-col items-center bg-gray-50 p-4 rounded-lg shadow-sm">
           <div className="w-full text-sm font-semibold text-gray-700 mb-1">
             Email:
           </div>
           <div className="w-full text-sm text-gray-900">
             {isEditing ? (
-              <>
-                <input
-                  type="email"
-                  value={editEmail}
-                  onChange={(e) => setEditEmail(e.target.value)}
-                  className="w-full border border-gray-300 p-2 rounded-lg"
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-xs mt-1">{errors.email}</p>
-                )}
-              </>
+              isGoogle ? (
+                <span className="italic">{editEmail}</span>
+              ) : (
+                <>
+                  <input
+                    type="text"
+                    value={editEmail}
+                    onChange={(e) => setEditEmail(e.target.value)}
+                    className="w-full border border-gray-300 p-2 rounded-lg"
+                  />
+                  {errors.email && (
+                    <p className="text-red-500 text-xs">{errors.email}</p>
+                  )}
+                </>
+              )
             ) : (
-              <span>{editEmail}</span>
+              <span>{originalValues.email}</span>
             )}
           </div>
         </div>
@@ -305,13 +308,11 @@ const UserDetails: React.FC<UserDetailsProps> = ({
                   className="w-full border border-gray-300 p-2 rounded-lg"
                 />
                 {errors.phoneNumber && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors.phoneNumber}
-                  </p>
+                  <p className="text-red-500 text-xs">{errors.phoneNumber}</p>
                 )}
               </>
             ) : (
-              <span>{editPhoneNumber}</span>
+              <span>{originalValues.phoneNumber}</span>
             )}
           </div>
         </div>
