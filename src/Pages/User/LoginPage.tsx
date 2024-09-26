@@ -106,7 +106,7 @@ const LoginPage: React.FC = () => {
           if (responseGoogle) {
             localStorage.setItem("token", responseGoogle.data.token);
             if (responseGoogle.data.isAdmin) {
-              dispatch(adminSetCredentials(responseGoogle.data.message)); // Dispatch admin credentials
+              dispatch(adminSetCredentials(responseGoogle.data.message)); 
               navigate("/admin/dashboard");
             } else {
               dispatch(setCredentials(responseGoogle.data.message));

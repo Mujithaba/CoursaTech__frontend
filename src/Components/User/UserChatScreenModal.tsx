@@ -24,7 +24,7 @@ export interface Message {
   timestamp: string;
 }
 
-const SOCKET_SERVER_URL = "http://localhost:3000";
+const SOCKET_SERVER_URL = "https://shoeone.shop";
 
 function UserChatScreenModal({
   isOpen,
