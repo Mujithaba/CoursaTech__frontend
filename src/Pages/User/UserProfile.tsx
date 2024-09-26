@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ChangePassword from "../../Components/Common/ChangePasswordUser";
-import UserDetails, { updateData } from "../../Components/User/UserDetails";
+import UserDetails from "../../Components/User/UserDetails";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { getUserInfo, updatePassword } from "../../api/user";
@@ -69,7 +69,7 @@ export default function UserProfile() {
     }
   };
 
-  const updatedUserData = (userData: boolean) => {
+  const updatedUserData = (_: boolean) => {
     setIsEdited(true);
   };
 

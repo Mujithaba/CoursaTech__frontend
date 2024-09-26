@@ -22,7 +22,7 @@ const TutorProfile: React.FC = () => {
     ITutorDetails | undefined
   >(undefined);
   const [profileImgUrl, setProfileImgUrl] = useState<string>("");
-  const [isReadOnly, setIsReadOnly] = useState<boolean>(false);
+  const [isReadOnly, _] = useState<boolean>(false);
   const [saveChange, setSaveChange] = useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);

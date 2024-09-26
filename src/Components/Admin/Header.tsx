@@ -4,12 +4,12 @@ import { fetchNotApprovedCourses } from "../../api/admin";
 import { ICourse } from "../../services/types";
 
 function Header() {
-  const [isInvisible, setIsInvisible] = useState(false);
+  const [_, setIsInvisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [courses, setCourses] = useState<ICourse[]>([]);
   const [count, setCount] = useState(Number);
 
-  const openModal = () => setIsOpen(true);
+  
   const closeModal = () => setIsOpen(false);
 
   useEffect(() => {

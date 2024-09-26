@@ -79,7 +79,7 @@ export default function Reviews({ courseID, isPurchase }: ReviewsProps) {
         {isPurchase ? (
           <form className="m-2" onSubmit={handleSubmit}>
             <div className="flex mb-4">
-              {[...Array(5)].map((star, index) => {
+              {[...Array(5)].map((_, index) => {
                 const ratingValue = index + 1;
                 return (
                   <label key={index}>
