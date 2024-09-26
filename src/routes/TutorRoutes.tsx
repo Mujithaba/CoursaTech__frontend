@@ -4,6 +4,7 @@ import TutorLayouts from "../Layouts/TutorLayouts";
 import TutorProtected from "../protected/tutorProtected";
 import LoadingSpinner from "../Components/Common/LoadingSpinner";
 
+const NotFound = lazy(() => import("../Pages/ErrorPage/ErrorPage"));
 const SignupTutor = lazy(() => import("../Pages/Tutor/SignupTutor"));
 const OtpTutor = lazy(() => import("../Pages/Tutor/OtpTutor"));
 const LoginTutor = lazy(() => import("../Pages/Tutor/LoginTutor"));
@@ -60,6 +61,8 @@ function TutorRoutes() {
               />
             </Route>
           </Route>
+
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </Suspense>
     </div>

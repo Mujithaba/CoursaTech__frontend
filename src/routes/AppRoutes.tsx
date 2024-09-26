@@ -9,6 +9,7 @@ function AppRoutes() {
       <Route path="/*" element={<UserRoutes />} />
       <Route path="/tutor/*" element={<TutorRoutes />} />
       <Route path="/admin/*" element={<AdminRoutes />} />
+      
     </Routes>
   );
 }

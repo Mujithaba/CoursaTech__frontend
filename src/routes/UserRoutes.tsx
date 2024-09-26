@@ -4,6 +4,9 @@ import UserLayouts from "../Layouts/UserLayouts";
 import UserProtected from "../protected/userProtected";
 import LoadingSpinner from "../Components/Common/LoadingSpinner";
 
+
+
+const NotFound = lazy(() => import("../Pages/ErrorPage/ErrorPage"));
 const SIgnUpPage = lazy(() => import("../Pages/User/SIgnupPage"));
 const Otp = lazy(() => import("../Pages/User/Otp"));
 const LoginPage = lazy(() => import("../Pages/User/LoginPage"));
@@ -51,6 +54,8 @@ function UserRoutes() {
           <Route path="/userForgetPassword" element={<ForgotUserPass />} />
           <Route path="/forgotPassOTP" element={<ForgetPassOTP />} />
           <Route path="/resetPassword" element={<ForgotPassEnter />} />
+
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </Suspense>
     </div>

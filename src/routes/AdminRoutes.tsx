@@ -4,6 +4,7 @@ import AdminLayouts from "../Layouts/AdminLayouts";
 import LoadingSpinner from "../Components/Common/LoadingSpinner";
 import AdminProtected from "../protected/adminProtected";
 
+const NotFound = lazy(() => import("../Pages/ErrorPage/ErrorPage"));
 const DashBoard = lazy(() => import("../Components/Admin/AdminDashBoard"));
 const UsersList = lazy(() => import("../Components/Admin/Users"));
 const TutorsList = lazy(() => import("../Components/Admin/Tutors"));
@@ -34,6 +35,8 @@ function AdminRoutes() {
               <Route path="/reportedCourses" element={<ReportedCourses />} />
             </Route>
           </Route>
+
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </Suspense>
     </div>
