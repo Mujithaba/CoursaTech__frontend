@@ -21,7 +21,6 @@ export default function MyCourse() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalItems, setTotalItems] = useState<number>(0);
   const [itemsPerPage] = useState<number>(2);
-  const [ratings, setRatings] = useState<CourseRating[]>([]);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
