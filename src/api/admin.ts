@@ -98,8 +98,6 @@ export const tutorUnblock = async (tutorID: string) => {
 // add category
 export const addCategory = async (category: string) => {
   try {
-    console.log(category, "kkk");
-
     const res = await Api.post(adminRoutes.categoryAdd, { category });
     return res;
   } catch (error) {
@@ -183,14 +181,11 @@ export const getCourses = async (page: number, limit: number) => {
 // viewCoureseDetails
 export const viewCoureseDetails = async (course_id: string) => {
   try {
-    console.log(course_id, "cours....id");
-
     const res = await Api.get(adminRoutes.getViewCourse, {
       params: {
         id: course_id,
       },
     });
-    console.log(res, "data course view");
 
     return res.data;
   } catch (error) {
@@ -253,8 +248,6 @@ export const reviewsFetchingA = async (courseId: string) => {
 // eachAssignmentsFetch
 export const eachAssignmentsFetchA = async (courseId: string) => {
   try {
-    console.log(courseId, "ppp");
-
     const res = await Api.get(adminRoutes.fetchAssignments, {
       params: {
         courseId,
@@ -272,14 +265,11 @@ export const eachAssignmentsFetchA = async (courseId: string) => {
 // getInstructorData
 export const getInstructorDataA = async (instructorId: string) => {
   try {
-    console.log(instructorId, "ppp");
-
     const res = await Api.get(adminRoutes.getInstructor, {
       params: {
         instructorId,
       },
     });
-    console.log(res, "data instructor");
 
     return res.data;
   } catch (error) {
@@ -293,7 +283,7 @@ export const getInstructorDataA = async (instructorId: string) => {
 export const reportsFetching = async (): Promise<ReportData[]> => {
   try {
     const res = await Api.get<ApiResponse>(adminRoutes.getReports);
-    console.log(res.data, "getReports");
+
     return res.data.data || [];
   } catch (error) {
     console.error("Error fetching reports:", error);
@@ -333,15 +323,14 @@ export const getRatings = async () => {
   }
 };
 // dashboardFetching
-export const adminDashboardFetching = async()=>{
+export const adminDashboardFetching = async () => {
   try {
-    const res = await Api.get(adminRoutes.getDashboardData)
-    console.log(res.data,"getDashboardData");
-    
-    return res.data
+    const res = await Api.get(adminRoutes.getDashboardData);
+
+    return res.data;
   } catch (error) {
     console.log("error", error);
     const err: Error = error as Error;
     return errorHandler(err);
   }
-}
+};

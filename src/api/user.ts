@@ -2,7 +2,7 @@ import Api from "../services/axios";
 import errorHandler from "./error";
 import userRoutes from "../services/endPoints/userEndPoints";
 import { AxiosError } from "axios";
-import {  IReportIssues } from "../services/types";
+import { IReportIssues } from "../services/types";
 
 interface userFormData {
   name?: string;
@@ -10,8 +10,6 @@ interface userFormData {
   phone?: string;
   password?: string;
 }
-
-
 
 interface loginInfo {
   email: string;
@@ -28,7 +26,7 @@ export const signup = async (userData: userFormData) => {
     if (error instanceof AxiosError) {
       return errorHandler(error);
     }
-  
+
     throw error;
   }
 };
@@ -108,13 +106,10 @@ export const forgotOTPverify = async (data: {}) => {
 
 export const newPasswordSet = async (email: string, password: string) => {
   try {
-    console.log(email, password, "jjjjj");
-
     const res = await Api.patch(userRoutes.forgotPassReset, {
       email,
       password,
     });
-    console.log(res, "gggttt");
 
     return res;
   } catch (error) {
@@ -126,8 +121,6 @@ export const newPasswordSet = async (email: string, password: string) => {
 
 export const homePageData = async (userId: string): Promise<any> => {
   try {
-    console.log(userId, "kkk");
-
     const res = await Api.get(userRoutes.homePage, { params: { id: userId } });
     return res;
   } catch (error) {
@@ -138,13 +131,17 @@ export const homePageData = async (userId: string): Promise<any> => {
 };
 
 // get all courses
-export const getCourses = async (page: number, limit: number, searchTerm: string, category: string) => {
+export const getCourses = async (
+  page: number,
+  limit: number,
+  searchTerm: string,
+  category: string
+) => {
   try {
     const res = await Api.get(userRoutes.getCourse, {
       params: { page, limit, searchTerm, category },
     });
-    console.log(res.data,"ooo");
-    
+
     return res.data;
   } catch (error) {
     console.log("error", error);
@@ -156,15 +153,12 @@ export const getCourses = async (page: number, limit: number, searchTerm: string
 // viewCoureseDetails
 export const viewCoureseDetails = async (course_id: string, userid: string) => {
   try {
-    console.log(course_id, "cours....id");
-
     const res = await Api.get(userRoutes.getViewCourse, {
       params: {
         id: course_id,
         userId: userid,
       },
     });
-    // console.log(res,"data course view");
 
     return res.data;
   } catch (error) {
@@ -176,8 +170,6 @@ export const viewCoureseDetails = async (course_id: string, userid: string) => {
 // payment
 export const createPayment = async (courseId: string) => {
   try {
-    console.log(courseId, "id course for payment ");
-
     const res = await Api.post(userRoutes.createPayment, { courseId });
     return res;
   } catch (error) {
@@ -203,19 +195,24 @@ export const sendUserMsg = async (
   userId: string,
   instructorId: string,
   username: string,
-  instructorName:string
-
+  instructorName: string
 ) => {
   try {
-    console.log(message, userId, instructorId, username,instructorName, "ppppppppp");
+    console.log(
+      message,
+      userId,
+      instructorId,
+      username,
+      instructorName,
+      "ppppppppp"
+    );
     const res = await Api.post(userRoutes.sendusermsg, {
       message,
       userId,
       instructorId,
       username,
-      instructorName
+      instructorName,
     });
-    console.log(res, "res chat ");
 
     return res;
   } catch (error) {
@@ -266,14 +263,11 @@ export const reviewsFetching = async (courseId: string) => {
 // eachAssignmentsFetch
 export const eachAssignmentsFetch = async (courseId: string) => {
   try {
-    console.log(courseId, "ppp");
-
     const res = await Api.get(userRoutes.fetchAssignments, {
       params: {
         courseId,
       },
     });
-    console.log(res, "assignment res");
 
     return res.data;
   } catch (error) {
@@ -285,14 +279,11 @@ export const eachAssignmentsFetch = async (courseId: string) => {
 // getInstructorData
 export const getInstructorData = async (instructorId: string) => {
   try {
-    console.log(instructorId, "ppp");
-
     const res = await Api.get(userRoutes.getInstructor, {
       params: {
         instructorId,
       },
     });
-    console.log(res, "data instructor");
 
     return res.data;
   } catch (error) {
@@ -334,29 +325,28 @@ export const getRatings = async () => {
   }
 };
 // getUserInfo
-export const getUserInfo = async(userId:string)=>{
+export const getUserInfo = async (userId: string) => {
   try {
-    const res = await Api.get(userRoutes.getStudentInfo,{
-      params:{
-        userId
-      }
-    })
+    const res = await Api.get(userRoutes.getStudentInfo, {
+      params: {
+        userId,
+      },
+    });
     return res;
   } catch (error) {
     console.log("error", error);
     const err: Error = error as Error;
     return errorHandler(err);
   }
-}
+};
 // updateUserData
 export const updateUserData = async (formData: FormData) => {
   try {
     const res = await Api.patch(userRoutes.updatedUserData, formData, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       },
     });
-    console.log(res.data, "updateUserData");
     return res;
   } catch (error) {
     console.log("error", error);
@@ -365,17 +355,24 @@ export const updateUserData = async (formData: FormData) => {
   }
 };
 // updatePassword
-export const updatePassword =async(userId:string,currentPassword: string, newPassword: string)=>{
+export const updatePassword = async (
+  userId: string,
+  currentPassword: string,
+  newPassword: string
+) => {
   try {
-    const res = await Api.patch(userRoutes.changePassword, { userId, currentPassword, newPassword });
-    console.log(res, "Password Change Response");
+    const res = await Api.patch(userRoutes.changePassword, {
+      userId,
+      currentPassword,
+      newPassword,
+    });
     return res;
   } catch (error) {
     console.log("error", error);
     const err: Error = error as Error;
     return errorHandler(err);
   }
-}
+};
 // category fetch
 export const categoryData = async () => {
   try {
@@ -388,82 +385,88 @@ export const categoryData = async () => {
   }
 };
 // getHomeData
-export const getHomeData = async ()=>{
+export const getHomeData = async () => {
   try {
-    const res = await Api.get(userRoutes.getHomePageData)
-    console.log(res.data,"getHomePageData");
-    
-    return res.data
-  } catch (error) {
-    console.log("error:", error);
-    const err: Error = error as Error;
-    return errorHandler(err);
-  }
-}
+    const res = await Api.get(userRoutes.getHomePageData);
 
-// entrolledCourseData
-export const entrolledCourseData = async(userId:string)=>{
-  try {
-    const res = await Api.get(userRoutes.getEntrolledCourse,{
-      params:{
-        userId
-      }
-    })
-    console.log(res);
-    
-    return res
-  } catch (error) {
-    console.log("error:", error);
-    const err: Error = error as Error;
-    return errorHandler(err);
-  }
-}
-// getInitialMsgs
-export const getInitialMsgs = async(senderId:string,receiverId:string)=>{
-  try {
-    console.log(senderId,receiverId,"api ");
-    
-    const res = await Api.get(userRoutes.getInitialMsg,{
-      params:{
-        senderId,
-        receiverId
-      }
-    })
-    
     return res.data;
   } catch (error) {
     console.log("error:", error);
     const err: Error = error as Error;
     return errorHandler(err);
   }
-}
-// getWalletData
-export const getWalletData = async(userId:string)=>{
+};
+
+// entrolledCourseData
+export const entrolledCourseData = async (userId: string) => {
   try {
-    const res = await Api.get(userRoutes.getWallet,{
-      params:{
-        userId
-      }
-    })
-    console.log(res,"APi wallet")
+    const res = await Api.get(userRoutes.getEntrolledCourse, {
+      params: {
+        userId,
+      },
+    });
+    console.log(res);
+
     return res;
   } catch (error) {
     console.log("error:", error);
     const err: Error = error as Error;
     return errorHandler(err);
   }
-}
+};
+// getInitialMsgs
+export const getInitialMsgs = async (senderId: string, receiverId: string) => {
+  try {
+    const res = await Api.get(userRoutes.getInitialMsg, {
+      params: {
+        senderId,
+        receiverId,
+      },
+    });
+
+    return res.data;
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};
+// getWalletData
+export const getWalletData = async (userId: string) => {
+  try {
+    const res = await Api.get(userRoutes.getWallet, {
+      params: {
+        userId,
+      },
+    });
+    return res;
+  } catch (error) {
+    console.log("error:", error);
+    const err: Error = error as Error;
+    return errorHandler(err);
+  }
+};
 
 // walletPayment
-export const walletPayment = async(userId:string,instructorId:string,courseId:string,coursePrice:number,courseName:string)=>{
+export const walletPayment = async (
+  userId: string,
+  instructorId: string,
+  courseId: string,
+  coursePrice: number,
+  courseName: string
+) => {
   try {
-    const res = await Api.post(userRoutes.paymentWallet,{userId,instructorId,courseId,coursePrice,courseName})
-    console.log(res,"paymentWallet");
+    const res = await Api.post(userRoutes.paymentWallet, {
+      userId,
+      instructorId,
+      courseId,
+      coursePrice,
+      courseName,
+    });
     return res;
-    
   } catch (error) {
     console.log("error:", error);
     const err: Error = error as Error;
     return errorHandler(err);
   }
-}
+};
