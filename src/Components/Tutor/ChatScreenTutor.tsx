@@ -16,7 +16,7 @@ interface Message {
   timestamp: string;
 }
 
-const SOCKET_SERVER_URL = "https://shoeone.shop";
+const SOCKET_SERVER_URL = "https://coursatech-backend.onrender.com";
 
 const ChatScreenTutor: React.FC = () => {
   const [message, setMessage] = useState<string>("");

@@ -8,7 +8,7 @@ if (!backendBaseUrl) {
 }
 
 const Api = axios.create({
-  baseURL: backendBaseUrl  || 'https://shoeone.shop/api',
+  baseURL: backendBaseUrl  || 'https://coursatech-backend.onrender.com/api',
   withCredentials: true,
 });
 
