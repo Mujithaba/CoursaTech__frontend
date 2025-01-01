@@ -24,7 +24,7 @@ export interface Message {
   timestamp: string;
 }
 
-const SOCKET_SERVER_URL = "https://coursatech-backend.onrender.com";
+const SOCKET_SERVER_URL = "http://localhost:3000";
 
 function UserChatScreenModal({
   isOpen,
