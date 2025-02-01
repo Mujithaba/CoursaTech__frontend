@@ -128,6 +128,8 @@ const Home: React.FC = () => {
     if (userInfo) {
       navigate("/coursePage");
     } else {
+
+
       toast.info(
         <div className="p-4 text-center">
           <div className="text-lg font-semibold text-red-600 mb-2">
@@ -146,9 +148,10 @@ const Home: React.FC = () => {
           closeOnClick: true,
           draggable: true,
           hideProgressBar: true,
-          icon: "🔒",
+          icon: () => <span role="img" aria-label="lock">🔒</span>  // Correct way to use custom icon
         }
       );
+
     }
   };
 
