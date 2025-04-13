@@ -105,23 +105,25 @@ export default function UserProfile() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
-      {/* Top spacer with mobile menu toggle */}
-      <div className="w-full h-20 bg-gray-100 flex items-center px-4 md:px-6">
-        <button 
-          className="md:hidden flex items-center justify-center"
-          onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileSidebarOpen ? 
-            <IoMdClose size={24} className="text-gray-700" /> : 
-            <RxHamburgerMenu size={24} className="text-gray-700" />
-          }
-        </button>
-        <h1 className="text-lg font-medium ml-3 md:ml-0">User Profile</h1>
+      {/* Persistent top header with menu toggle */}
+      <div className="fixed top-0 left-0 right-0 z-30 bg-white shadow-md flex items-center justify-between px-4 h-16">
+        <div className="flex items-center">
+          <button 
+            className="md:hidden flex items-center justify-center mr-3"
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileSidebarOpen ? 
+              <IoMdClose size={24} className="text-gray-700" /> : 
+              <RxHamburgerMenu size={24} className="text-gray-700" />
+            }
+          </button>
+          <h1 className="text-lg font-medium">{activeTab}</h1>
+        </div>
       </div>
 
-      {/* Main container */}
-      <div className="flex flex-grow overflow-hidden">
+      {/* Main container - adjusted to account for fixed header */}
+      <div className="flex flex-grow pt-16 overflow-hidden">
         {/* Mobile Sidebar Overlay */}
         {mobileSidebarOpen && (
           <div 
@@ -134,8 +136,8 @@ export default function UserProfile() {
         <div 
           className={`${
             mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          } md:translate-x-0 fixed md:relative md:w-64 z-30 md:z-0 top-20 left-0 bottom-0 
-            bg-white border-r border-gray-300 p-4 overflow-y-auto transition-transform duration-300 ease-in-out`}
+          } md:translate-x-0 fixed md:relative z-30 md:z-10 top-16 left-0 bottom-0 
+            w-64 bg-white border-r border-gray-300 p-4 overflow-y-auto transition-transform duration-300 ease-in-out`}
         >
           <ul className="space-y-4">
             {menuItems.map((item, index) => (
@@ -157,7 +159,7 @@ export default function UserProfile() {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 p-4 md:p-8 bg-gray-50 overflow-y-auto w-full md:ml-0">
+        <div className="flex-1 p-4 md:p-6 lg:p-8 bg-gray-50 overflow-y-auto w-full">
           {loading ? (
             <div className="flex items-center justify-center h-full">
               <div className="text-center text-gray-500">Loading...</div>
