@@ -129,7 +129,7 @@ export default function UserProfile() {
 
           {/* Desktop sidebar */}
           <div className="hidden md:block w-64">
-            <ul className="space-y-4 mt-4">
+            <ul className="space-y-4 ">
               {menuItems.map((item, index) => (
                 <li key={index}>
                   <button
