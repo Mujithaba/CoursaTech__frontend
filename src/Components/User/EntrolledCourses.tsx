@@ -88,7 +88,7 @@ export default function EnrolledCourses({ userId }: EnrolledCoursesProps) {
       sx={{
         height: "calc(100vh - 64px - 64px)", // Adjust height for header and footer
         overflow: "auto",
-        backgroundColor: "#f5f5f5",
+        // backgroundColor: "#f5f5f5",
       }}
     >
       <Container maxWidth="lg" sx={{ py: 4 }}>

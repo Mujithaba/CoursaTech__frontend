@@ -34,7 +34,7 @@ const Wallet: React.FC<WalletProps> = ({ userId }) => {
   };
 
   return (
-    <div className="h-[calc(100vh-64px-64px)] overflow-auto bg-gray-100 p-4">
+    <div className="h-[calc(100vh-64px-64px)] overflow-auto  p-4">
       <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden">
         <div className="p-8">
           <div className="flex justify-between items-center mb-6">
