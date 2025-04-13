@@ -96,7 +96,7 @@ export default function UserProfile() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
+    <div className="flex flex-col min-h-screen ">
       {/* Header with current section name */}
       <div className="fixed top-0 left-0 right-0 z-30 bg-white shadow-md flex items-center px-4 h-16">
         <h1 className="text-lg font-medium mx-auto md:mx-0 md:ml-16">{activeTab}</h1>
