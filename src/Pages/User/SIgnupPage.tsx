@@ -77,20 +77,24 @@ const SignupPage: React.FC = () => {
           email: email,
           phone: phone,
           password: password,
+             role : "user"  // changed here 1
+
         };
 
         const response = await signup(userData);
 
         if (response) {
           toast.success(response.data.message);
-          navigate("/otpVerify", {
-            state: {
-              name: name,
-              email: email,
-              phone: phone,
-              password: password,
-            },
-          });
+          navigate("/login"
+          //  , {
+          //   state: {
+          //     name: name,
+          //     email: email,
+          //     phone: phone,
+          //     password: password,
+          //   },
+          // }
+        );
         }
       }
     } catch (error) {
