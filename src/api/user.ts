@@ -17,7 +17,8 @@ interface loginInfo {
 }
 
 // ---signup api---
-export const signup = async (userData: userFormData) => {
+// export const signup = async (userData: userFormData) => {
+export const signup = async (userData: any) => {
   try {
     const response = await Api.post(userRoutes.signup, userData);
 
