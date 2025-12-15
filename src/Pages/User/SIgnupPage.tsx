@@ -77,24 +77,13 @@ const SignupPage: React.FC = () => {
           email: email,
           phone: phone,
           password: password,
-             role : "user"  // changed here 1
-
         };
 
         const response = await signup(userData);
 
         if (response) {
-          toast.success(response.data.message);
-          navigate("/login"
-          //  , {
-          //   state: {
-          //     name: name,
-          //     email: email,
-          //     phone: phone,
-          //     password: password,
-          //   },
-          // }
-        );
+          navigate("/login");
+          toast.success("Signup successful! Please login.");
         }
       }
     } catch (error) {

@@ -49,7 +49,7 @@ function UserRoutes() {
           </Route>
 
           <Route path="/register" element={<SIgnUpPage />} />
-          <Route path="/otpVerify" element={<Otp />} />
+          {/* <Route path="/otpVerify" element={<Otp />} /> */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/userForgetPassword" element={<ForgotUserPass />} />
           <Route path="/forgotPassOTP" element={<ForgetPassOTP />} />
