@@ -4,12 +4,12 @@ import userRoutes from "../services/endPoints/userEndPoints";
 import { AxiosError } from "axios";
 import { IReportIssues } from "../services/types";
 
-interface userFormData {
-  name?: string;
-  email?: string;
-  phone?: string;
-  password?: string;
-}
+// interface userFormData {
+//   name?: string;
+//   email?: string;
+//   phone?: string;
+//   password?: string;
+// }
 
 interface loginInfo {
   email: string;
