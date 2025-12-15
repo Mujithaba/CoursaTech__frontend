@@ -8,7 +8,7 @@ import LoadingSpinner from "../Components/Common/LoadingSpinner";
 
 const NotFound = lazy(() => import("../Pages/ErrorPage/ErrorPage"));
 const SIgnUpPage = lazy(() => import("../Pages/User/SIgnupPage"));
-const Otp = lazy(() => import("../Pages/User/Otp"));
+// const Otp = lazy(() => import("../Pages/User/Otp"));
 const LoginPage = lazy(() => import("../Pages/User/LoginPage"));
 const Home = lazy(() => import("../Components/User/Home"));
 const ForgotUserPass = lazy(() => import("../Pages/User/ForgotUser"));
